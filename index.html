@@ -3,904 +3,778 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JHEP Digital - Politeknik Tuanku Syed Sirajuddin</title>
-    
+    <title>JHEP Digital PTSS</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+    <!-- Font Awesome untuk Ikon -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-        .hero-gradient { background: linear-gradient(90deg, #3B1C5A 0%, #68308B 50%, #8743A3 100%); }
-        .stats-header-gradient { background: linear-gradient(135deg, #2a1458 0%, #442485 100%); }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-        /* Toast Animation */
-        .toast-enter { transform: translateY(100%); opacity: 0; }
-        .toast-enter-active { transform: translateY(0); opacity: 1; transition: all 0.3s ease-out; }
-        .toast-exit { transform: translateY(0); opacity: 1; }
-        .toast-exit-active { transform: translateY(100%); opacity: 0; transition: all 0.3s ease-in; }
-
-        /* Accordion Animation */
-        details > summary { list-style: none; }
-        details > summary::-webkit-details-marker { display: none; }
-        details[open] summary ~ * { animation: sweep .3s ease-in-out; }
-        @keyframes sweep { 0% {opacity: 0; transform: translateY(-10px)} 100% {opacity: 1; transform: translateY(0)} }
+        html { scroll-behavior: smooth; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 font-sans text-gray-800">
 
-    <!-- Toast Notification Container -->
-    <div id="toast-container" class="fixed bottom-4 right-4 z-[100] flex flex-col gap-2"></div>
-
-    <!-- MAIN APP WRAPPER -->
-    <div id="app">
-
-        <!-- ========================================== -->
-        <!-- 1. LANDING PAGE (PUBLIC VIEW)              -->
-        <!-- ========================================== -->
-        <div id="landing-view" class="block">
-            
-            <!-- Navbar -->
-            <nav class="bg-white shadow-sm sticky top-0 z-40">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-20">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-lg bg-pink-600 flex items-center justify-center text-white font-bold text-xl shadow-md">J</div>
-                            <div class="flex flex-col">
-                                <span class="font-bold text-lg leading-tight text-gray-900">JHEP DIGITAL</span>
-                                <span class="text-xs text-gray-500 uppercase tracking-wide">Politeknik Tuanku Syed Sirajuddin</span>
-                            </div>
-                        </div>
-
-                        <div class="hidden lg:flex items-center space-x-6">
-                            <a href="#utama" class="text-gray-900 hover:text-pink-600 font-medium text-sm transition">Utama</a>
-                            <a href="#pengenalan" class="text-gray-500 hover:text-pink-600 font-medium text-sm transition">Pengenalan</a>
-                            <a href="#statistik" class="text-gray-500 hover:text-pink-600 font-medium text-sm transition">Statistik</a>
-                            <a href="#kakitangan" class="text-gray-500 hover:text-pink-600 font-medium text-sm transition">Kakitangan</a>
-                            <a href="#komuniti" class="text-gray-500 hover:text-pink-600 font-medium text-sm transition">Komuniti</a>
-                            <a href="#faq" class="text-gray-500 hover:text-pink-600 font-medium text-sm transition">FAQ</a>
-                        </div>
-
-                        <div class="flex items-center gap-4">
-                            <span id="sync-status" class="text-xs font-semibold text-gray-400 hidden"><i class="fas fa-sync fa-spin"></i> Menyegerak...</span>
-                            <button onclick="openLoginModal()" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2 rounded-full font-medium text-sm transition shadow-lg shadow-pink-200">
-                                Log Masuk
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-
-            <div id="public-pages-container">
-                <!-- HERO SECTION (CAROUSEL) -->
-                <section id="utama" class="scroll-mt-20">
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-12">
-                        <div class="relative overflow-hidden rounded-3xl shadow-2xl h-[450px] md:h-[500px] hero-gradient group">
-                            <!-- Background Decoration -->
-                            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-white opacity-10 blur-3xl z-0"></div>
-                            
-                            <!-- Carousel Track -->
-                            <div id="carousel-track" class="flex w-[300%] h-full transition-transform duration-700 ease-in-out relative z-10">
-                                <!-- Slides rendered via JS -->
-                            </div>
-                            
-                            <!-- Carousel Controls -->
-                            <div class="absolute bottom-6 left-0 right-0 flex justify-center space-x-2 z-20" id="carousel-dots">
-                                <!-- Dots rendered via JS -->
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- PENGENALAN SECTION -->
-                <section id="pengenalan" class="bg-white py-16 scroll-mt-20 border-t border-gray-100">
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div class="flex flex-col md:flex-row md:items-start justify-between mb-16 gap-8">
-                            <div class="md:w-1/2">
-                                <span class="text-sm font-bold text-gray-400 uppercase tracking-widest block mb-4">Mengenali JHEP</span>
-                                <h2 id="public-intro-header" class="text-4xl md:text-5xl font-extrabold text-[#2a1458] leading-tight">Bersama pelajar,<br>di setiap langkah.</h2>
-                            </div>
-                            <div class="md:w-1/2 md:pl-10 border-l-0 md:border-l border-gray-200">
-                                <span class="text-sm font-bold text-gray-400 uppercase tracking-widest block mb-4">Pengenalan</span>
-                                <p id="public-intro-p1" class="text-gray-600 mb-4 text-lg"></p>
-                                <p id="public-intro-p2" class="text-gray-500 mb-6"></p>
-                            </div>
-                        </div>
-
-                        <div class="mb-10 text-center md:text-left">
-                            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-2">Fungsi & Tanggungjawab</span>
-                            <h3 class="text-2xl font-bold text-[#2a1458]">Dua bahagian. Satu komitmen.</h3>
-                        </div>
-
-                        <!-- Blok 01: Pengambilan & Data -->
-                        <div class="flex flex-col md:flex-row rounded-3xl overflow-hidden border border-gray-100 shadow-sm mb-8">
-                            <div class="md:w-5/12 bg-[#f4f2fa] p-10 flex flex-col justify-center">
-                                <span class="text-5xl font-light text-[#6c5b96] mb-6">01</span>
-                                <span class="text-xs font-bold text-[#6c5b96] uppercase tracking-widest block mb-3">Pendaftaran & Rekod</span>
-                                <h4 id="public-b1-title" class="text-3xl font-bold text-[#2a1458] mb-4"></h4>
-                                <p id="public-b1-desc" class="text-gray-600 mb-8"></p>
-                            </div>
-                            <div class="md:w-7/12 bg-white p-10 flex flex-col justify-center">
-                                <span class="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-6">Skop Perkhidmatan</span>
-                                <ul id="public-b1-list" class="space-y-4">
-                                    <!-- Rendered via JS -->
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Blok 02: Kebajikan & Disiplin -->
-                        <div class="flex flex-col md:flex-row rounded-3xl overflow-hidden border border-gray-100 shadow-sm">
-                            <div class="md:w-5/12 bg-[#fcf0f2] p-10 flex flex-col justify-center">
-                                <span class="text-5xl font-light text-[#a56171] mb-6">02</span>
-                                <span class="text-xs font-bold text-[#a56171] uppercase tracking-widest block mb-3">Kebajikan & Sahsiah</span>
-                                <h4 id="public-b2-title" class="text-3xl font-bold text-[#2a1458] mb-4"></h4>
-                                <p id="public-b2-desc" class="text-gray-600 mb-8"></p>
-                            </div>
-                            <div class="md:w-7/12 bg-white p-10 flex flex-col justify-center">
-                                <div id="public-b2-accordion" class="space-y-2">
-                                    <!-- Rendered via JS -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- STATISTIK SECTION -->
-                <section id="statistik" class="bg-gray-50 py-16 scroll-mt-20">
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div class="stats-header-gradient rounded-3xl p-8 mb-8 flex flex-col md:flex-row md:items-center justify-between shadow-xl text-white">
-                            <div>
-                                <span class="inline-block bg-white/20 px-3 py-1 rounded-full text-xs mb-3 flex items-center w-max"><span class="w-2 h-2 rounded-full bg-green-400 mr-2 animate-pulse"></span> Pemantauan Data Masa Nyata</span>
-                                <h2 class="text-3xl font-extrabold mb-2">Dashboard Analitik Pelajar PTSS</h2>
-                                <p class="text-gray-300 max-w-2xl text-sm">Paparan menyeluruh statistik bilangan pelajar, nisbah jantina, serta taburan jabatan akademik.</p>
-                            </div>
-                        </div>
-
-                        <!-- 4 Stat Cards -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
-                                <div class="absolute -right-4 -top-4 w-16 h-16 bg-blue-100 rounded-full"></div>
-                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2 relative z-10">Jumlah Pelajar Bendaftar</span>
-                                <div class="flex items-end gap-2 mb-2 relative z-10">
-                                    <h3 id="stat-total" class="text-4xl font-extrabold text-gray-900">0</h3>
-                                </div>
-                                <p class="text-xs text-gray-500 relative z-10">Terkini merangkumi semua jabatan.</p>
-                            </div>
-
-                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
-                                <div class="absolute -right-4 -top-4 w-16 h-16 bg-purple-100 rounded-full"></div>
-                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2 relative z-10">Pecahan Jantina</span>
-                                <div class="mb-3 relative z-10">
-                                    <div class="flex justify-between text-sm font-bold mb-1">
-                                        <span class="text-blue-600">Lelaki: <span id="stat-male">0</span> (<span id="stat-male-pct">0</span>%)</span>
-                                        <span class="text-pink-500">Perempuan: <span id="stat-female">0</span> (<span id="stat-female-pct">0</span>%)</span>
-                                    </div>
-                                    <div class="w-full bg-pink-500 rounded-full h-2.5 flex overflow-hidden">
-                                        <div id="stat-bar-male" class="bg-blue-600 h-2.5" style="width: 50%"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
-                                <div class="absolute -right-4 -top-4 w-16 h-16 bg-emerald-100 rounded-full"></div>
-                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2 relative z-10">Purata HPNM Semasa</span>
-                                <div class="flex items-end gap-2 mb-2 relative z-10">
-                                    <h3 id="stat-cgpa" class="text-4xl font-extrabold text-emerald-600">0.00</h3>
-                                    <span class="text-gray-400 text-sm font-medium mb-1">/ 4.00</span>
-                                </div>
-                            </div>
-
-                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
-                                <div class="absolute -right-4 -top-4 w-16 h-16 bg-rose-100 rounded-full"></div>
-                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2 relative z-10">Kadar Kelulusan</span>
-                                <div class="flex items-end gap-2 mb-2 relative z-10">
-                                    <h3 id="stat-pass" class="text-4xl font-extrabold text-gray-900">0%</h3>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Department Distribution Module -->
-                        <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-gray-100 pb-5">
-                                <div>
-                                    <h3 class="text-xl font-bold text-[#2a1458] flex items-center mb-1">
-                                        <i class="fas fa-building text-indigo-500 mr-3"></i> Taburan Pelajar Mengikut Jabatan Akademik PTSS
-                                    </h3>
-                                    <p class="text-sm text-gray-500">Pecahan data bilangan pelajar lelaki dan perempuan bagi setiap jabatan serta ketua jabatan bertanggungjawab.</p>
-                                </div>
-                                <span id="dept-count-badge" class="mt-4 md:mt-0 bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap shadow-sm border border-indigo-100">
-                                    0 Jabatan Berdaftar
-                                </span>
-                            </div>
-                            
-                            <!-- Departments Grid -->
-                            <div id="dept-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                <!-- Generated via JavaScript -->
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- KAKITANGAN SECTION -->
-                <section id="kakitangan" class="bg-white py-16 scroll-mt-20 border-t border-gray-200">
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <h2 class="text-3xl font-bold text-[#2a1458] mb-8">Carta Organisasi & Kakitangan</h2>
-                        
-                        <!-- Carta Image -->
-                        <div id="org-chart-container" class="mb-10 p-4 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 flex items-center justify-center min-h-[200px]">
-                            <p class="text-gray-400"><i class="fas fa-image mr-2"></i> Carta Organisasi belum dimuat naik.</p>
-                        </div>
-
-                        <!-- Staff Table -->
-                        <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
-                            <table class="w-full text-left border-collapse min-w-[600px]">
-                                <thead>
-                                    <tr class="bg-gray-50 text-gray-600 font-semibold text-sm">
-                                        <th class="p-4 border-b border-gray-200 w-16 text-center">Bil.</th>
-                                        <th class="p-4 border-b border-gray-200">Nama</th>
-                                        <th class="p-4 border-b border-gray-200">Jawatan</th>
-                                        <th class="p-4 border-b border-gray-200 text-center">Samb. Telefon</th>
-                                        <th class="p-4 border-b border-gray-200">E-mel (@ptss.edu.my)</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="public-staff-body" class="text-sm text-gray-700 bg-white">
-                                    <!-- Rendered via JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- KOMUNITI SECTION -->
-                <section id="komuniti" class="bg-gray-50 py-16 scroll-mt-20">
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
-                            <h2 class="text-3xl font-bold text-[#2a1458] mb-4">Komuniti & Kelab Pelajar</h2>
-                            <p id="public-komuniti-desc" class="text-gray-600 mb-8"></p>
-                            <div id="public-komuniti-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <!-- Rendered via JS -->
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- FAQ SECTION -->
-                <section id="faq" class="bg-white py-16 scroll-mt-20 border-t border-gray-200">
-                    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <h2 class="text-3xl font-bold text-center text-[#2a1458] mb-10">Soalan Lazim (FAQ)</h2>
-                        <div id="public-faq-container" class="space-y-4">
-                            <!-- Rendered via JS -->
-                        </div>
-                    </div>
-                </section>
-
-                <!-- FOOTER -->
-                <footer class="bg-[#2b1b54] text-white pt-16">
-                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 grid grid-cols-1 md:grid-cols-3 gap-10">
-                        <div>
-                            <h3 class="text-xl font-bold mb-6 text-pink-400">Hubungi Kami</h3>
-                            <p class="text-sm mb-4 text-gray-300"><strong>Politeknik Tuanku Syed Sirajuddin</strong><br>Pauh Putra, 02600 Arau, Perlis</p>
-                            <p class="text-sm mb-2 text-gray-300"><strong>Telefon:</strong> <span id="footer-tel"></span></p>
-                            <p class="text-sm mb-2 text-gray-300"><strong>Faks:</strong> <span id="footer-faks"></span></p>
-                            <p class="text-sm text-gray-300"><strong>E-mel:</strong> <span id="footer-emel"></span></p>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-6 text-pink-400">Pautan Umum</h3>
-                            <ul class="space-y-2 text-sm text-gray-300">
-                                <li><a href="#" class="hover:text-white transition">Takwim Aktiviti Tahunan PTSS</a></li>
-                                <li><a href="#" class="hover:text-white transition">Media Creative Centre (MCC)</a></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold mb-6 text-pink-400">Penafian</h3>
-                            <p class="text-sm text-gray-400 leading-relaxed">PTSS tidak bertanggungjawab terhadap sebarang kehilangan atau kerosakan yang dialami kerana menggunakan maklumat dari portal ini.</p>
-                        </div>
-                    </div>
-                    <div class="bg-[#1f1340] text-center py-6 border-t border-white/10 text-sm text-gray-400">
-                        Hak Cipta Terpelihara © Politeknik Tuanku Syed Sirajuddin, Perlis (PTSS)
-                    </div>
-                </footer>
-            </div>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- 2. LOGIN MODAL                             -->
-        <!-- ========================================== -->
-        <div id="login-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center">
-            <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all" id="login-card">
-                <div class="bg-gradient-to-r from-pink-600 to-purple-700 p-6 text-center">
-                    <h2 class="text-white text-2xl font-bold">Log Masuk Portal</h2>
-                </div>
-                <div class="p-8">
-                    <form onsubmit="handleLogin(event)">
-                        <div class="mb-5">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">ID Pengguna (Taip 'admin')</label>
-                            <input type="text" id="userid" class="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-pink-500 outline-none" value="admin" required>
-                        </div>
-                        <div class="mb-8">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Kata Laluan</label>
-                            <input type="password" id="password" class="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-pink-500 outline-none" value="password" required>
-                        </div>
-                        <div class="flex gap-3">
-                            <button type="button" onclick="closeLoginModal()" class="flex-1 bg-gray-100 font-bold py-3 rounded-xl hover:bg-gray-200">Batal</button>
-                            <button type="submit" class="flex-1 bg-pink-600 text-white font-bold py-3 rounded-xl hover:bg-pink-700">Masuk</button>
-                        </div>
-                    </form>
+    <!-- NAVBAR AWAM -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50" id="main-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
+            <div class="flex items-center">
+                <!-- LOGO BOLEH UBAH -->
+                <img id="nav-logo" src="https://via.placeholder.com/100x100/e83e8c/ffffff?text=JHEP" class="h-10 w-auto rounded-lg mr-3 shadow-sm object-cover" alt="Logo PTSS">
+                <div>
+                    <h1 class="font-bold text-gray-900 leading-tight tracking-tight">JHEP DIGITAL</h1>
+                    <p class="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Politeknik Tuanku Syed Sirajuddin</p>
                 </div>
             </div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-600">
+                <a href="#hero" class="hover:text-pink-600 transition">Utama</a>
+                <a href="#pengenalan" class="hover:text-pink-600 transition">Pengenalan</a>
+                <a href="#statistik" class="hover:text-pink-600 transition">Statistik</a>
+                <a href="#kakitangan" class="hover:text-pink-600 transition">Kakitangan</a>
+                <a href="#komuniti" class="hover:text-pink-600 transition">Komuniti</a>
+                <a href="#faq" class="hover:text-pink-600 transition">FAQ</a>
+            </div>
+            <div>
+                <button onclick="document.getElementById('login-modal').classList.remove('hidden')" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2 rounded-full font-semibold text-sm transition shadow-lg shadow-pink-200">
+                    Log Masuk
+                </button>
+            </div>
         </div>
+    </nav>
 
-        <!-- ========================================== -->
-        <!-- 3. ADMIN CMS DASHBOARD                     -->
-        <!-- ========================================== -->
-        <div id="dashboard-view" class="hidden min-h-screen bg-gray-100 flex flex-col md:flex-row">
-            
-            <!-- Sidebar -->
-            <aside class="w-full md:w-64 bg-[#1e1b4b] text-white flex flex-col shadow-xl z-20 md:h-screen sticky top-0">
-                <div class="p-6 border-b border-white/10 text-center">
-                    <div class="w-12 h-12 rounded-xl bg-pink-600 mx-auto flex items-center justify-center font-bold text-2xl mb-3">J</div>
-                    <span class="font-bold text-lg">JHEP ADMIN</span>
+    <!-- KANDUNGAN AWAM (FRONTEND) -->
+    <div id="public-view">
+        
+        <!-- HERO SECTION (Satu Slide Sahaja) -->
+        <section id="hero" class="max-w-7xl mx-auto mt-6 px-4 scroll-mt-24">
+            <div class="bg-gradient-to-r from-[#2b1b54] to-[#6b2c91] rounded-3xl p-10 md:p-20 text-white shadow-xl relative overflow-hidden flex items-center min-h-[400px]">
+                <div class="z-10 max-w-2xl">
+                    <span class="inline-block py-1 px-3 rounded-full bg-white/10 border border-white/20 text-xs font-semibold mb-4 backdrop-blur-sm">URUSAN LEBIH MUDAH</span>
+                    <h2 id="hero-title" class="text-4xl md:text-6xl font-bold mb-4 leading-tight">Kurangkan langkah.<br><span class="text-pink-300">Lebihkan peluang.</span></h2>
+                    <p id="hero-sub" class="text-lg text-purple-200 mb-8">Cari dokumen, rekodkan aktiviti dan urus permohonan melalui portal JHEP secara berpusat.</p>
                 </div>
-                <div class="p-4 flex-1">
-                    <button class="w-full flex items-center gap-3 px-4 py-3 bg-pink-600 text-white rounded-xl font-medium text-sm text-left">
-                        <i class="fas fa-edit w-5"></i> Urus Kandungan Web
-                    </button>
+                <!-- Hiasan Grafik -->
+                <div class="absolute right-0 top-0 opacity-20 hidden md:block">
+                    <svg width="400" height="400" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="#FFFFFF" d="M45.7,-76.4C58.9,-69.3,69.2,-55.4,78.2,-41.1C87.2,-26.8,94.9,-12.1,93.5,1.9C92,15.9,81.4,29.1,70.6,40.6C59.8,52.1,48.8,61.9,35.6,69.5C22.4,77.1,7.1,82.4,-7.8,81.9C-22.7,81.4,-37.1,75.1,-50.2,66.6C-63.3,58.1,-75.1,47.4,-82.4,33.9C-89.7,20.4,-92.5,4.1,-89,-11C-85.5,-26.1,-75.7,-40,-63.3,-50.1C-50.9,-60.2,-36,-66.5,-22.1,-71.4C-8.2,-76.3,4.7,-79.8,18.8,-79.1C32.9,-78.4,45.7,-76.4,45.7,-76.4Z" transform="translate(100 100)" /></svg>
                 </div>
-                <div class="p-4 border-t border-white/10 bg-black/20">
-                    <button onclick="handleLogout()" class="w-full py-2 bg-red-500/20 text-red-400 rounded-lg text-sm font-semibold hover:bg-red-500/40">
-                        Log Keluar
-                    </button>
+            </div>
+        </section>
+
+        <!-- PENGENALAN -->
+        <section id="pengenalan" class="max-w-7xl mx-auto mt-20 px-4 scroll-mt-24">
+            <div class="grid md:grid-cols-2 gap-12 items-center bg-white p-10 rounded-3xl shadow-sm border border-gray-100">
+                <div>
+                    <h5 class="text-sm font-bold text-gray-400 tracking-widest uppercase mb-2">Mengenali JHEP</h5>
+                    <h2 class="text-4xl font-bold text-[#2b1b54] mb-4">Bersama pelajar,<br>di setiap langkah.</h2>
+                    <p id="intro-desc" class="text-pink-600 font-medium mb-6">Memperkasakan potensi graduan melalui perkhidmatan holistik.</p>
                 </div>
-            </aside>
+                <div class="text-gray-600 leading-relaxed border-l-4 border-pink-500 pl-6">
+                    <p id="intro-p1" class="mb-4">Jabatan Hal Ehwal Pelajar (JHEP) bertanggungjawab menguruskan kebajikan, kemudahan, disiplin dan pembangunan peribadi pelajar di Politeknik Tuanku Syed Sirajuddin (PTSS).</p>
+                    <p id="intro-p2">Matlamat kami adalah untuk melahirkan graduan yang bukan sahaja cemerlang dalam akademik, tetapi juga mempunyai sahsiah diri yang tinggi dan bersedia menghadapi cabaran industri.</p>
+                </div>
+            </div>
+        </section>
 
-            <!-- Main Form Content -->
-            <main class="flex-1 flex flex-col h-screen overflow-hidden bg-gray-50">
-                <header class="bg-white shadow-sm h-16 flex items-center justify-between px-8 shrink-0">
-                    <h2 class="text-xl font-bold text-gray-800">Urus Kandungan Web (CMS)</h2>
-                </header>
-
-                <div class="flex-1 overflow-auto p-4 md:p-8">
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 md:p-8 max-w-6xl mx-auto">
-                        <form id="cms-form" onsubmit="handleCmsSubmit(event)">
-                            
-                            <!-- 1. HERO (DYNAMIC TABLE) -->
-                            <div class="mb-8 border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
-                                <div class="bg-gray-50 p-4 border-b"><h4 class="font-bold text-pink-600">1. Bahagian Utama (Carousel Hero)</h4></div>
-                                <div class="p-4 overflow-x-auto">
-                                    <table class="w-full text-left border-collapse min-w-[600px]">
-                                        <thead>
-                                            <tr class="text-xs text-gray-500 uppercase bg-gray-100">
-                                                <th class="p-2 border">Tag / Kategori</th>
-                                                <th class="p-2 border">Tajuk Utama</th>
-                                                <th class="p-2 border">Penerangan</th>
-                                                <th class="p-2 border w-20 text-center">Tindakan</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="cms-hero-tbody">
-                                            <!-- Rendered via JS -->
-                                        </tbody>
-                                    </table>
-                                    <button type="button" onclick="addHeroRow()" class="mt-3 px-4 py-2 bg-indigo-50 text-indigo-600 rounded text-sm font-semibold hover:bg-indigo-100 border border-indigo-200">+ Tambah Baris</button>
-                                </div>
-                            </div>
-
-                            <!-- 2. PENGENALAN (STANDARD INPUT) -->
-                            <div class="mb-8 border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
-                                <div class="bg-gray-50 p-4 border-b"><h4 class="font-bold text-pink-600">2. Bahagian Pengenalan</h4></div>
-                                <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div class="space-y-3">
-                                        <label class="text-xs font-bold text-gray-500 uppercase block border-b pb-1">Blok 01: Pengambilan & Data</label>
-                                        <div><label class="text-xs font-bold text-gray-700">Tajuk:</label><input type="text" id="cms-b1-title" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500"></div>
-                                        <div><label class="text-xs font-bold text-gray-700">Penerangan:</label><textarea id="cms-b1-desc" rows="2" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500"></textarea></div>
-                                        <div><label class="text-xs font-bold text-gray-700">Senarai (Satu item satu baris):</label><textarea id="cms-b1-list" rows="4" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500"></textarea></div>
-                                    </div>
-                                    <div class="space-y-3">
-                                        <label class="text-xs font-bold text-gray-500 uppercase block border-b pb-1">Blok 02: Kebajikan (Accordion)</label>
-                                        <div><label class="text-xs font-bold text-gray-700">Tajuk:</label><input type="text" id="cms-b2-title" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500"></div>
-                                        <div><label class="text-xs font-bold text-gray-700">Penerangan:</label><textarea id="cms-b2-desc" rows="2" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500"></textarea></div>
-                                        <div><label class="text-xs font-bold text-gray-700">Senarai Accordion (Tajuk | Penerangan):</label><textarea id="cms-b2-list" rows="4" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500"></textarea></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 3. STATISTIK & JABATAN (DYNAMIC TABLE) -->
-                            <div class="mb-8 border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
-                                <div class="bg-gray-50 p-4 border-b flex justify-between items-center">
-                                    <h4 class="font-bold text-pink-600">3. Statistik & Taburan Jabatan</h4>
-                                </div>
-                                <div class="p-4">
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                                        <div><label class="text-xs font-bold text-gray-700">Purata HPNM Semasa (Keseluruhan):</label><input type="text" id="cms-stat-cgpa" class="w-full p-2 border rounded"></div>
-                                        <div><label class="text-xs font-bold text-gray-700">Kadar Kelulusan (%):</label><input type="text" id="cms-stat-pass" class="w-full p-2 border rounded"></div>
-                                    </div>
-                                    
-                                    <label class="text-xs font-bold text-gray-700 block mb-2">Jadual Data Jabatan Akademik (Peratusan akan dikira secara automatik)</label>
-                                    <div class="overflow-x-auto border border-gray-200 rounded">
-                                        <table class="w-full text-left border-collapse min-w-[800px]">
-                                            <thead>
-                                                <tr class="text-xs text-gray-500 uppercase bg-gray-100">
-                                                    <th class="p-2 border w-24">Kod</th>
-                                                    <th class="p-2 border">Nama Jabatan</th>
-                                                    <th class="p-2 border">Ketua</th>
-                                                    <th class="p-2 border w-24">Jumlah</th>
-                                                    <th class="p-2 border w-20">Lelaki</th>
-                                                    <th class="p-2 border w-24">Perempuan</th>
-                                                    <th class="p-2 border w-20">HPNM</th>
-                                                    <th class="p-2 border w-28">Warna Tema</th>
-                                                    <th class="p-2 border w-16 text-center">Tindakan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="cms-dept-tbody">
-                                                <!-- Rendered via JS -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <button type="button" onclick="addDeptRow()" class="mt-3 px-4 py-2 bg-indigo-50 text-indigo-600 rounded text-sm font-semibold hover:bg-indigo-100 border border-indigo-200">+ Tambah Baris Jabatan</button>
-                                </div>
-                            </div>
-
-                            <!-- 4. KAKITANGAN (DYNAMIC TABLE) -->
-                            <div class="mb-8 border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
-                                <div class="bg-gray-50 p-4 border-b"><h4 class="font-bold text-pink-600">4. Carta & Maklumat Kakitangan</h4></div>
-                                <div class="p-4">
-                                    <label class="text-xs font-bold text-gray-700 block mb-1">Muat Naik Imej Carta Organisasi (Pilihan)</label>
-                                    <input type="file" id="cms-carta-img" accept="image/*" class="w-full p-2 border rounded mb-6 text-sm">
-                                    
-                                    <label class="text-xs font-bold text-gray-700 block mb-2">Jadual Maklumat Kakitangan</label>
-                                    <div class="overflow-x-auto border border-gray-200 rounded">
-                                        <table class="w-full text-left border-collapse min-w-[700px]">
-                                            <thead>
-                                                <tr class="text-xs text-gray-500 uppercase bg-gray-100">
-                                                    <th class="p-2 border">Nama Kakitangan</th>
-                                                    <th class="p-2 border w-48">Jawatan</th>
-                                                    <th class="p-2 border w-32">Samb. Tel</th>
-                                                    <th class="p-2 border w-48">E-mel (@ptss.edu.my)</th>
-                                                    <th class="p-2 border w-16 text-center">Tindakan</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="cms-staff-tbody">
-                                                <!-- Rendered via JS -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <button type="button" onclick="addStaffRow()" class="mt-3 px-4 py-2 bg-indigo-50 text-indigo-600 rounded text-sm font-semibold hover:bg-indigo-100 border border-indigo-200">+ Tambah Kakitangan</button>
-                                </div>
-                            </div>
-
-                            <!-- 5. KOMUNITI & FAQ (STANDARD INPUT) -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                                <div class="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
-                                    <div class="bg-gray-50 p-4 border-b"><h4 class="font-bold text-pink-600">5. Komuniti (Pautan Luar)</h4></div>
-                                    <div class="p-4">
-                                        <label class="text-xs font-bold text-gray-700 block mb-2">Penerangan Komuniti:</label>
-                                        <textarea id="cms-komuniti-desc" rows="2" class="w-full p-2 border rounded mb-4 focus:ring-1 focus:ring-pink-500"></textarea>
-                                        <label class="text-xs font-bold text-gray-700 block mb-1">Senarai Kelab (Format: Nama | Pautan):</label>
-                                        <textarea id="cms-komuniti-list" rows="5" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500" placeholder="Contoh: Majlis Perwakilan Pelajar | https://mpp-ptss.com"></textarea>
-                                    </div>
-                                </div>
-                                <div class="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
-                                    <div class="bg-gray-50 p-4 border-b"><h4 class="font-bold text-pink-600">6. Soalan Lazim (FAQ)</h4></div>
-                                    <div class="p-4">
-                                        <label class="text-xs font-bold text-gray-700 block mb-1">Senarai Soalan (Format: Soalan | Jawapan):</label>
-                                        <p class="text-xs text-gray-500 mb-2">Setiap soalan dipisahkan dengan baris baharu (enter).</p>
-                                        <textarea id="cms-faq-list" rows="8" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500" placeholder="Contoh: Borang asrama di mana? | Di google drive JHEP."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 7. FOOTER -->
-                            <div class="mb-8 border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
-                                <div class="bg-gray-50 p-4 border-b"><h4 class="font-bold text-pink-600">7. Footer (Hubungi Kami)</h4></div>
-                                <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <div><label class="text-xs font-bold text-gray-700">Telefon:</label><input type="text" id="cms-footer-tel" class="w-full p-2 border rounded"></div>
-                                    <div><label class="text-xs font-bold text-gray-700">Faks:</label><input type="text" id="cms-footer-faks" class="w-full p-2 border rounded"></div>
-                                    <div><label class="text-xs font-bold text-gray-700">E-mel:</label><input type="text" id="cms-footer-emel" class="w-full p-2 border rounded"></div>
-                                </div>
-                            </div>
-
-                            <!-- SUBMIT BUTTON -->
-                            <div class="sticky bottom-0 bg-white border-t border-gray-200 pt-4 pb-4 flex justify-end gap-3 z-10">
-                                <button type="button" onclick="handleLogout()" class="px-6 py-3 rounded-lg font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Batal</button>
-                                <button type="submit" class="px-8 py-3 rounded-lg font-bold text-white bg-pink-600 hover:bg-pink-700 shadow-lg shadow-pink-200 transition flex items-center">
-                                    <i class="fas fa-save mr-2"></i> Kemaskini Kandungan
-                                </button>
-                            </div>
-                        </form>
+        <!-- STATISTIK (Taburan Jabatan Sahaja) -->
+        <section id="statistik" class="max-w-7xl mx-auto mt-20 px-4 scroll-mt-24">
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                <div class="flex justify-between items-end mb-8 border-b pb-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-[#2b1b54]"><i class="fas fa-chart-pie text-pink-500 mr-2"></i> Taburan Pelajar Mengikut Jabatan Akademik PTSS</h2>
+                        <p class="text-gray-500 text-sm mt-1">Pecahan data bilangan pelajar bagi setiap jabatan.</p>
+                    </div>
+                    <div class="bg-indigo-50 text-indigo-700 px-4 py-2 rounded-lg font-bold text-sm">
+                        Total Pelajar: <span id="grand-total-display">0</span> Orang
                     </div>
                 </div>
-            </main>
-        </div>
+                <!-- Grid Jabatan -->
+                <div id="jabatan-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Data dijana secara automatik oleh JS -->
+                </div>
+            </div>
+        </section>
 
+        <!-- CARTA ORGANISASI & KAKITANGAN -->
+        <section id="kakitangan" class="max-w-7xl mx-auto mt-20 px-4 scroll-mt-24">
+            <h2 class="text-2xl font-bold text-[#2b1b54] mb-8 uppercase tracking-wide">Maklumat Kakitangan</h2>
+            
+            <div class="mb-10 bg-white p-6 rounded-3xl shadow-sm border border-gray-100 text-center">
+                <h3 class="text-lg font-bold text-gray-700 mb-4">Carta Organisasi JHEP</h3>
+                <div id="org-chart-container" class="border-2 border-dashed border-gray-300 rounded-xl p-10 bg-gray-50 text-gray-400 flex flex-col items-center justify-center min-h-[300px]">
+                    <i class="fas fa-sitemap text-4xl mb-3 text-gray-300"></i>
+                    <p>Imej Carta Organisasi Belum Dimuat Naik</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-600">
+                        <thead class="bg-gray-50 text-gray-700 font-bold border-b">
+                            <tr>
+                                <th class="p-4 text-center w-16">Bil.</th>
+                                <th class="p-4">Nama</th>
+                                <th class="p-4">Jawatan</th>
+                                <th class="p-4 text-center">No. Telefon</th>
+                                <th class="p-4 text-center">E-mel</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staff-table-body" class="divide-y divide-gray-100">
+                            <!-- Data Kakitangan -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- KOMUNITI & PERKHIDMATAN -->
+        <section id="komuniti" class="max-w-7xl mx-auto mt-20 px-4 scroll-mt-24 grid md:grid-cols-2 gap-8">
+            <!-- Kelab -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                <h2 class="text-2xl font-bold text-[#2b1b54] mb-4">Komuniti & Kelab Pelajar</h2>
+                <p id="komuniti-desc" class="text-gray-600 mb-6">Sertai kelab dan persatuan untuk memperkayakan pengalaman kehidupan kampus anda di PTSS.</p>
+                <div id="komuniti-grid" class="flex flex-col gap-3 mb-8">
+                    <!-- Senarai Kelab -->
+                </div>
+                
+                <!-- Ruangan Google Drive & QR Code -->
+                <div class="border-t pt-6 mt-4">
+                    <h4 class="font-bold text-gray-800 mb-4">Muat Turun Dokumen / Borang</h4>
+                    <div class="flex flex-wrap gap-6 items-center">
+                        <a id="komuniti-gdrive-btn" href="#" target="_blank" class="flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md font-semibold transition">
+                            <i class="fab fa-google-drive text-xl mr-3"></i> Buka Google Drive
+                        </a>
+                        <div class="text-center">
+                            <img id="komuniti-qr-img" src="https://via.placeholder.com/120x120?text=QR+Code" alt="QR Code Drive" class="w-24 h-24 border p-1 rounded-lg shadow-sm mx-auto">
+                            <p class="text-[10px] text-gray-500 mt-2 font-semibold uppercase">Imbas QR</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Perkhidmatan -->
+            <div class="bg-gray-50 p-8 rounded-3xl border border-gray-200">
+                <h2 class="text-2xl font-bold text-[#2b1b54] mb-6">Perkhidmatan Kami</h2>
+                <ul id="perkhidmatan-list" class="space-y-3">
+                    <!-- Senarai Perkhidmatan -->
+                </ul>
+            </div>
+        </section>
+
+        <!-- SOALAN LAZIM (FAQ) -->
+        <section id="faq" class="max-w-7xl mx-auto mt-20 px-4 scroll-mt-24 mb-20">
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
+                <h2 class="text-2xl font-bold text-[#2b1b54] mb-6">Soalan Lazim (FAQ)</h2>
+                <div id="faq-container" class="space-y-3">
+                    <!-- Soalan dijana dinamik -->
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-[#1a103c] text-white pt-16 pb-8 border-t-[6px] border-pink-600">
+            <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-10 mb-12">
+                <div>
+                    <h3 class="text-pink-500 font-bold text-lg mb-6">Hubungi Kami</h3>
+                    <p class="font-bold mb-1">Politeknik Tuanku Syed Sirajuddin</p>
+                    <p class="text-gray-400 text-sm mb-4">Pauh Putra, 02600 Arau, Perlis</p>
+                    <p class="text-sm text-gray-300 mb-2">Telefon: <span id="footer-tel">04 988 6200</span></p>
+                    <p class="text-sm text-gray-300 mb-2">Faks: <span id="footer-faks">04 988 6300</span></p>
+                    <p class="text-sm text-gray-300">E-mel: <span id="footer-emel">info[at]ptss.edu.my</span></p>
+                </div>
+                <div>
+                    <h3 class="text-pink-500 font-bold text-lg mb-6">Pautan Umum</h3>
+                    <ul class="space-y-3 text-sm text-gray-300">
+                        <li><a href="#" class="hover:text-white">Takwim Aktiviti Tahunan PTSS</a></li>
+                        <li><a href="#" class="hover:text-white">Pelan Tindakan PTSS</a></li>
+                        <li><a href="#" class="hover:text-white">Media Creative Centre (MCC)</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-pink-500 font-bold text-lg mb-6">Penafian</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed mb-4">PTSS tidak bertanggungjawab terhadap sebarang kehilangan atau kerosakan yang dialami kerana menggunakan maklumat dari portal ini.</p>
+                    <div class="text-sm text-pink-400 space-x-2">
+                        <a href="#" class="hover:underline">Dasar Privasi</a> <span>•</span>
+                        <a href="#" class="hover:underline">Dasar Keselamatan</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center pt-8 border-t border-purple-900/50">
+                <div class="flex justify-center space-x-4 mb-6">
+                    <a href="#" class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center hover:-translate-y-1 transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center hover:-translate-y-1 transition"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gradient-to-tr from-yellow-400 to-purple-600 flex items-center justify-center hover:-translate-y-1 transition"><i class="fab fa-instagram"></i></a>
+                </div>
+                <p id="footer-copyright" class="text-sm text-gray-400 font-semibold mb-1">Hak Cipta Terpelihara © Politeknik Tuanku Syed Sirajuddin, Perlis (PTSS)</p>
+                <p class="text-xs text-gray-500">Sebarang pertanyaan berhubung laman sesawang ini, sila emelkan kepada webmaster[at]ptss.edu.my</p>
+            </div>
+        </footer>
     </div>
 
+
+    <!-- MODAL LOG MASUK -->
+    <div id="login-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden flex justify-center items-center">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-sm w-full relative">
+            <button onclick="document.getElementById('login-modal').classList.add('hidden')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xl"></i></button>
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-3xl"><i class="fas fa-shield-alt"></i></div>
+                <h3 class="text-2xl font-bold text-gray-800">Log Masuk</h3>
+                <p class="text-sm text-gray-500 mt-1">Sistem Pengurusan JHEP</p>
+            </div>
+            <div class="space-y-3">
+                <button onclick="handleLogin('admin')" class="w-full bg-gray-50 border border-gray-200 hover:border-pink-500 hover:bg-pink-50 p-4 rounded-xl flex items-center transition group">
+                    <i class="fas fa-user-cog text-gray-400 group-hover:text-pink-600 text-xl w-8"></i>
+                    <div class="text-left"><p class="font-bold text-gray-700 group-hover:text-pink-700">Pentadbir (Admin)</p><p class="text-xs text-gray-500">Akses penuh sistem</p></div>
+                </button>
+                <button onclick="handleLogin('staf')" class="w-full bg-gray-50 border border-gray-200 hover:border-pink-500 hover:bg-pink-50 p-4 rounded-xl flex items-center transition group">
+                    <i class="fas fa-user-tie text-gray-400 group-hover:text-pink-600 text-xl w-8"></i>
+                    <div class="text-left"><p class="font-bold text-gray-700 group-hover:text-pink-700">Kakitangan</p><p class="text-xs text-gray-500">Urus data pelajar</p></div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- PAPAN PEMUKA ADMIN (CMS) -->
+    <div id="admin-view" class="hidden min-h-screen bg-gray-100 flex">
+        
+        <!-- SIDEBAR -->
+        <aside class="w-64 bg-[#1a103c] text-white flex flex-col shadow-xl z-10 sticky top-0 h-screen">
+            <div class="p-6 border-b border-white/10 flex items-center">
+                <div class="w-8 h-8 bg-pink-600 rounded flex items-center justify-center font-bold mr-3">J</div>
+                <span class="font-bold tracking-wider">JHEP ADMIN</span>
+            </div>
+            <div class="p-4 flex-1">
+                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-4 px-2">Menu Utama</p>
+                <ul class="space-y-2">
+                    <li><a href="#" class="flex items-center px-4 py-3 bg-white/10 text-white rounded-lg"><i class="fas fa-edit w-6"></i> Urus Kandungan Web</a></li>
+                </ul>
+            </div>
+            <div class="p-4 border-t border-white/10">
+                <div class="flex items-center mb-4 px-2">
+                    <div class="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center mr-3"><i class="fas fa-user"></i></div>
+                    <div><p class="text-sm font-bold">Pentadbir</p><p class="text-xs text-pink-400">Super Admin</p></div>
+                </div>
+                <button onclick="handleLogout()" class="w-full py-2 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500 hover:text-white transition text-sm font-semibold flex items-center justify-center">
+                    <i class="fas fa-sign-out-alt mr-2"></i> Log Keluar
+                </button>
+            </div>
+        </aside>
+
+        <!-- KANDUNGAN CMS -->
+        <main class="flex-1 overflow-y-auto">
+            <div class="bg-white shadow-sm px-8 py-5 flex justify-between items-center sticky top-0 z-20">
+                <h1 class="text-xl font-bold text-gray-800">Urus Kandungan Web (CMS)</h1>
+                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span> G-Sheets Disambung</span>
+            </div>
+
+            <div class="p-8 max-w-5xl mx-auto">
+                <form id="cms-form" onsubmit="handleCmsSubmit(event)" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-8 space-y-12">
+
+                        <!-- 1. Logo Navbar -->
+                        <div>
+                            <h3 class="text-lg font-bold text-[#2b1b54] mb-4 border-b pb-2">1. Logo Bar Navigasi</h3>
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Muat Naik Logo Portal</label>
+                                <input type="file" id="cms-logo-img" accept="image/*" class="w-full p-2 border rounded bg-white text-sm">
+                                <p class="text-xs text-gray-500 mt-2">Logo ini akan dipaparkan di penjuru kiri atas laman web. Sila guna format lutsinar (PNG) untuk hasil terbaik.</p>
+                            </div>
+                        </div>
+
+                        <!-- 2. Hero Section -->
+                        <div>
+                            <h3 class="text-lg font-bold text-[#2b1b54] mb-4 border-b pb-2">2. Bahagian Utama (Hero)</h3>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Tajuk Utama</label>
+                            <input type="text" id="cms-hero-title" class="w-full p-3 border rounded-lg mb-4 text-sm font-medium focus:ring-2 focus:ring-pink-500 focus:border-pink-500" required>
+                            
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Penerangan Sub-Tajuk</label>
+                            <textarea id="cms-hero-sub" rows="2" class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-pink-500 focus:border-pink-500"></textarea>
+                        </div>
+
+                        <!-- 3. Pengenalan -->
+                        <div>
+                            <h3 class="text-lg font-bold text-[#2b1b54] mb-4 border-b pb-2">3. Bahagian Pengenalan</h3>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Penerangan Ringkas (Description)</label>
+                            <input type="text" id="cms-intro-desc" class="w-full p-3 border rounded-lg mb-4 text-sm font-medium text-pink-600 focus:ring-2 focus:ring-pink-500">
+
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Perenggan 1</label>
+                            <textarea id="cms-intro-p1" rows="3" class="w-full p-3 border rounded-lg mb-4 text-sm focus:ring-2 focus:ring-pink-500"></textarea>
+                            
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Perenggan 2</label>
+                            <textarea id="cms-intro-p2" rows="3" class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-pink-500"></textarea>
+                        </div>
+
+                        <!-- 4. Carta Organisasi (Imej) -->
+                        <div>
+                            <h3 class="text-lg font-bold text-[#2b1b54] mb-4 border-b pb-2">4. Carta Organisasi</h3>
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Muat Naik Imej Carta</label>
+                                <input type="file" id="cms-carta-img" accept="image/*" class="w-full p-2 border rounded bg-white text-sm">
+                            </div>
+                        </div>
+
+                        <!-- 5. Kakitangan (Jadual Dinamik) -->
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-2 mb-4">
+                                <h3 class="text-lg font-bold text-[#2b1b54]">5. Maklumat Kakitangan</h3>
+                                <button type="button" onclick="addRow('table-kakitangan')" class="text-xs bg-gray-800 text-white px-3 py-1.5 rounded hover:bg-gray-700"><i class="fas fa-plus"></i> Tambah Staf</button>
+                            </div>
+                            <div class="border rounded-xl overflow-hidden">
+                                <table class="w-full text-sm text-left">
+                                    <thead class="bg-gray-100 font-bold text-gray-700">
+                                        <tr>
+                                            <th class="p-3">Nama</th>
+                                            <th class="p-3">Jawatan</th>
+                                            <th class="p-3 w-32">Telefon</th>
+                                            <th class="p-3 w-40">Emel</th>
+                                            <th class="p-3 w-16 text-center">Tindakan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-kakitangan" class="divide-y">
+                                        <!-- Rows dijana -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 6. Statistik Jabatan (Jadual Dinamik) -->
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-2 mb-4">
+                                <h3 class="text-lg font-bold text-[#2b1b54]">6. Statistik Taburan Jabatan</h3>
+                                <button type="button" onclick="addRow('table-jabatan')" class="text-xs bg-gray-800 text-white px-3 py-1.5 rounded hover:bg-gray-700"><i class="fas fa-plus"></i> Tambah Jabatan</button>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-3">*Peratusan dan Jumlah Keseluruhan akan dikira secara automatik di muka hadapan.</p>
+                            <div class="border rounded-xl overflow-hidden overflow-x-auto">
+                                <table class="w-full text-sm text-left min-w-[800px]">
+                                    <thead class="bg-gray-100 font-bold text-gray-700">
+                                        <tr>
+                                            <th class="p-3 w-24">Singkatan</th>
+                                            <th class="p-3">Nama Jabatan</th>
+                                            <th class="p-3">Ketua Jabatan</th>
+                                            <th class="p-3 w-20">J. Pelajar</th>
+                                            <th class="p-3 w-16">Lelaki</th>
+                                            <th class="p-3 w-16">Perempuan</th>
+                                            <th class="p-3 w-20">Tema Warna</th>
+                                            <th class="p-3 w-16 text-center">Tindakan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-jabatan" class="divide-y">
+                                        <!-- Rows dijana -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 7. Komuniti & Google Drive -->
+                        <div>
+                            <h3 class="text-lg font-bold text-[#2b1b54] mb-4 border-b pb-2">7. Komuniti, Kelab & Google Drive</h3>
+                            
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Penerangan Komuniti</label>
+                            <textarea id="cms-komuniti-desc" rows="2" class="w-full p-3 border rounded-lg mb-4 text-sm"></textarea>
+                            
+                            <div class="flex justify-between items-center border-b pb-2 mb-3 mt-4">
+                                <label class="block text-sm font-semibold text-gray-700">Senarai Kelab Pelajar</label>
+                                <button type="button" onclick="addRow('table-kelab')" class="text-xs bg-gray-800 text-white px-3 py-1 rounded"><i class="fas fa-plus"></i> Tambah</button>
+                            </div>
+                            <div class="border rounded-xl overflow-hidden mb-6">
+                                <table class="w-full text-sm text-left"><tbody id="table-kelab" class="divide-y"></tbody></table>
+                            </div>
+
+                            <div class="grid md:grid-cols-2 gap-6 bg-gray-50 p-6 rounded-xl border border-gray-200">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2"><i class="fab fa-google-drive text-blue-600"></i> Pautan Google Drive (URL)</label>
+                                    <input type="text" id="cms-drive-link" class="w-full p-2 border rounded bg-white text-sm" placeholder="https://drive.google.com/...">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-2"><i class="fas fa-qrcode text-gray-600"></i> Muat Naik Kod QR</label>
+                                    <input type="file" id="cms-qr-img" accept="image/*" class="w-full p-2 border rounded bg-white text-sm">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8. Perkhidmatan Kami -->
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-2 mb-4">
+                                <h3 class="text-lg font-bold text-[#2b1b54]">8. Senarai Perkhidmatan</h3>
+                                <button type="button" onclick="addRow('table-perkhidmatan')" class="text-xs bg-gray-800 text-white px-3 py-1 rounded"><i class="fas fa-plus"></i> Tambah</button>
+                            </div>
+                            <div class="border rounded-xl overflow-hidden">
+                                <table class="w-full text-sm text-left"><tbody id="table-perkhidmatan" class="divide-y"></tbody></table>
+                            </div>
+                        </div>
+
+                        <!-- 9. Soalan Lazim (FAQ) -->
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-2 mb-4">
+                                <h3 class="text-lg font-bold text-[#2b1b54]">9. Soalan Lazim (FAQ)</h3>
+                                <button type="button" onclick="addRow('table-faq')" class="text-xs bg-gray-800 text-white px-3 py-1 rounded"><i class="fas fa-plus"></i> Tambah FAQ</button>
+                            </div>
+                            <div class="border rounded-xl overflow-hidden">
+                                <table class="w-full text-sm text-left">
+                                    <thead class="bg-gray-100 font-bold text-gray-700">
+                                        <tr><th class="p-3 w-1/3">Soalan</th><th class="p-3">Jawapan</th><th class="p-3 w-16 text-center">Tindakan</th></tr>
+                                    </thead>
+                                    <tbody id="table-faq" class="divide-y"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 10. Footer & Hak Cipta -->
+                        <div>
+                            <h3 class="text-lg font-bold text-[#2b1b54] mb-4 border-b pb-2">10. Maklumat Footer & Hak Cipta</h3>
+                            <div class="grid md:grid-cols-3 gap-4 mb-4">
+                                <div><label class="block text-xs font-semibold text-gray-600 mb-1">Telefon</label><input type="text" id="cms-footer-tel" class="w-full p-2 border rounded text-sm"></div>
+                                <div><label class="block text-xs font-semibold text-gray-600 mb-1">Faks</label><input type="text" id="cms-footer-faks" class="w-full p-2 border rounded text-sm"></div>
+                                <div><label class="block text-xs font-semibold text-gray-600 mb-1">E-mel</label><input type="text" id="cms-footer-emel" class="w-full p-2 border rounded text-sm"></div>
+                            </div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-1">Teks Hak Cipta (Copyright)</label>
+                            <input type="text" id="cms-footer-copyright" class="w-full p-3 border rounded-lg text-sm text-gray-600">
+                        </div>
+
+                    </div>
+
+                    <!-- BUTANG KEMASKINI (STICKY BAWAH) -->
+                    <div class="sticky bottom-0 bg-white border-t border-gray-200 p-6 flex justify-end gap-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] z-20">
+                        <button type="button" onclick="handleLogout()" class="px-6 py-3 rounded-lg font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Batal</button>
+                        <button type="submit" class="px-8 py-3 rounded-lg font-bold text-white bg-pink-600 hover:bg-pink-700 shadow-lg shadow-pink-200 transition flex items-center">
+                            <i class="fas fa-save mr-2"></i> Kemaskini & Terbitkan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-xl transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center">
+        <i class="fas fa-check-circle text-green-400 mr-3 text-lg"></i>
+        <span id="toast-msg" class="font-medium">Berjaya!</span>
+    </div>
+
+
     <!-- ========================================== -->
-    <!-- JAVASCRIPT LOGIC                           -->
+    <!-- LOGIK JAVASCRIPT & DATABASE                -->
     <!-- ========================================== -->
     <script>
-        // PASTIKAN ANDA MASUKKAN GOOGLE APPS SCRIPT WEB APP URL ANDA DI SINI
-        const DATABASE_URL = "https://script.google.com/macros/s/AKfycbyPwp5pJUJ9dSXXpe6h1ewVtMChIWztuU1C0KKABcaGKj9PJ_IJYswnuH_rZ8-rpUH9/exec"; 
+        // 1. MASUKKAN URL GOOGLE APPS SCRIPT ANDA DI SINI
+        const DATABASE_URL = "https://script.google.com/macros/s/AKfycbyPwp5pJUJ9dSXXpe6h1ewVtMChIWztuU1C0KKABcaGKj9PJ_IJYswnuH_rZ8-rpUH9/exec";
 
-        // Initial/Fallback Data
+        // 2. DATA PERMULAAN (Jika Sheet Kosong/Gagal load)
         let appData = {
-            heroSlides: [
-                { tag: "Urusan Lebih Mudah", title: "Kurangkan langkah. Lebihkan peluang.", desc: "Cari dokumen, rekodkan aktiviti dan urus permohonan melalui portal JHEP secara berpusat." },
-                { tag: "Digitalisasi PTSS", title: "Satu Portal Untuk Semua.", desc: "Akses pantas ke sistem asrama, rekod disiplin dan profil pelajar." }
+            hero: { title: "Kurangkan langkah. Lebihkan peluang.", sub: "Cari dokumen, rekodkan aktiviti dan urus permohonan melalui portal JHEP secara berpusat." },
+            intro: { desc: "Memperkasakan potensi graduan melalui perkhidmatan holistik.", p1: "Jabatan Hal Ehwal Pelajar (JHEP) bertanggungjawab menguruskan kebajikan, kemudahan, disiplin dan pembangunan peribadi pelajar di Politeknik Tuanku Syed Sirajuddin (PTSS).", p2: "Matlamat kami adalah untuk melahirkan graduan yang bukan sahaja cemerlang dalam akademik, tetapi juga mempunyai sahsiah diri yang tinggi dan bersedia menghadapi cabaran industri." },
+            departments: [
+                { acronym: "JTMK", name: "Jabatan Teknologi Maklumat & Komunikasi", ketua: "Ts. Noor Hidayah", jumlah: 1515, lelaki: 900, perempuan: 615, theme: "blue" },
+                { acronym: "JKE", name: "Jabatan Kejuruteraan Elektrik", ketua: "Ir. Zulkifli", jumlah: 1200, lelaki: 800, perempuan: 400, theme: "purple" }
             ],
-            introB1: { 
-                title: "Bahagian Pengambilan Pelajar dan Data", 
-                desc: "Mengurus urusan pengajian dan memastikan data pelajar sentiasa tersusun.",
-                list: "Pendaftaran Pelajar Baru dan Lapor Diri Pelajar Senior\nPermohonan Kad Pelajar\nPertukaran Kursus\nPenangguhan Semester"
-            },
-            introB2: {
-                title: "Bahagian Kebajikan dan Disiplin",
-                desc: "Membantu kebajikan, pembangunan sahsiah dan pengurusan disiplin pelajar.",
-                list: "Menguruskan Bantuan Kewangan | Tajaan pendidikan, pinjaman dan zakat.\nPengurusan Disiplin Pelajar | Memastikan peraturan am institusi dipatuhi."
-            },
-            stats: { 
-                cgpa: "3.65", 
-                pass: "98.6%", 
-                departments: [
-                    { acronym: "JTMK", name: "Jabatan Teknologi Maklumat & Komunikasi", ketua: "Ts. Noor Hidayah", jumlah: 1515, lelaki: 900, perempuan: 615, hpnm: "3.78", theme: "blue" },
-                    { acronym: "JKE", name: "Jabatan Kejuruteraan Elektrik", ketua: "Ir. Zulkifli bin Ismail", jumlah: 2499, lelaki: 1500, perempuan: 999, hpnm: "3.55", theme: "purple" }
-                ]
-            },
-            orgImage: "",
             staff: [
-                {"nama": "Nasrul Effendy bin Mat Nasir", "jawatan": "Ketua Jabatan", "tel": "6202", "emel": "nasrul.effendy"},
-                {"nama": "Syazwani binti Sobri", "jawatan": "Pegawai Pengambilan", "tel": "6204", "emel": "syazwani"}
+                { nama: "Nasrul Effendy bin Mat Nasir", jawatan: "Ketua Jabatan", tel: "6202", emel: "nasrul.effendy" },
+                { nama: "Syazwani binti Sobri", jawatan: "Pegawai Pengambilan", tel: "6204", emel: "syazwani" }
             ],
-            komunitiDesc: "Sertai kelab dan persatuan untuk memperkayakan pengalaman kehidupan kampus anda di PTSS.",
-            komuniti: "Majlis Perwakilan Pelajar (MPP) | https://example.com\nKelab Sukan & Rekreasi | ",
-            faq: "Bagaimana cara memohon asrama? | Melalui Papan Pemuka Pelajar pada awal semester.\nDi manakah borang insurans? | Boleh dimuat turun dari ruangan Google Drive.",
-            footer: { tel: "04 988 6200", faks: "04 988 6300", emel: "info@ptss.edu.my" }
+            komuniti: { desc: "Sertai kelab dan persatuan untuk memperkayakan pengalaman kehidupan kampus anda di PTSS.", driveLink: "https://drive.google.com/drive/folders/1pHjWF-WYlZolWwqpP0STOeSYAen4IEkw" },
+            kelab: ["Majlis Perwakilan Pelajar (MPP)", "Kelab Rakan Siswa YADIM", "Kelab Sukan & Rekreasi"],
+            perkhidmatan: ["Pengurusan Asrama dan Penginapan Pelajar", "Bantuan Kewangan & Biasiswa", "Perkhidmatan Kaunseling dan Kerjaya"],
+            faq: [
+                { q: "Bagaimana cara memohon asrama?", a: "Permohonan boleh dibuat pada awal setiap semester melalui portal SPMP." },
+                { q: "Di manakah saya boleh dapatkan borang tuntutan insurans?", a: "Borang boleh dimuat turun melalui butang Google Drive di bahagian Komuniti." }
+            ],
+            footer: { tel: "04 988 6200", faks: "04 988 6300", emel: "info[at]ptss.edu.my", copyright: "Hak Cipta Terpelihara © Politeknik Tuanku Syed Sirajuddin, Perlis (PTSS)" }
         };
 
-        let carouselInterval;
-        let currentSlide = 0;
+        // IMAGE STATE
+        let savedOrgChartImg = null;
+        let savedLogoImg = null;
+        let savedQrImg = null;
 
-        const colorThemes = {
-            blue: { bg: 'bg-blue-500', text: 'text-blue-600', badge: 'bg-blue-50 text-blue-600' },
-            purple: { bg: 'bg-purple-500', text: 'text-purple-600', badge: 'bg-purple-50 text-purple-600' },
-            pink: { bg: 'bg-pink-500', text: 'text-pink-600', badge: 'bg-pink-50 text-pink-600' },
-            emerald: { bg: 'bg-emerald-500', text: 'text-emerald-600', badge: 'bg-emerald-50 text-emerald-600' },
-            orange: { bg: 'bg-orange-500', text: 'text-orange-600', badge: 'bg-orange-50 text-orange-600' }
+        // BACA DATA DARI DATABASE APABILA WEB DIBUKA
+        window.onload = async () => {
+            try {
+                if(DATABASE_URL) {
+                    const response = await fetch(DATABASE_URL);
+                    const dbData = await response.json();
+                    if(Object.keys(dbData).length > 0) appData = dbData;
+                }
+            } catch(e) { console.log("Guna data default. (Tidak dapat sambung ke G-Sheets)"); }
+            renderFrontend();
         };
 
-        // --- Fetch & Save Data ---
-        async function loadData() {
-            if (!DATABASE_URL) return;
-            try {
-                document.getElementById('sync-status').classList.remove('hidden');
-                const response = await fetch(DATABASE_URL);
-                const data = await response.json();
-                if(data && Object.keys(data).length > 0) appData = { ...appData, ...data };
-            } catch (error) {
-                console.error("Gagal muat turun:", error);
-                showToast("Berjalan dalam mod offline.", "error");
-            } finally {
-                document.getElementById('sync-status').classList.add('hidden');
-                renderPublicUI(); 
-            }
-        }
-
-        async function saveData() {
-            if (!DATABASE_URL) { showToast("Perubahan hanya disimpan sementara di skrin ini (Tiada URL DB)."); return; }
-            try {
-                showToast("Menyimpan data...");
-                const response = await fetch(DATABASE_URL, { method: "POST", body: JSON.stringify(appData) });
-                const result = await response.json();
-                if(result.status === "success") showToast("Data berjaya disimpan!");
-            } catch (error) { showToast("Ralat menyimpan data.", "error"); }
-        }
-
-        // --- Render Public UI ---
-        function renderPublicUI() {
+        // RENDER MUKA HADAPAN (FRONTEND)
+        function renderFrontend() {
             // Hero
-            document.getElementById('carousel-track').innerHTML = appData.heroSlides.map(slide => `
-                <div class="w-full flex-shrink-0 flex items-center p-10 md:p-20 text-white relative z-10">
-                    <div class="max-w-3xl">
-                        <span class="inline-block border border-white/30 rounded-full px-4 py-1 text-xs font-semibold tracking-wider bg-white/10 backdrop-blur-sm mb-6 uppercase">${slide.tag}</span>
-                        <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">${slide.title}</h1>
-                        <p class="text-lg text-gray-200 mb-8 max-w-lg">${slide.desc}</p>
-                    </div>
-                </div>
-            `).join('');
-            document.getElementById('carousel-dots').innerHTML = appData.heroSlides.map((_, i) => `<button onclick="goToSlide(${i})" class="carousel-dot transition-all ${i===0?'w-8 bg-white':'w-2.5 bg-white/50'} h-2.5 rounded-full"></button>`).join('');
-            initCarousel(appData.heroSlides.length);
+            document.getElementById('hero-title').innerHTML = appData.hero.title;
+            document.getElementById('hero-sub').innerText = appData.hero.sub;
 
-            // Intro
-            document.getElementById('public-b1-title').innerText = appData.introB1.title;
-            document.getElementById('public-b1-desc').innerText = appData.introB1.desc;
-            document.getElementById('public-b1-list').innerHTML = (appData.introB1.list || "").split('\n').filter(i=>i.trim()).map((item, idx) => 
-                `<li class="flex text-gray-700 mb-3 border-b border-gray-100 pb-2"><span class="text-xs font-mono text-pink-500 mr-3 mt-0.5">0${idx+1}</span> ${item}</li>`
-            ).join('');
+            // Pengenalan
+            if(document.getElementById('intro-desc')) document.getElementById('intro-desc').innerText = appData.intro.desc;
+            document.getElementById('intro-p1').innerText = appData.intro.p1;
+            document.getElementById('intro-p2').innerText = appData.intro.p2;
 
-            document.getElementById('public-b2-title').innerText = appData.introB2.title;
-            document.getElementById('public-b2-desc').innerText = appData.introB2.desc;
-            document.getElementById('public-b2-accordion').innerHTML = (appData.introB2.list || "").split('\n').filter(i=>i.trim()).map((item, idx) => {
-                let [t, c] = item.split('|');
-                return `<details class="group bg-white rounded-lg border border-gray-100 mb-2 p-4 cursor-pointer shadow-sm"><summary class="font-bold text-[#2a1458] flex justify-between outline-none"><span class="flex"><span class="text-xs font-mono text-gray-400 mr-3 mt-0.5">0${idx+1}</span> ${t?t.trim():''}</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition"></i></summary><p class="mt-3 text-sm text-gray-600 pl-7 leading-relaxed">${c?c.trim():''}</p></details>`;
-            }).join('');
-
-            // Stats
-            let grandTotal = 0, totalMale = 0, totalFemale = 0;
-            const depts = appData.stats.departments || [];
-            depts.forEach(d => { grandTotal += (parseInt(d.jumlah)||0); totalMale += (parseInt(d.lelaki)||0); totalFemale += (parseInt(d.perempuan)||0); });
-
-            document.getElementById('stat-total').innerText = grandTotal.toLocaleString();
-            document.getElementById('stat-cgpa').innerText = appData.stats.cgpa;
-            document.getElementById('stat-pass').innerText = appData.stats.pass;
+            // Statistik Taburan (Kiraan Automatik)
+            let grandTotal = 0;
+            let deptHTML = '';
             
-            let mPct = grandTotal > 0 ? Math.round((totalMale/grandTotal)*100) : 0;
-            document.getElementById('stat-male').innerText = totalMale.toLocaleString();
-            document.getElementById('stat-female').innerText = totalFemale.toLocaleString();
-            document.getElementById('stat-male-pct').innerText = mPct;
-            document.getElementById('stat-female-pct').innerText = (100 - mPct);
-            document.getElementById('stat-bar-male').style.width = `${mPct}%`;
+            // Kira Grand Total dahulu
+            appData.departments.forEach(dept => { grandTotal += parseInt(dept.jumlah) || 0; });
+            document.getElementById('grand-total-display').innerText = grandTotal.toLocaleString();
 
-            document.getElementById('dept-count-badge').innerText = `${depts.length} Jabatan Berdaftar`;
-            document.getElementById('dept-grid').innerHTML = depts.map(d => {
-                const theme = colorThemes[d.theme] || colorThemes.blue;
-                const deptPct = grandTotal > 0 ? Math.round(((parseInt(d.jumlah)||0) / grandTotal) * 100) : 0;
-                return `
-                <div class="bg-white rounded-2xl p-5 border shadow-sm relative hover:shadow-md transition">
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="border border-gray-200 text-gray-700 px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">${d.acronym}</span>
-                        <span class="${theme.badge} px-3 py-1 rounded-full text-sm font-bold shadow-sm">${deptPct}%</span>
+            appData.departments.forEach(dept => {
+                const j = parseInt(dept.jumlah) || 0;
+                const pct = grandTotal > 0 ? Math.round((j / grandTotal) * 100) : 0;
+                let colorClass = "bg-blue-500 text-blue-800 bg-blue-100";
+                if(dept.theme === 'purple') colorClass = "bg-purple-500 text-purple-800 bg-purple-100";
+                if(dept.theme === 'pink') colorClass = "bg-pink-500 text-pink-800 bg-pink-100";
+                if(dept.theme === 'green') colorClass = "bg-emerald-500 text-emerald-800 bg-emerald-100";
+                if(dept.theme === 'orange') colorClass = "bg-orange-500 text-orange-800 bg-orange-100";
+                
+                const classes = colorClass.split(" ");
+                const bgSolid = classes[0]; const textCol = classes[1]; const bgLight = classes[2];
+
+                deptHTML += `
+                <div class="border rounded-2xl p-5 hover:shadow-lg transition bg-white relative overflow-hidden group">
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="${bgLight} ${textCol} font-bold px-3 py-1 rounded-md text-xs">${dept.acronym}</span>
+                        <span class="${bgSolid} text-white font-bold px-3 py-1 rounded-full text-xs shadow-sm">${pct}%</span>
                     </div>
-                    <h4 class="font-bold text-gray-900 leading-tight mb-1">${d.name}</h4>
-                    <p class="text-xs text-gray-400 mb-6">Ketua: ${d.ketua}</p>
-                    <div class="space-y-2 mb-4 text-sm">
-                        <div class="flex justify-between"><span class="text-gray-500">Jumlah:</span> <span class="font-semibold">${parseInt(d.jumlah||0).toLocaleString()}</span></div>
-                        <div class="flex justify-between"><span class="text-gray-500">Lelaki / Perempuan:</span> <span class="font-semibold">${d.lelaki} / ${d.perempuan}</span></div>
-                        <div class="flex justify-between"><span class="text-gray-500">Purata HPNM:</span> <span class="font-bold ${theme.text}">${d.hpnm}</span></div>
-                    </div>
-                    <div class="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden"><div class="${theme.bg} h-1.5 rounded-full" style="width: ${deptPct}%"></div></div>
+                    <h3 class="font-bold text-gray-800 leading-tight mb-1">${dept.name}</h3>
+                    <p class="text-[10px] text-gray-500 uppercase mb-4">Ketua: ${dept.ketua}</p>
+                    <div class="flex justify-between text-sm mb-1 text-gray-600"><span class="font-semibold">Jumlah Pelajar:</span> <span>${j.toLocaleString()} Orang</span></div>
+                    <div class="flex justify-between text-sm mb-3 text-gray-600"><span class="font-semibold">Lelaki / Perempuan:</span> <span>${dept.lelaki} L / ${dept.perempuan} P</span></div>
+                    <div class="w-full bg-gray-100 rounded-full h-1.5"><div class="${bgSolid} h-1.5 rounded-full" style="width: ${pct}%"></div></div>
                 </div>`;
-            }).join('');
+            });
+            document.getElementById('jabatan-grid').innerHTML = deptHTML;
 
-            // Staff
-            if(appData.orgImage) document.getElementById('org-chart-container').innerHTML = `<img src="${appData.orgImage}" class="w-full max-w-4xl mx-auto rounded shadow-sm border" alt="Carta Organisasi">`;
-            document.getElementById('public-staff-body').innerHTML = (appData.staff || []).map((s, i) => `
-                <tr class="border-b hover:bg-gray-50"><td class="p-3 text-center text-gray-500">${i + 1}</td><td class="p-3 font-medium">${s.nama}</td><td class="p-3 text-gray-600">${s.jawatan}</td><td class="p-3 text-center">${s.tel}</td><td class="p-3">${s.emel}</td></tr>
-            `).join('');
+            // Imej
+            if(appData.images) {
+                if(appData.images.orgChart) {
+                    document.getElementById('org-chart-container').innerHTML = `<img src="${appData.images.orgChart}" class="w-full h-auto rounded shadow" alt="Carta Organisasi">`;
+                    savedOrgChartImg = appData.images.orgChart;
+                }
+                if(appData.images.logo) {
+                    document.getElementById('nav-logo').src = appData.images.logo;
+                    savedLogoImg = appData.images.logo;
+                }
+                if(appData.images.qrCode && document.getElementById('komuniti-qr-img')) {
+                    document.getElementById('komuniti-qr-img').src = appData.images.qrCode;
+                    savedQrImg = appData.images.qrCode;
+                }
+            }
 
-            // Community & FAQ
-            document.getElementById('public-komuniti-desc').innerText = appData.komunitiDesc || "";
-            document.getElementById('public-komuniti-grid').innerHTML = (appData.komuniti || "").split('\n').filter(i=>i.trim()).map(item => {
-                let [name, url] = item.split('|'); name = name?name.trim():''; url = url?url.trim():'';
-                return url ? `<a href="${url}" target="_blank" class="p-4 border rounded-xl hover:shadow bg-white text-blue-600 font-medium flex justify-between group">${name} <i class="fas fa-external-link-alt text-gray-300"></i></a>` : `<div class="p-4 border rounded-xl bg-white text-gray-700">${name}</div>`;
-            }).join('');
-            document.getElementById('public-faq-container').innerHTML = (appData.faq || "").split('\n').filter(i=>i.trim()).map(item => {
-                let [q, a] = item.split('|');
-                return `<details class="group border-b border-gray-200 pb-4"><summary class="font-bold text-gray-800 cursor-pointer outline-none flex justify-between pt-4 hover:text-pink-600">${q?q.trim():''} <i class="fas fa-plus text-pink-500 group-open:rotate-45 transition"></i></summary><p class="mt-3 text-gray-600 text-sm pl-2">${a?a.trim():''}</p></details>`;
-            }).join('');
+            // Kakitangan
+            let staffHTML = '';
+            appData.staff.forEach((s, i) => {
+                staffHTML += `<tr class="hover:bg-gray-50"><td class="p-4 text-center">${i+1}</td><td class="p-4 font-medium text-gray-800">${s.nama}</td><td class="p-4 text-gray-600">${s.jawatan}</td><td class="p-4 text-center">${s.tel}</td><td class="p-4 text-center">${s.emel}</td></tr>`;
+            });
+            document.getElementById('staff-table-body').innerHTML = staffHTML;
+
+            // Komuniti & Pautan
+            document.getElementById('komuniti-desc').innerText = appData.komuniti.desc;
+            if(document.getElementById('komuniti-gdrive-btn')) {
+                document.getElementById('komuniti-gdrive-btn').href = appData.komuniti.driveLink || "#";
+            }
+            let kelabHTML = '';
+            appData.kelab.forEach(k => {
+                kelabHTML += `<div class="p-4 border rounded-xl shadow-sm bg-gray-50 font-medium text-gray-700 hover:border-pink-300 transition">${k}</div>`;
+            });
+            document.getElementById('komuniti-grid').innerHTML = kelabHTML;
+
+            let servisHTML = '';
+            appData.perkhidmatan.forEach(s => {
+                servisHTML += `<li class="flex items-center text-gray-700 bg-white p-3 rounded-xl shadow-sm border border-gray-100"><span class="w-2 h-2 rounded-full bg-pink-500 mr-3"></span>${s}</li>`;
+            });
+            document.getElementById('perkhidmatan-list').innerHTML = servisHTML;
+
+            // FAQ
+            let faqHTML = '';
+            appData.faq.forEach(f => {
+                faqHTML += `
+                <div class="border border-gray-200 rounded-xl overflow-hidden mb-3">
+                    <button class="w-full text-left p-4 bg-gray-50 hover:bg-gray-100 font-bold text-[#2b1b54] flex justify-between focus:outline-none" onclick="this.nextElementSibling.classList.toggle('hidden')">
+                        ${f.q} <i class="fas fa-chevron-down text-gray-400"></i>
+                    </button>
+                    <div class="p-4 bg-white text-gray-600 hidden border-t border-gray-100">${f.a}</div>
+                </div>`;
+            });
+            document.getElementById('faq-container').innerHTML = faqHTML;
 
             // Footer
             document.getElementById('footer-tel').innerText = appData.footer.tel;
             document.getElementById('footer-faks').innerText = appData.footer.faks;
             document.getElementById('footer-emel').innerText = appData.footer.emel;
+            if(document.getElementById('footer-copyright')) document.getElementById('footer-copyright').innerText = appData.footer.copyright;
         }
 
-        // --- Carousel Script ---
-        function initCarousel(total) {
-            clearInterval(carouselInterval);
-            currentSlide = 0;
-            if(total > 1) { carouselInterval = setInterval(() => { goToSlide((currentSlide + 1) % total); }, 5000); }
-        }
-        function goToSlide(index) {
-            currentSlide = index;
-            document.getElementById('carousel-track').style.transform = `translateX(-${index * (100 / appData.heroSlides.length)}%)`;
-            document.querySelectorAll('.carousel-dot').forEach((dot, i) => { dot.className = `carousel-dot transition-all h-2.5 rounded-full ${i===index?'w-8 bg-white':'w-2.5 bg-white/50'}`; });
-            clearInterval(carouselInterval);
-            carouselInterval = setInterval(() => { goToSlide((currentSlide + 1) % appData.heroSlides.length); }, 5000);
-        }
-
-        // ==========================================
-        // ADMIN DYNAMIC TABLE FUNCTIONS
-        // ==========================================
-        
-        // Remove Row Helper
-        function removeRow(btn) { btn.closest('tr').remove(); }
-
-        // Add Row: Hero
-        function addHeroRow(tag='', title='', desc='') {
+        // FUNGSI JADUAL DINAMIK CMS
+        function addRow(tableId, data = null) {
+            const tbody = document.getElementById(tableId);
             const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="p-1 border"><input type="text" class="h-tag w-full p-2 border rounded text-sm focus:ring-1 focus:ring-pink-500" value="${tag}"></td>
-                <td class="p-1 border"><input type="text" class="h-title w-full p-2 border rounded text-sm focus:ring-1 focus:ring-pink-500" value="${title}"></td>
-                <td class="p-1 border"><input type="text" class="h-desc w-full p-2 border rounded text-sm focus:ring-1 focus:ring-pink-500" value="${desc}"></td>
-                <td class="p-1 border text-center"><button type="button" onclick="removeRow(this)" class="text-red-500 hover:text-red-700 bg-red-50 px-3 py-1 rounded"><i class="fas fa-trash"></i></button></td>
-            `;
-            document.getElementById('cms-hero-tbody').appendChild(tr);
-        }
-
-        // Add Row: Department
-        function addDeptRow(acronym='', name='', ketua='', jumlah='', lelaki='', perempuan='', hpnm='', theme='blue') {
-            const themes = ['blue', 'purple', 'pink', 'emerald', 'orange'];
-            const themeOptions = themes.map(t => `<option value="${t}" ${t===theme?'selected':''}>${t}</option>`).join('');
+            tr.className = 'hover:bg-gray-50';
+            let html = '';
             
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="p-1 border"><input type="text" class="d-acronym w-full p-1 border rounded text-sm text-center" value="${acronym}" placeholder="JTMK"></td>
-                <td class="p-1 border"><input type="text" class="d-name w-full p-1 border rounded text-sm" value="${name}"></td>
-                <td class="p-1 border"><input type="text" class="d-ketua w-full p-1 border rounded text-sm" value="${ketua}"></td>
-                <td class="p-1 border"><input type="number" class="d-jumlah w-full p-1 border rounded text-sm text-center" value="${jumlah}"></td>
-                <td class="p-1 border"><input type="number" class="d-lelaki w-full p-1 border rounded text-sm text-center" value="${lelaki}"></td>
-                <td class="p-1 border"><input type="number" class="d-perempuan w-full p-1 border rounded text-sm text-center" value="${perempuan}"></td>
-                <td class="p-1 border"><input type="text" class="d-hpnm w-full p-1 border rounded text-sm text-center" value="${hpnm}"></td>
-                <td class="p-1 border"><select class="d-theme w-full p-1 border rounded text-sm">${themeOptions}</select></td>
-                <td class="p-1 border text-center"><button type="button" onclick="removeRow(this)" class="text-red-500 hover:text-red-700 bg-red-50 px-2 py-1 rounded"><i class="fas fa-trash"></i></button></td>
-            `;
-            document.getElementById('cms-dept-tbody').appendChild(tr);
-        }
-
-        // Add Row: Staff
-        function addStaffRow(nama='', jawatan='', tel='', emel='') {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="p-1 border"><input type="text" class="s-nama w-full p-2 border rounded text-sm" value="${nama}"></td>
-                <td class="p-1 border"><input type="text" class="s-jawatan w-full p-2 border rounded text-sm" value="${jawatan}"></td>
-                <td class="p-1 border"><input type="text" class="s-tel w-full p-2 border rounded text-sm text-center" value="${tel}"></td>
-                <td class="p-1 border"><input type="text" class="s-emel w-full p-2 border rounded text-sm" value="${emel}"></td>
-                <td class="p-1 border text-center"><button type="button" onclick="removeRow(this)" class="text-red-500 hover:text-red-700 bg-red-50 px-3 py-1 rounded"><i class="fas fa-trash"></i></button></td>
-            `;
-            document.getElementById('cms-staff-tbody').appendChild(tr);
-        }
-
-        // Populate Forms when entering Dashboard
-        function populateCMSForm() {
-            // Text Inputs
-            document.getElementById('cms-b1-title').value = appData.introB1.title || '';
-            document.getElementById('cms-b1-desc').value = appData.introB1.desc || '';
-            document.getElementById('cms-b1-list').value = appData.introB1.list || '';
+            if(tableId === 'table-kakitangan') {
+                html = `<td class="p-2"><input type="text" class="w-full p-2 border rounded text-xs" value="${data?data.nama:''}"></td>
+                        <td class="p-2"><input type="text" class="w-full p-2 border rounded text-xs" value="${data?data.jawatan:''}"></td>
+                        <td class="p-2"><input type="text" class="w-full p-2 border rounded text-xs" value="${data?data.tel:''}"></td>
+                        <td class="p-2"><input type="text" class="w-full p-2 border rounded text-xs" value="${data?data.emel:''}"></td>`;
+            } else if(tableId === 'table-jabatan') {
+                html = `<td class="p-2"><input type="text" class="w-full p-2 border rounded text-xs font-bold" value="${data?data.acronym:''}"></td>
+                        <td class="p-2"><input type="text" class="w-full p-2 border rounded text-xs" value="${data?data.name:''}"></td>
+                        <td class="p-2"><input type="text" class="w-full p-2 border rounded text-xs" value="${data?data.ketua:''}"></td>
+                        <td class="p-2"><input type="number" class="w-full p-2 border rounded text-xs" value="${data?data.jumlah:''}"></td>
+                        <td class="p-2"><input type="number" class="w-full p-2 border rounded text-xs" value="${data?data.lelaki:''}"></td>
+                        <td class="p-2"><input type="number" class="w-full p-2 border rounded text-xs" value="${data?data.perempuan:''}"></td>
+                        <td class="p-2"><select class="w-full p-2 border rounded text-xs"><option value="blue" ${data?.theme=='blue'?'selected':''}>Biru</option><option value="purple" ${data?.theme=='purple'?'selected':''}>Ungu</option><option value="pink" ${data?.theme=='pink'?'selected':''}>Pink</option><option value="orange" ${data?.theme=='orange'?'selected':''}>Oren</option><option value="green" ${data?.theme=='green'?'selected':''}>Hijau</option></select></td>`;
+            } else if(tableId === 'table-kelab' || tableId === 'table-perkhidmatan') {
+                html = `<td class="p-2 w-full"><input type="text" class="w-full p-2 border rounded text-xs" value="${data?data:''}"></td>`;
+            } else if(tableId === 'table-faq') {
+                html = `<td class="p-2"><input type="text" class="w-full p-2 border rounded text-xs" value="${data?data.q:''}"></td>
+                        <td class="p-2"><textarea rows="2" class="w-full p-2 border rounded text-xs">${data?data.a:''}</textarea></td>`;
+            }
             
-            document.getElementById('cms-b2-title').value = appData.introB2.title || '';
-            document.getElementById('cms-b2-desc').value = appData.introB2.desc || '';
-            document.getElementById('cms-b2-list').value = appData.introB2.list || '';
-
-            document.getElementById('cms-stat-cgpa').value = appData.stats.cgpa || '';
-            document.getElementById('cms-stat-pass').value = appData.stats.pass || '';
-
-            document.getElementById('cms-komuniti-desc').value = appData.komunitiDesc || '';
-            document.getElementById('cms-komuniti-list').value = appData.komuniti || '';
-            document.getElementById('cms-faq-list').value = appData.faq || '';
-
-            document.getElementById('cms-footer-tel').value = appData.footer?.tel || '';
-            document.getElementById('cms-footer-faks').value = appData.footer?.faks || '';
-            document.getElementById('cms-footer-emel').value = appData.footer?.emel || '';
-
-            // Clear and Populate Tables
-            document.getElementById('cms-hero-tbody').innerHTML = '';
-            (appData.heroSlides || []).forEach(h => addHeroRow(h.tag, h.title, h.desc));
-
-            document.getElementById('cms-dept-tbody').innerHTML = '';
-            (appData.stats.departments || []).forEach(d => addDeptRow(d.acronym, d.name, d.ketua, d.jumlah, d.lelaki, d.perempuan, d.hpnm, d.theme));
-
-            document.getElementById('cms-staff-tbody').innerHTML = '';
-            (appData.staff || []).forEach(s => addStaffRow(s.nama, s.jawatan, s.tel, s.emel));
+            html += `<td class="p-2 text-center"><button type="button" onclick="this.parentElement.parentElement.remove()" class="text-red-500 hover:text-red-700 bg-red-50 p-1.5 rounded"><i class="fas fa-trash"></i></button></td>`;
+            tr.innerHTML = html;
+            tbody.appendChild(tr);
         }
 
-        // Process Submit from Dynamic Tables
+        function extractTableData(tableId) {
+            const rows = document.getElementById(tableId).querySelectorAll('tr');
+            let data = [];
+            rows.forEach(row => {
+                const inputs = row.querySelectorAll('input, select, textarea');
+                if(tableId === 'table-kakitangan') data.push({ nama: inputs[0].value, jawatan: inputs[1].value, tel: inputs[2].value, emel: inputs[3].value });
+                else if(tableId === 'table-jabatan') data.push({ acronym: inputs[0].value, name: inputs[1].value, ketua: inputs[2].value, jumlah: inputs[3].value, lelaki: inputs[4].value, perempuan: inputs[5].value, theme: inputs[6].value });
+                else if(tableId === 'table-faq') data.push({ q: inputs[0].value, a: inputs[1].value });
+                else data.push(inputs[0].value);
+            });
+            return data;
+        }
+
+        // BACA IMEJ BASE64
+        function getBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        // FUNGSI SIMPAN CMS KE DATABASE
         async function handleCmsSubmit(e) {
             e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Menyimpan...';
             
-            // 1. Extract Hero
-            const newHero = [];
-            document.querySelectorAll('#cms-hero-tbody tr').forEach(tr => {
-                newHero.push({
-                    tag: tr.querySelector('.h-tag').value,
-                    title: tr.querySelector('.h-title').value,
-                    desc: tr.querySelector('.h-desc').value
-                });
-            });
+            // Baca fail imej jika ada yang di-upload
+            const chartFile = document.getElementById('cms-carta-img').files[0];
+            if(chartFile) savedOrgChartImg = await getBase64(chartFile);
 
-            // 2. Extract Departments
-            const newDepts = [];
-            document.querySelectorAll('#cms-dept-tbody tr').forEach(tr => {
-                newDepts.push({
-                    acronym: tr.querySelector('.d-acronym').value,
-                    name: tr.querySelector('.d-name').value,
-                    ketua: tr.querySelector('.d-ketua').value,
-                    jumlah: parseInt(tr.querySelector('.d-jumlah').value) || 0,
-                    lelaki: parseInt(tr.querySelector('.d-lelaki').value) || 0,
-                    perempuan: parseInt(tr.querySelector('.d-perempuan').value) || 0,
-                    hpnm: tr.querySelector('.d-hpnm').value,
-                    theme: tr.querySelector('.d-theme').value
-                });
-            });
+            const logoFile = document.getElementById('cms-logo-img').files[0];
+            if(logoFile) savedLogoImg = await getBase64(logoFile);
 
-            // 3. Extract Staff
-            const newStaff = [];
-            document.querySelectorAll('#cms-staff-tbody tr').forEach(tr => {
-                newStaff.push({
-                    nama: tr.querySelector('.s-nama').value,
-                    jawatan: tr.querySelector('.s-jawatan').value,
-                    tel: tr.querySelector('.s-tel').value,
-                    emel: tr.querySelector('.s-emel').value
-                });
-            });
+            const qrFile = document.getElementById('cms-qr-img').files[0];
+            if(qrFile) savedQrImg = await getBase64(qrFile);
 
-            // Update appData
-            appData.heroSlides = newHero;
-            appData.stats.departments = newDepts;
-            appData.staff = newStaff;
-            
-            appData.introB1 = { title: document.getElementById('cms-b1-title').value, desc: document.getElementById('cms-b1-desc').value, list: document.getElementById('cms-b1-list').value };
-            appData.introB2 = { title: document.getElementById('cms-b2-title').value, desc: document.getElementById('cms-b2-desc').value, list: document.getElementById('cms-b2-list').value };
-            appData.stats.cgpa = document.getElementById('cms-stat-cgpa').value;
-            appData.stats.pass = document.getElementById('cms-stat-pass').value;
-            appData.komunitiDesc = document.getElementById('cms-komuniti-desc').value;
-            appData.komuniti = document.getElementById('cms-komuniti-list').value;
-            appData.faq = document.getElementById('cms-faq-list').value;
-            appData.footer = { tel: document.getElementById('cms-footer-tel').value, faks: document.getElementById('cms-footer-faks').value, emel: document.getElementById('cms-footer-emel').value };
-
-            // Handle Image Upload
-            const fileInput = document.getElementById('cms-carta-img');
-            if(fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = async function(ev) {
-                    appData.orgImage = ev.target.result;
-                    await completeSave();
+            // Kumpul semua input
+            let newData = {
+                hero: {
+                    title: document.getElementById('cms-hero-title').value,
+                    sub: document.getElementById('cms-hero-sub').value
+                },
+                intro: {
+                    desc: document.getElementById('cms-intro-desc').value,
+                    p1: document.getElementById('cms-intro-p1').value,
+                    p2: document.getElementById('cms-intro-p2').value
+                },
+                images: {
+                    orgChart: savedOrgChartImg,
+                    logo: savedLogoImg,
+                    qrCode: savedQrImg
+                },
+                departments: extractTableData('table-jabatan'),
+                staff: extractTableData('table-kakitangan'),
+                komuniti: {
+                    desc: document.getElementById('cms-komuniti-desc').value,
+                    driveLink: document.getElementById('cms-drive-link').value
+                },
+                kelab: extractTableData('table-kelab'),
+                perkhidmatan: extractTableData('table-perkhidmatan'),
+                faq: extractTableData('table-faq'),
+                footer: {
+                    tel: document.getElementById('cms-footer-tel').value,
+                    faks: document.getElementById('cms-footer-faks').value,
+                    emel: document.getElementById('cms-footer-emel').value,
+                    copyright: document.getElementById('cms-footer-copyright').value
                 }
-                reader.readAsDataURL(fileInput.files[0]);
-            } else {
-                await completeSave();
+            };
+
+            // Hantar ke Google Sheets
+            try {
+                if(!DATABASE_URL) throw new Error("URL Kosong");
+                const res = await fetch(DATABASE_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newData)
+                });
+                appData = newData;
+                renderFrontend();
+                showToast("Berjaya! Semua kandungan telah diterbitkan.");
+            } catch(error) {
+                appData = newData;
+                renderFrontend(); // Render secara lokal (Offline mode)
+                showToast("Disimpan sementara (Offline/Tanpa Database)");
             }
+            btn.innerHTML = '<i class="fas fa-save mr-2"></i> Kemaskini & Terbitkan';
         }
 
-        async function completeSave() {
-            renderPublicUI();
-            await saveData();
-        }
+        // FUNGSI LOGIN / LOGOUT
+        function handleLogin(role) {
+            document.getElementById('login-modal').classList.add('hidden');
+            document.getElementById('public-view').classList.add('hidden');
+            document.getElementById('main-nav').classList.add('hidden');
+            document.getElementById('admin-view').classList.remove('hidden');
 
-        // --- Toasts & Auth ---
-        function showToast(msg, type='success') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = `toast-enter-active px-5 py-3 rounded text-white text-sm font-bold shadow-lg flex items-center gap-2 ${type==='success'?'bg-indigo-600':'bg-red-600'}`;
-            toast.innerHTML = `<i class="fas ${type==='success'?'fa-check-circle':'fa-exclamation-triangle'}"></i> ${msg}`;
-            container.appendChild(toast);
-            setTimeout(() => { toast.classList.replace('toast-enter-active', 'toast-exit-active'); setTimeout(()=>toast.remove(), 300); }, 3000);
-        }
+            // Masukkan data semasa ke dalam borang CMS
+            document.getElementById('cms-hero-title').value = appData.hero.title;
+            document.getElementById('cms-hero-sub').value = appData.hero.sub;
+            document.getElementById('cms-intro-desc').value = appData.intro.desc || "";
+            document.getElementById('cms-intro-p1').value = appData.intro.p1;
+            document.getElementById('cms-intro-p2').value = appData.intro.p2;
+            
+            document.getElementById('cms-komuniti-desc').value = appData.komuniti.desc;
+            document.getElementById('cms-drive-link').value = appData.komuniti.driveLink || "";
 
-        function openLoginModal() { document.getElementById('login-modal').classList.remove('hidden'); setTimeout(()=>document.getElementById('login-card').classList.remove('scale-95'), 10); }
-        function closeLoginModal() { document.getElementById('login-card').classList.add('scale-95'); setTimeout(()=>document.getElementById('login-modal').classList.add('hidden'), 200); }
+            document.getElementById('cms-footer-tel').value = appData.footer.tel;
+            document.getElementById('cms-footer-faks').value = appData.footer.faks;
+            document.getElementById('cms-footer-emel').value = appData.footer.emel;
+            document.getElementById('cms-footer-copyright').value = appData.footer.copyright || "";
 
-        function handleLogin(e) {
-            e.preventDefault();
-            if(document.getElementById('userid').value.toLowerCase() === 'admin') {
-                closeLoginModal();
-                document.getElementById('landing-view').classList.add('hidden');
-                document.getElementById('dashboard-view').classList.remove('hidden');
-                populateCMSForm();
-                window.scrollTo(0,0);
-            } else {
-                showToast("ID Pengguna salah. (Guna: admin)", "error");
-            }
+            // Reset & Isi Jadual
+            document.getElementById('table-jabatan').innerHTML = ''; appData.departments.forEach(d => addRow('table-jabatan', d));
+            document.getElementById('table-kakitangan').innerHTML = ''; appData.staff.forEach(s => addRow('table-kakitangan', s));
+            document.getElementById('table-kelab').innerHTML = ''; appData.kelab.forEach(k => addRow('table-kelab', k));
+            document.getElementById('table-perkhidmatan').innerHTML = ''; appData.perkhidmatan.forEach(p => addRow('table-perkhidmatan', p));
+            document.getElementById('table-faq').innerHTML = ''; appData.faq.forEach(f => addRow('table-faq', f));
+            
+            showToast("Log masuk berjaya sebagai " + role);
         }
 
         function handleLogout() {
-            document.getElementById('dashboard-view').classList.add('hidden');
-            document.getElementById('landing-view').classList.remove('hidden');
-            renderPublicUI();
+            document.getElementById('admin-view').classList.add('hidden');
+            document.getElementById('public-view').classList.remove('hidden');
+            document.getElementById('main-nav').classList.remove('hidden');
             window.scrollTo(0,0);
-            showToast("Berjaya Log Keluar.");
         }
 
-        // Init
-        window.onload = async () => { renderPublicUI(); await loadData(); };
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            t.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => { t.classList.add('translate-y-20', 'opacity-0'); }, 3000);
+        }
     </script>
 </body>
 </html>
