@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JHEP Digital - Politeknik Tuanku Syed Sirajuddin</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .hero-gradient { background: linear-gradient(90deg, #3B1C5A 0%, #68308B 50%, #8743A3 100%); }
+        .stats-header-gradient { background: linear-gradient(135deg, #2a1458 0%, #442485 100%); }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Toast Animation */
+        .toast-enter { transform: translateY(100%); opacity: 0; }
+        .toast-enter-active { transform: translateY(0); opacity: 1; transition: all 0.3s ease-out; }
+        .toast-exit { transform: translateY(0); opacity: 1; }
+        .toast-exit-active { transform: translateY(100%); opacity: 0; transition: all 0.3s ease-in; }
+
+        /* Accordion Animation */
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] summary ~ * { animation: sweep .3s ease-in-out; }
+        @keyframes sweep { 0% {opacity: 0; transform: translateY(-10px)} 100% {opacity: 1; transform: translateY(0)} }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-[100] flex flex-col gap-2"></div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div id="app">
+
+        <!-- ========================================== -->
+        <!-- 1. LANDING PAGE (PUBLIC VIEW)              -->
+        <!-- ========================================== -->
+        <div id="landing-view" class="block">
+            
+            <!-- Navbar -->
+            <nav class="bg-white shadow-sm sticky top-0 z-40">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between h-20">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-pink-600 flex items-center justify-center text-white font-bold text-xl shadow-md">J</div>
+                            <div class="flex flex-col">
+                                <span class="font-bold text-lg leading-tight text-gray-900">JHEP DIGITAL</span>
+                                <span class="text-xs text-gray-500 uppercase tracking-wide">Politeknik Tuanku Syed Sirajuddin</span>
+                            </div>
+                        </div>
+
+                        <div class="hidden lg:flex items-center space-x-6">
+                            <a href="#utama" class="text-gray-900 hover:text-pink-600 font-medium text-sm transition">Utama</a>
+                            <a href="#pengenalan" class="text-gray-500 hover:text-pink-600 font-medium text-sm transition">Pengenalan</a>
+                            <a href="#statistik" class="text-gray-500 hover:text-pink-600 font-medium text-sm transition">Statistik</a>
+                            <a href="#kakitangan" class="text-gray-500 hover:text-pink-600 font-medium text-sm transition">Kakitangan</a>
+                            <a href="#komuniti" class="text-gray-500 hover:text-pink-600 font-medium text-sm transition">Komuniti</a>
+                            <a href="#faq" class="text-gray-500 hover:text-pink-600 font-medium text-sm transition">FAQ</a>
+                        </div>
+
+                        <div class="flex items-center gap-4">
+                            <span id="sync-status" class="text-xs font-semibold text-gray-400 hidden"><i class="fas fa-sync fa-spin"></i> Menyegerak...</span>
+                            <button onclick="openLoginModal()" class="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2 rounded-full font-medium text-sm transition shadow-lg shadow-pink-200">
+                                Log Masuk
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <div id="public-pages-container">
+                <!-- HERO SECTION (CAROUSEL) -->
+                <section id="utama" class="scroll-mt-20">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-12">
+                        <div class="relative overflow-hidden rounded-3xl shadow-2xl h-[450px] md:h-[500px] hero-gradient group">
+                            <!-- Background Decoration -->
+                            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-white opacity-10 blur-3xl z-0"></div>
+                            
+                            <!-- Carousel Track -->
+                            <div id="carousel-track" class="flex w-[300%] h-full transition-transform duration-700 ease-in-out relative z-10">
+                                <!-- Slides rendered via JS -->
+                            </div>
+                            
+                            <!-- Carousel Controls -->
+                            <div class="absolute bottom-6 left-0 right-0 flex justify-center space-x-2 z-20" id="carousel-dots">
+                                <!-- Dots rendered via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PENGENALAN SECTION -->
+                <section id="pengenalan" class="bg-white py-16 scroll-mt-20 border-t border-gray-100">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="flex flex-col md:flex-row md:items-start justify-between mb-16 gap-8">
+                            <div class="md:w-1/2">
+                                <span class="text-sm font-bold text-gray-400 uppercase tracking-widest block mb-4">Mengenali JHEP</span>
+                                <h2 id="public-intro-header" class="text-4xl md:text-5xl font-extrabold text-[#2a1458] leading-tight">Bersama pelajar,<br>di setiap langkah.</h2>
+                            </div>
+                            <div class="md:w-1/2 md:pl-10 border-l-0 md:border-l border-gray-200">
+                                <span class="text-sm font-bold text-gray-400 uppercase tracking-widest block mb-4">Pengenalan</span>
+                                <p id="public-intro-p1" class="text-gray-600 mb-4 text-lg"></p>
+                                <p id="public-intro-p2" class="text-gray-500 mb-6"></p>
+                            </div>
+                        </div>
+
+                        <div class="mb-10 text-center md:text-left">
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-2">Fungsi & Tanggungjawab</span>
+                            <h3 class="text-2xl font-bold text-[#2a1458]">Dua bahagian. Satu komitmen.</h3>
+                        </div>
+
+                        <!-- Blok 01: Pengambilan & Data -->
+                        <div class="flex flex-col md:flex-row rounded-3xl overflow-hidden border border-gray-100 shadow-sm mb-8">
+                            <div class="md:w-5/12 bg-[#f4f2fa] p-10 flex flex-col justify-center">
+                                <span class="text-5xl font-light text-[#6c5b96] mb-6">01</span>
+                                <span class="text-xs font-bold text-[#6c5b96] uppercase tracking-widest block mb-3">Pendaftaran & Rekod</span>
+                                <h4 id="public-b1-title" class="text-3xl font-bold text-[#2a1458] mb-4"></h4>
+                                <p id="public-b1-desc" class="text-gray-600 mb-8"></p>
+                            </div>
+                            <div class="md:w-7/12 bg-white p-10 flex flex-col justify-center">
+                                <span class="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-6">Skop Perkhidmatan</span>
+                                <ul id="public-b1-list" class="space-y-4">
+                                    <!-- Rendered via JS -->
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Blok 02: Kebajikan & Disiplin -->
+                        <div class="flex flex-col md:flex-row rounded-3xl overflow-hidden border border-gray-100 shadow-sm">
+                            <div class="md:w-5/12 bg-[#fcf0f2] p-10 flex flex-col justify-center">
+                                <span class="text-5xl font-light text-[#a56171] mb-6">02</span>
+                                <span class="text-xs font-bold text-[#a56171] uppercase tracking-widest block mb-3">Kebajikan & Sahsiah</span>
+                                <h4 id="public-b2-title" class="text-3xl font-bold text-[#2a1458] mb-4"></h4>
+                                <p id="public-b2-desc" class="text-gray-600 mb-8"></p>
+                            </div>
+                            <div class="md:w-7/12 bg-white p-10 flex flex-col justify-center">
+                                <div id="public-b2-accordion" class="space-y-2">
+                                    <!-- Rendered via JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- STATISTIK SECTION -->
+                <section id="statistik" class="bg-gray-50 py-16 scroll-mt-20">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="stats-header-gradient rounded-3xl p-8 mb-8 flex flex-col md:flex-row md:items-center justify-between shadow-xl text-white">
+                            <div>
+                                <span class="inline-block bg-white/20 px-3 py-1 rounded-full text-xs mb-3 flex items-center w-max"><span class="w-2 h-2 rounded-full bg-green-400 mr-2 animate-pulse"></span> Pemantauan Data Masa Nyata</span>
+                                <h2 class="text-3xl font-extrabold mb-2">Dashboard Analitik Pelajar PTSS</h2>
+                                <p class="text-gray-300 max-w-2xl text-sm">Paparan menyeluruh statistik bilangan pelajar, nisbah jantina, serta taburan jabatan akademik.</p>
+                            </div>
+                        </div>
+
+                        <!-- 4 Stat Cards -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                                <div class="absolute -right-4 -top-4 w-16 h-16 bg-blue-100 rounded-full"></div>
+                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2 relative z-10">Jumlah Pelajar Bendaftar</span>
+                                <div class="flex items-end gap-2 mb-2 relative z-10">
+                                    <h3 id="stat-total" class="text-4xl font-extrabold text-gray-900">0</h3>
+                                </div>
+                                <p class="text-xs text-gray-500 relative z-10">Terkini merangkumi semua jabatan.</p>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                                <div class="absolute -right-4 -top-4 w-16 h-16 bg-purple-100 rounded-full"></div>
+                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2 relative z-10">Pecahan Jantina</span>
+                                <div class="mb-3 relative z-10">
+                                    <div class="flex justify-between text-sm font-bold mb-1">
+                                        <span class="text-blue-600">Lelaki: <span id="stat-male">0</span> (<span id="stat-male-pct">0</span>%)</span>
+                                        <span class="text-pink-500">Perempuan: <span id="stat-female">0</span> (<span id="stat-female-pct">0</span>%)</span>
+                                    </div>
+                                    <div class="w-full bg-pink-500 rounded-full h-2.5 flex overflow-hidden">
+                                        <div id="stat-bar-male" class="bg-blue-600 h-2.5" style="width: 50%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                                <div class="absolute -right-4 -top-4 w-16 h-16 bg-emerald-100 rounded-full"></div>
+                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2 relative z-10">Purata HPNM Semasa</span>
+                                <div class="flex items-end gap-2 mb-2 relative z-10">
+                                    <h3 id="stat-cgpa" class="text-4xl font-extrabold text-emerald-600">0.00</h3>
+                                    <span class="text-gray-400 text-sm font-medium mb-1">/ 4.00</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden">
+                                <div class="absolute -right-4 -top-4 w-16 h-16 bg-rose-100 rounded-full"></div>
+                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2 relative z-10">Kadar Kelulusan</span>
+                                <div class="flex items-end gap-2 mb-2 relative z-10">
+                                    <h3 id="stat-pass" class="text-4xl font-extrabold text-gray-900">0%</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Department Distribution Module -->
+                        <div class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-gray-100 pb-5">
+                                <div>
+                                    <h3 class="text-xl font-bold text-[#2a1458] flex items-center mb-1">
+                                        <i class="fas fa-building text-indigo-500 mr-3"></i> Taburan Pelajar Mengikut Jabatan Akademik PTSS
+                                    </h3>
+                                    <p class="text-sm text-gray-500">Pecahan data bilangan pelajar lelaki dan perempuan bagi setiap jabatan serta ketua jabatan bertanggungjawab.</p>
+                                </div>
+                                <span id="dept-count-badge" class="mt-4 md:mt-0 bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap shadow-sm border border-indigo-100">
+                                    0 Jabatan Berdaftar
+                                </span>
+                            </div>
+                            
+                            <!-- Departments Grid -->
+                            <div id="dept-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- Generated via JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- KAKITANGAN SECTION -->
+                <section id="kakitangan" class="bg-white py-16 scroll-mt-20 border-t border-gray-200">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <h2 class="text-3xl font-bold text-[#2a1458] mb-8">Carta Organisasi & Kakitangan</h2>
+                        
+                        <!-- Carta Image -->
+                        <div id="org-chart-container" class="mb-10 p-4 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 flex items-center justify-center min-h-[200px]">
+                            <p class="text-gray-400"><i class="fas fa-image mr-2"></i> Carta Organisasi belum dimuat naik.</p>
+                        </div>
+
+                        <!-- Staff Table -->
+                        <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                            <table class="w-full text-left border-collapse min-w-[600px]">
+                                <thead>
+                                    <tr class="bg-gray-50 text-gray-600 font-semibold text-sm">
+                                        <th class="p-4 border-b border-gray-200 w-16 text-center">Bil.</th>
+                                        <th class="p-4 border-b border-gray-200">Nama</th>
+                                        <th class="p-4 border-b border-gray-200">Jawatan</th>
+                                        <th class="p-4 border-b border-gray-200 text-center">Samb. Telefon</th>
+                                        <th class="p-4 border-b border-gray-200">E-mel (@ptss.edu.my)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="public-staff-body" class="text-sm text-gray-700 bg-white">
+                                    <!-- Rendered via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- KOMUNITI SECTION -->
+                <section id="komuniti" class="bg-gray-50 py-16 scroll-mt-20">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div class="bg-white rounded-2xl shadow-sm p-8 border border-gray-100">
+                            <h2 class="text-3xl font-bold text-[#2a1458] mb-4">Komuniti & Kelab Pelajar</h2>
+                            <p id="public-komuniti-desc" class="text-gray-600 mb-8"></p>
+                            <div id="public-komuniti-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <!-- Rendered via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FAQ SECTION -->
+                <section id="faq" class="bg-white py-16 scroll-mt-20 border-t border-gray-200">
+                    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <h2 class="text-3xl font-bold text-center text-[#2a1458] mb-10">Soalan Lazim (FAQ)</h2>
+                        <div id="public-faq-container" class="space-y-4">
+                            <!-- Rendered via JS -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FOOTER -->
+                <footer class="bg-[#2b1b54] text-white pt-16">
+                    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 grid grid-cols-1 md:grid-cols-3 gap-10">
+                        <div>
+                            <h3 class="text-xl font-bold mb-6 text-pink-400">Hubungi Kami</h3>
+                            <p class="text-sm mb-4 text-gray-300"><strong>Politeknik Tuanku Syed Sirajuddin</strong><br>Pauh Putra, 02600 Arau, Perlis</p>
+                            <p class="text-sm mb-2 text-gray-300"><strong>Telefon:</strong> <span id="footer-tel"></span></p>
+                            <p class="text-sm mb-2 text-gray-300"><strong>Faks:</strong> <span id="footer-faks"></span></p>
+                            <p class="text-sm text-gray-300"><strong>E-mel:</strong> <span id="footer-emel"></span></p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-6 text-pink-400">Pautan Umum</h3>
+                            <ul class="space-y-2 text-sm text-gray-300">
+                                <li><a href="#" class="hover:text-white transition">Takwim Aktiviti Tahunan PTSS</a></li>
+                                <li><a href="#" class="hover:text-white transition">Media Creative Centre (MCC)</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-6 text-pink-400">Penafian</h3>
+                            <p class="text-sm text-gray-400 leading-relaxed">PTSS tidak bertanggungjawab terhadap sebarang kehilangan atau kerosakan yang dialami kerana menggunakan maklumat dari portal ini.</p>
+                        </div>
+                    </div>
+                    <div class="bg-[#1f1340] text-center py-6 border-t border-white/10 text-sm text-gray-400">
+                        Hak Cipta Terpelihara © Politeknik Tuanku Syed Sirajuddin, Perlis (PTSS)
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 2. LOGIN MODAL                             -->
+        <!-- ========================================== -->
+        <div id="login-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center">
+            <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-all" id="login-card">
+                <div class="bg-gradient-to-r from-pink-600 to-purple-700 p-6 text-center">
+                    <h2 class="text-white text-2xl font-bold">Log Masuk Portal</h2>
+                </div>
+                <div class="p-8">
+                    <form onsubmit="handleLogin(event)">
+                        <div class="mb-5">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">ID Pengguna (Taip 'admin')</label>
+                            <input type="text" id="userid" class="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-pink-500 outline-none" value="admin" required>
+                        </div>
+                        <div class="mb-8">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Kata Laluan</label>
+                            <input type="password" id="password" class="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-pink-500 outline-none" value="password" required>
+                        </div>
+                        <div class="flex gap-3">
+                            <button type="button" onclick="closeLoginModal()" class="flex-1 bg-gray-100 font-bold py-3 rounded-xl hover:bg-gray-200">Batal</button>
+                            <button type="submit" class="flex-1 bg-pink-600 text-white font-bold py-3 rounded-xl hover:bg-pink-700">Masuk</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 3. ADMIN CMS DASHBOARD                     -->
+        <!-- ========================================== -->
+        <div id="dashboard-view" class="hidden min-h-screen bg-gray-100 flex flex-col md:flex-row">
+            
+            <!-- Sidebar -->
+            <aside class="w-full md:w-64 bg-[#1e1b4b] text-white flex flex-col shadow-xl z-20 md:h-screen sticky top-0">
+                <div class="p-6 border-b border-white/10 text-center">
+                    <div class="w-12 h-12 rounded-xl bg-pink-600 mx-auto flex items-center justify-center font-bold text-2xl mb-3">J</div>
+                    <span class="font-bold text-lg">JHEP ADMIN</span>
+                </div>
+                <div class="p-4 flex-1">
+                    <button class="w-full flex items-center gap-3 px-4 py-3 bg-pink-600 text-white rounded-xl font-medium text-sm text-left">
+                        <i class="fas fa-edit w-5"></i> Urus Kandungan Web
+                    </button>
+                </div>
+                <div class="p-4 border-t border-white/10 bg-black/20">
+                    <button onclick="handleLogout()" class="w-full py-2 bg-red-500/20 text-red-400 rounded-lg text-sm font-semibold hover:bg-red-500/40">
+                        Log Keluar
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Form Content -->
+            <main class="flex-1 flex flex-col h-screen overflow-hidden bg-gray-50">
+                <header class="bg-white shadow-sm h-16 flex items-center justify-between px-8 shrink-0">
+                    <h2 class="text-xl font-bold text-gray-800">Urus Kandungan Web (CMS)</h2>
+                </header>
+
+                <div class="flex-1 overflow-auto p-4 md:p-8">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 md:p-8 max-w-6xl mx-auto">
+                        <form id="cms-form" onsubmit="handleCmsSubmit(event)">
+                            
+                            <!-- 1. HERO (DYNAMIC TABLE) -->
+                            <div class="mb-8 border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
+                                <div class="bg-gray-50 p-4 border-b"><h4 class="font-bold text-pink-600">1. Bahagian Utama (Carousel Hero)</h4></div>
+                                <div class="p-4 overflow-x-auto">
+                                    <table class="w-full text-left border-collapse min-w-[600px]">
+                                        <thead>
+                                            <tr class="text-xs text-gray-500 uppercase bg-gray-100">
+                                                <th class="p-2 border">Tag / Kategori</th>
+                                                <th class="p-2 border">Tajuk Utama</th>
+                                                <th class="p-2 border">Penerangan</th>
+                                                <th class="p-2 border w-20 text-center">Tindakan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="cms-hero-tbody">
+                                            <!-- Rendered via JS -->
+                                        </tbody>
+                                    </table>
+                                    <button type="button" onclick="addHeroRow()" class="mt-3 px-4 py-2 bg-indigo-50 text-indigo-600 rounded text-sm font-semibold hover:bg-indigo-100 border border-indigo-200">+ Tambah Baris</button>
+                                </div>
+                            </div>
+
+                            <!-- 2. PENGENALAN (STANDARD INPUT) -->
+                            <div class="mb-8 border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
+                                <div class="bg-gray-50 p-4 border-b"><h4 class="font-bold text-pink-600">2. Bahagian Pengenalan</h4></div>
+                                <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="space-y-3">
+                                        <label class="text-xs font-bold text-gray-500 uppercase block border-b pb-1">Blok 01: Pengambilan & Data</label>
+                                        <div><label class="text-xs font-bold text-gray-700">Tajuk:</label><input type="text" id="cms-b1-title" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500"></div>
+                                        <div><label class="text-xs font-bold text-gray-700">Penerangan:</label><textarea id="cms-b1-desc" rows="2" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500"></textarea></div>
+                                        <div><label class="text-xs font-bold text-gray-700">Senarai (Satu item satu baris):</label><textarea id="cms-b1-list" rows="4" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500"></textarea></div>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <label class="text-xs font-bold text-gray-500 uppercase block border-b pb-1">Blok 02: Kebajikan (Accordion)</label>
+                                        <div><label class="text-xs font-bold text-gray-700">Tajuk:</label><input type="text" id="cms-b2-title" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500"></div>
+                                        <div><label class="text-xs font-bold text-gray-700">Penerangan:</label><textarea id="cms-b2-desc" rows="2" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500"></textarea></div>
+                                        <div><label class="text-xs font-bold text-gray-700">Senarai Accordion (Tajuk | Penerangan):</label><textarea id="cms-b2-list" rows="4" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500"></textarea></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. STATISTIK & JABATAN (DYNAMIC TABLE) -->
+                            <div class="mb-8 border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
+                                <div class="bg-gray-50 p-4 border-b flex justify-between items-center">
+                                    <h4 class="font-bold text-pink-600">3. Statistik & Taburan Jabatan</h4>
+                                </div>
+                                <div class="p-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                        <div><label class="text-xs font-bold text-gray-700">Purata HPNM Semasa (Keseluruhan):</label><input type="text" id="cms-stat-cgpa" class="w-full p-2 border rounded"></div>
+                                        <div><label class="text-xs font-bold text-gray-700">Kadar Kelulusan (%):</label><input type="text" id="cms-stat-pass" class="w-full p-2 border rounded"></div>
+                                    </div>
+                                    
+                                    <label class="text-xs font-bold text-gray-700 block mb-2">Jadual Data Jabatan Akademik (Peratusan akan dikira secara automatik)</label>
+                                    <div class="overflow-x-auto border border-gray-200 rounded">
+                                        <table class="w-full text-left border-collapse min-w-[800px]">
+                                            <thead>
+                                                <tr class="text-xs text-gray-500 uppercase bg-gray-100">
+                                                    <th class="p-2 border w-24">Kod</th>
+                                                    <th class="p-2 border">Nama Jabatan</th>
+                                                    <th class="p-2 border">Ketua</th>
+                                                    <th class="p-2 border w-24">Jumlah</th>
+                                                    <th class="p-2 border w-20">Lelaki</th>
+                                                    <th class="p-2 border w-24">Perempuan</th>
+                                                    <th class="p-2 border w-20">HPNM</th>
+                                                    <th class="p-2 border w-28">Warna Tema</th>
+                                                    <th class="p-2 border w-16 text-center">Tindakan</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="cms-dept-tbody">
+                                                <!-- Rendered via JS -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button type="button" onclick="addDeptRow()" class="mt-3 px-4 py-2 bg-indigo-50 text-indigo-600 rounded text-sm font-semibold hover:bg-indigo-100 border border-indigo-200">+ Tambah Baris Jabatan</button>
+                                </div>
+                            </div>
+
+                            <!-- 4. KAKITANGAN (DYNAMIC TABLE) -->
+                            <div class="mb-8 border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
+                                <div class="bg-gray-50 p-4 border-b"><h4 class="font-bold text-pink-600">4. Carta & Maklumat Kakitangan</h4></div>
+                                <div class="p-4">
+                                    <label class="text-xs font-bold text-gray-700 block mb-1">Muat Naik Imej Carta Organisasi (Pilihan)</label>
+                                    <input type="file" id="cms-carta-img" accept="image/*" class="w-full p-2 border rounded mb-6 text-sm">
+                                    
+                                    <label class="text-xs font-bold text-gray-700 block mb-2">Jadual Maklumat Kakitangan</label>
+                                    <div class="overflow-x-auto border border-gray-200 rounded">
+                                        <table class="w-full text-left border-collapse min-w-[700px]">
+                                            <thead>
+                                                <tr class="text-xs text-gray-500 uppercase bg-gray-100">
+                                                    <th class="p-2 border">Nama Kakitangan</th>
+                                                    <th class="p-2 border w-48">Jawatan</th>
+                                                    <th class="p-2 border w-32">Samb. Tel</th>
+                                                    <th class="p-2 border w-48">E-mel (@ptss.edu.my)</th>
+                                                    <th class="p-2 border w-16 text-center">Tindakan</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="cms-staff-tbody">
+                                                <!-- Rendered via JS -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <button type="button" onclick="addStaffRow()" class="mt-3 px-4 py-2 bg-indigo-50 text-indigo-600 rounded text-sm font-semibold hover:bg-indigo-100 border border-indigo-200">+ Tambah Kakitangan</button>
+                                </div>
+                            </div>
+
+                            <!-- 5. KOMUNITI & FAQ (STANDARD INPUT) -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <div class="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
+                                    <div class="bg-gray-50 p-4 border-b"><h4 class="font-bold text-pink-600">5. Komuniti (Pautan Luar)</h4></div>
+                                    <div class="p-4">
+                                        <label class="text-xs font-bold text-gray-700 block mb-2">Penerangan Komuniti:</label>
+                                        <textarea id="cms-komuniti-desc" rows="2" class="w-full p-2 border rounded mb-4 focus:ring-1 focus:ring-pink-500"></textarea>
+                                        <label class="text-xs font-bold text-gray-700 block mb-1">Senarai Kelab (Format: Nama | Pautan):</label>
+                                        <textarea id="cms-komuniti-list" rows="5" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500" placeholder="Contoh: Majlis Perwakilan Pelajar | https://mpp-ptss.com"></textarea>
+                                    </div>
+                                </div>
+                                <div class="border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
+                                    <div class="bg-gray-50 p-4 border-b"><h4 class="font-bold text-pink-600">6. Soalan Lazim (FAQ)</h4></div>
+                                    <div class="p-4">
+                                        <label class="text-xs font-bold text-gray-700 block mb-1">Senarai Soalan (Format: Soalan | Jawapan):</label>
+                                        <p class="text-xs text-gray-500 mb-2">Setiap soalan dipisahkan dengan baris baharu (enter).</p>
+                                        <textarea id="cms-faq-list" rows="8" class="w-full p-2 border rounded focus:ring-1 focus:ring-pink-500" placeholder="Contoh: Borang asrama di mana? | Di google drive JHEP."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 7. FOOTER -->
+                            <div class="mb-8 border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm">
+                                <div class="bg-gray-50 p-4 border-b"><h4 class="font-bold text-pink-600">7. Footer (Hubungi Kami)</h4></div>
+                                <div class="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div><label class="text-xs font-bold text-gray-700">Telefon:</label><input type="text" id="cms-footer-tel" class="w-full p-2 border rounded"></div>
+                                    <div><label class="text-xs font-bold text-gray-700">Faks:</label><input type="text" id="cms-footer-faks" class="w-full p-2 border rounded"></div>
+                                    <div><label class="text-xs font-bold text-gray-700">E-mel:</label><input type="text" id="cms-footer-emel" class="w-full p-2 border rounded"></div>
+                                </div>
+                            </div>
+
+                            <!-- SUBMIT BUTTON -->
+                            <div class="sticky bottom-0 bg-white border-t border-gray-200 pt-4 pb-4 flex justify-end gap-3 z-10">
+                                <button type="button" onclick="handleLogout()" class="px-6 py-3 rounded-lg font-bold bg-gray-100 text-gray-600 hover:bg-gray-200 transition">Batal</button>
+                                <button type="submit" class="px-8 py-3 rounded-lg font-bold text-white bg-pink-600 hover:bg-pink-700 shadow-lg shadow-pink-200 transition flex items-center">
+                                    <i class="fas fa-save mr-2"></i> Kemaskini Kandungan
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC                           -->
+    <!-- ========================================== -->
+    <script>
+        // PASTIKAN ANDA MASUKKAN GOOGLE APPS SCRIPT WEB APP URL ANDA DI SINI
+        const DATABASE_URL = "https://script.google.com/macros/s/AKfycbyPwp5pJUJ9dSXXpe6h1ewVtMChIWztuU1C0KKABcaGKj9PJ_IJYswnuH_rZ8-rpUH9/exec"; 
+
+        // Initial/Fallback Data
+        let appData = {
+            heroSlides: [
+                { tag: "Urusan Lebih Mudah", title: "Kurangkan langkah. Lebihkan peluang.", desc: "Cari dokumen, rekodkan aktiviti dan urus permohonan melalui portal JHEP secara berpusat." },
+                { tag: "Digitalisasi PTSS", title: "Satu Portal Untuk Semua.", desc: "Akses pantas ke sistem asrama, rekod disiplin dan profil pelajar." }
+            ],
+            introB1: { 
+                title: "Bahagian Pengambilan Pelajar dan Data", 
+                desc: "Mengurus urusan pengajian dan memastikan data pelajar sentiasa tersusun.",
+                list: "Pendaftaran Pelajar Baru dan Lapor Diri Pelajar Senior\nPermohonan Kad Pelajar\nPertukaran Kursus\nPenangguhan Semester"
+            },
+            introB2: {
+                title: "Bahagian Kebajikan dan Disiplin",
+                desc: "Membantu kebajikan, pembangunan sahsiah dan pengurusan disiplin pelajar.",
+                list: "Menguruskan Bantuan Kewangan | Tajaan pendidikan, pinjaman dan zakat.\nPengurusan Disiplin Pelajar | Memastikan peraturan am institusi dipatuhi."
+            },
+            stats: { 
+                cgpa: "3.65", 
+                pass: "98.6%", 
+                departments: [
+                    { acronym: "JTMK", name: "Jabatan Teknologi Maklumat & Komunikasi", ketua: "Ts. Noor Hidayah", jumlah: 1515, lelaki: 900, perempuan: 615, hpnm: "3.78", theme: "blue" },
+                    { acronym: "JKE", name: "Jabatan Kejuruteraan Elektrik", ketua: "Ir. Zulkifli bin Ismail", jumlah: 2499, lelaki: 1500, perempuan: 999, hpnm: "3.55", theme: "purple" }
+                ]
+            },
+            orgImage: "",
+            staff: [
+                {"nama": "Nasrul Effendy bin Mat Nasir", "jawatan": "Ketua Jabatan", "tel": "6202", "emel": "nasrul.effendy"},
+                {"nama": "Syazwani binti Sobri", "jawatan": "Pegawai Pengambilan", "tel": "6204", "emel": "syazwani"}
+            ],
+            komunitiDesc: "Sertai kelab dan persatuan untuk memperkayakan pengalaman kehidupan kampus anda di PTSS.",
+            komuniti: "Majlis Perwakilan Pelajar (MPP) | https://example.com\nKelab Sukan & Rekreasi | ",
+            faq: "Bagaimana cara memohon asrama? | Melalui Papan Pemuka Pelajar pada awal semester.\nDi manakah borang insurans? | Boleh dimuat turun dari ruangan Google Drive.",
+            footer: { tel: "04 988 6200", faks: "04 988 6300", emel: "info@ptss.edu.my" }
+        };
+
+        let carouselInterval;
+        let currentSlide = 0;
+
+        const colorThemes = {
+            blue: { bg: 'bg-blue-500', text: 'text-blue-600', badge: 'bg-blue-50 text-blue-600' },
+            purple: { bg: 'bg-purple-500', text: 'text-purple-600', badge: 'bg-purple-50 text-purple-600' },
+            pink: { bg: 'bg-pink-500', text: 'text-pink-600', badge: 'bg-pink-50 text-pink-600' },
+            emerald: { bg: 'bg-emerald-500', text: 'text-emerald-600', badge: 'bg-emerald-50 text-emerald-600' },
+            orange: { bg: 'bg-orange-500', text: 'text-orange-600', badge: 'bg-orange-50 text-orange-600' }
+        };
+
+        // --- Fetch & Save Data ---
+        async function loadData() {
+            if (!DATABASE_URL) return;
+            try {
+                document.getElementById('sync-status').classList.remove('hidden');
+                const response = await fetch(DATABASE_URL);
+                const data = await response.json();
+                if(data && Object.keys(data).length > 0) appData = { ...appData, ...data };
+            } catch (error) {
+                console.error("Gagal muat turun:", error);
+                showToast("Berjalan dalam mod offline.", "error");
+            } finally {
+                document.getElementById('sync-status').classList.add('hidden');
+                renderPublicUI(); 
+            }
+        }
+
+        async function saveData() {
+            if (!DATABASE_URL) { showToast("Perubahan hanya disimpan sementara di skrin ini (Tiada URL DB)."); return; }
+            try {
+                showToast("Menyimpan data...");
+                const response = await fetch(DATABASE_URL, { method: "POST", body: JSON.stringify(appData) });
+                const result = await response.json();
+                if(result.status === "success") showToast("Data berjaya disimpan!");
+            } catch (error) { showToast("Ralat menyimpan data.", "error"); }
+        }
+
+        // --- Render Public UI ---
+        function renderPublicUI() {
+            // Hero
+            document.getElementById('carousel-track').innerHTML = appData.heroSlides.map(slide => `
+                <div class="w-full flex-shrink-0 flex items-center p-10 md:p-20 text-white relative z-10">
+                    <div class="max-w-3xl">
+                        <span class="inline-block border border-white/30 rounded-full px-4 py-1 text-xs font-semibold tracking-wider bg-white/10 backdrop-blur-sm mb-6 uppercase">${slide.tag}</span>
+                        <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">${slide.title}</h1>
+                        <p class="text-lg text-gray-200 mb-8 max-w-lg">${slide.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('carousel-dots').innerHTML = appData.heroSlides.map((_, i) => `<button onclick="goToSlide(${i})" class="carousel-dot transition-all ${i===0?'w-8 bg-white':'w-2.5 bg-white/50'} h-2.5 rounded-full"></button>`).join('');
+            initCarousel(appData.heroSlides.length);
+
+            // Intro
+            document.getElementById('public-b1-title').innerText = appData.introB1.title;
+            document.getElementById('public-b1-desc').innerText = appData.introB1.desc;
+            document.getElementById('public-b1-list').innerHTML = (appData.introB1.list || "").split('\n').filter(i=>i.trim()).map((item, idx) => 
+                `<li class="flex text-gray-700 mb-3 border-b border-gray-100 pb-2"><span class="text-xs font-mono text-pink-500 mr-3 mt-0.5">0${idx+1}</span> ${item}</li>`
+            ).join('');
+
+            document.getElementById('public-b2-title').innerText = appData.introB2.title;
+            document.getElementById('public-b2-desc').innerText = appData.introB2.desc;
+            document.getElementById('public-b2-accordion').innerHTML = (appData.introB2.list || "").split('\n').filter(i=>i.trim()).map((item, idx) => {
+                let [t, c] = item.split('|');
+                return `<details class="group bg-white rounded-lg border border-gray-100 mb-2 p-4 cursor-pointer shadow-sm"><summary class="font-bold text-[#2a1458] flex justify-between outline-none"><span class="flex"><span class="text-xs font-mono text-gray-400 mr-3 mt-0.5">0${idx+1}</span> ${t?t.trim():''}</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition"></i></summary><p class="mt-3 text-sm text-gray-600 pl-7 leading-relaxed">${c?c.trim():''}</p></details>`;
+            }).join('');
+
+            // Stats
+            let grandTotal = 0, totalMale = 0, totalFemale = 0;
+            const depts = appData.stats.departments || [];
+            depts.forEach(d => { grandTotal += (parseInt(d.jumlah)||0); totalMale += (parseInt(d.lelaki)||0); totalFemale += (parseInt(d.perempuan)||0); });
+
+            document.getElementById('stat-total').innerText = grandTotal.toLocaleString();
+            document.getElementById('stat-cgpa').innerText = appData.stats.cgpa;
+            document.getElementById('stat-pass').innerText = appData.stats.pass;
+            
+            let mPct = grandTotal > 0 ? Math.round((totalMale/grandTotal)*100) : 0;
+            document.getElementById('stat-male').innerText = totalMale.toLocaleString();
+            document.getElementById('stat-female').innerText = totalFemale.toLocaleString();
+            document.getElementById('stat-male-pct').innerText = mPct;
+            document.getElementById('stat-female-pct').innerText = (100 - mPct);
+            document.getElementById('stat-bar-male').style.width = `${mPct}%`;
+
+            document.getElementById('dept-count-badge').innerText = `${depts.length} Jabatan Berdaftar`;
+            document.getElementById('dept-grid').innerHTML = depts.map(d => {
+                const theme = colorThemes[d.theme] || colorThemes.blue;
+                const deptPct = grandTotal > 0 ? Math.round(((parseInt(d.jumlah)||0) / grandTotal) * 100) : 0;
+                return `
+                <div class="bg-white rounded-2xl p-5 border shadow-sm relative hover:shadow-md transition">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="border border-gray-200 text-gray-700 px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">${d.acronym}</span>
+                        <span class="${theme.badge} px-3 py-1 rounded-full text-sm font-bold shadow-sm">${deptPct}%</span>
+                    </div>
+                    <h4 class="font-bold text-gray-900 leading-tight mb-1">${d.name}</h4>
+                    <p class="text-xs text-gray-400 mb-6">Ketua: ${d.ketua}</p>
+                    <div class="space-y-2 mb-4 text-sm">
+                        <div class="flex justify-between"><span class="text-gray-500">Jumlah:</span> <span class="font-semibold">${parseInt(d.jumlah||0).toLocaleString()}</span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Lelaki / Perempuan:</span> <span class="font-semibold">${d.lelaki} / ${d.perempuan}</span></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Purata HPNM:</span> <span class="font-bold ${theme.text}">${d.hpnm}</span></div>
+                    </div>
+                    <div class="w-full bg-gray-100 rounded-full h-1.5 overflow-hidden"><div class="${theme.bg} h-1.5 rounded-full" style="width: ${deptPct}%"></div></div>
+                </div>`;
+            }).join('');
+
+            // Staff
+            if(appData.orgImage) document.getElementById('org-chart-container').innerHTML = `<img src="${appData.orgImage}" class="w-full max-w-4xl mx-auto rounded shadow-sm border" alt="Carta Organisasi">`;
+            document.getElementById('public-staff-body').innerHTML = (appData.staff || []).map((s, i) => `
+                <tr class="border-b hover:bg-gray-50"><td class="p-3 text-center text-gray-500">${i + 1}</td><td class="p-3 font-medium">${s.nama}</td><td class="p-3 text-gray-600">${s.jawatan}</td><td class="p-3 text-center">${s.tel}</td><td class="p-3">${s.emel}</td></tr>
+            `).join('');
+
+            // Community & FAQ
+            document.getElementById('public-komuniti-desc').innerText = appData.komunitiDesc || "";
+            document.getElementById('public-komuniti-grid').innerHTML = (appData.komuniti || "").split('\n').filter(i=>i.trim()).map(item => {
+                let [name, url] = item.split('|'); name = name?name.trim():''; url = url?url.trim():'';
+                return url ? `<a href="${url}" target="_blank" class="p-4 border rounded-xl hover:shadow bg-white text-blue-600 font-medium flex justify-between group">${name} <i class="fas fa-external-link-alt text-gray-300"></i></a>` : `<div class="p-4 border rounded-xl bg-white text-gray-700">${name}</div>`;
+            }).join('');
+            document.getElementById('public-faq-container').innerHTML = (appData.faq || "").split('\n').filter(i=>i.trim()).map(item => {
+                let [q, a] = item.split('|');
+                return `<details class="group border-b border-gray-200 pb-4"><summary class="font-bold text-gray-800 cursor-pointer outline-none flex justify-between pt-4 hover:text-pink-600">${q?q.trim():''} <i class="fas fa-plus text-pink-500 group-open:rotate-45 transition"></i></summary><p class="mt-3 text-gray-600 text-sm pl-2">${a?a.trim():''}</p></details>`;
+            }).join('');
+
+            // Footer
+            document.getElementById('footer-tel').innerText = appData.footer.tel;
+            document.getElementById('footer-faks').innerText = appData.footer.faks;
+            document.getElementById('footer-emel').innerText = appData.footer.emel;
+        }
+
+        // --- Carousel Script ---
+        function initCarousel(total) {
+            clearInterval(carouselInterval);
+            currentSlide = 0;
+            if(total > 1) { carouselInterval = setInterval(() => { goToSlide((currentSlide + 1) % total); }, 5000); }
+        }
+        function goToSlide(index) {
+            currentSlide = index;
+            document.getElementById('carousel-track').style.transform = `translateX(-${index * (100 / appData.heroSlides.length)}%)`;
+            document.querySelectorAll('.carousel-dot').forEach((dot, i) => { dot.className = `carousel-dot transition-all h-2.5 rounded-full ${i===index?'w-8 bg-white':'w-2.5 bg-white/50'}`; });
+            clearInterval(carouselInterval);
+            carouselInterval = setInterval(() => { goToSlide((currentSlide + 1) % appData.heroSlides.length); }, 5000);
+        }
+
+        // ==========================================
+        // ADMIN DYNAMIC TABLE FUNCTIONS
+        // ==========================================
+        
+        // Remove Row Helper
+        function removeRow(btn) { btn.closest('tr').remove(); }
+
+        // Add Row: Hero
+        function addHeroRow(tag='', title='', desc='') {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="p-1 border"><input type="text" class="h-tag w-full p-2 border rounded text-sm focus:ring-1 focus:ring-pink-500" value="${tag}"></td>
+                <td class="p-1 border"><input type="text" class="h-title w-full p-2 border rounded text-sm focus:ring-1 focus:ring-pink-500" value="${title}"></td>
+                <td class="p-1 border"><input type="text" class="h-desc w-full p-2 border rounded text-sm focus:ring-1 focus:ring-pink-500" value="${desc}"></td>
+                <td class="p-1 border text-center"><button type="button" onclick="removeRow(this)" class="text-red-500 hover:text-red-700 bg-red-50 px-3 py-1 rounded"><i class="fas fa-trash"></i></button></td>
+            `;
+            document.getElementById('cms-hero-tbody').appendChild(tr);
+        }
+
+        // Add Row: Department
+        function addDeptRow(acronym='', name='', ketua='', jumlah='', lelaki='', perempuan='', hpnm='', theme='blue') {
+            const themes = ['blue', 'purple', 'pink', 'emerald', 'orange'];
+            const themeOptions = themes.map(t => `<option value="${t}" ${t===theme?'selected':''}>${t}</option>`).join('');
+            
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="p-1 border"><input type="text" class="d-acronym w-full p-1 border rounded text-sm text-center" value="${acronym}" placeholder="JTMK"></td>
+                <td class="p-1 border"><input type="text" class="d-name w-full p-1 border rounded text-sm" value="${name}"></td>
+                <td class="p-1 border"><input type="text" class="d-ketua w-full p-1 border rounded text-sm" value="${ketua}"></td>
+                <td class="p-1 border"><input type="number" class="d-jumlah w-full p-1 border rounded text-sm text-center" value="${jumlah}"></td>
+                <td class="p-1 border"><input type="number" class="d-lelaki w-full p-1 border rounded text-sm text-center" value="${lelaki}"></td>
+                <td class="p-1 border"><input type="number" class="d-perempuan w-full p-1 border rounded text-sm text-center" value="${perempuan}"></td>
+                <td class="p-1 border"><input type="text" class="d-hpnm w-full p-1 border rounded text-sm text-center" value="${hpnm}"></td>
+                <td class="p-1 border"><select class="d-theme w-full p-1 border rounded text-sm">${themeOptions}</select></td>
+                <td class="p-1 border text-center"><button type="button" onclick="removeRow(this)" class="text-red-500 hover:text-red-700 bg-red-50 px-2 py-1 rounded"><i class="fas fa-trash"></i></button></td>
+            `;
+            document.getElementById('cms-dept-tbody').appendChild(tr);
+        }
+
+        // Add Row: Staff
+        function addStaffRow(nama='', jawatan='', tel='', emel='') {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="p-1 border"><input type="text" class="s-nama w-full p-2 border rounded text-sm" value="${nama}"></td>
+                <td class="p-1 border"><input type="text" class="s-jawatan w-full p-2 border rounded text-sm" value="${jawatan}"></td>
+                <td class="p-1 border"><input type="text" class="s-tel w-full p-2 border rounded text-sm text-center" value="${tel}"></td>
+                <td class="p-1 border"><input type="text" class="s-emel w-full p-2 border rounded text-sm" value="${emel}"></td>
+                <td class="p-1 border text-center"><button type="button" onclick="removeRow(this)" class="text-red-500 hover:text-red-700 bg-red-50 px-3 py-1 rounded"><i class="fas fa-trash"></i></button></td>
+            `;
+            document.getElementById('cms-staff-tbody').appendChild(tr);
+        }
+
+        // Populate Forms when entering Dashboard
+        function populateCMSForm() {
+            // Text Inputs
+            document.getElementById('cms-b1-title').value = appData.introB1.title || '';
+            document.getElementById('cms-b1-desc').value = appData.introB1.desc || '';
+            document.getElementById('cms-b1-list').value = appData.introB1.list || '';
+            
+            document.getElementById('cms-b2-title').value = appData.introB2.title || '';
+            document.getElementById('cms-b2-desc').value = appData.introB2.desc || '';
+            document.getElementById('cms-b2-list').value = appData.introB2.list || '';
+
+            document.getElementById('cms-stat-cgpa').value = appData.stats.cgpa || '';
+            document.getElementById('cms-stat-pass').value = appData.stats.pass || '';
+
+            document.getElementById('cms-komuniti-desc').value = appData.komunitiDesc || '';
+            document.getElementById('cms-komuniti-list').value = appData.komuniti || '';
+            document.getElementById('cms-faq-list').value = appData.faq || '';
+
+            document.getElementById('cms-footer-tel').value = appData.footer?.tel || '';
+            document.getElementById('cms-footer-faks').value = appData.footer?.faks || '';
+            document.getElementById('cms-footer-emel').value = appData.footer?.emel || '';
+
+            // Clear and Populate Tables
+            document.getElementById('cms-hero-tbody').innerHTML = '';
+            (appData.heroSlides || []).forEach(h => addHeroRow(h.tag, h.title, h.desc));
+
+            document.getElementById('cms-dept-tbody').innerHTML = '';
+            (appData.stats.departments || []).forEach(d => addDeptRow(d.acronym, d.name, d.ketua, d.jumlah, d.lelaki, d.perempuan, d.hpnm, d.theme));
+
+            document.getElementById('cms-staff-tbody').innerHTML = '';
+            (appData.staff || []).forEach(s => addStaffRow(s.nama, s.jawatan, s.tel, s.emel));
+        }
+
+        // Process Submit from Dynamic Tables
+        async function handleCmsSubmit(e) {
+            e.preventDefault();
+            
+            // 1. Extract Hero
+            const newHero = [];
+            document.querySelectorAll('#cms-hero-tbody tr').forEach(tr => {
+                newHero.push({
+                    tag: tr.querySelector('.h-tag').value,
+                    title: tr.querySelector('.h-title').value,
+                    desc: tr.querySelector('.h-desc').value
+                });
+            });
+
+            // 2. Extract Departments
+            const newDepts = [];
+            document.querySelectorAll('#cms-dept-tbody tr').forEach(tr => {
+                newDepts.push({
+                    acronym: tr.querySelector('.d-acronym').value,
+                    name: tr.querySelector('.d-name').value,
+                    ketua: tr.querySelector('.d-ketua').value,
+                    jumlah: parseInt(tr.querySelector('.d-jumlah').value) || 0,
+                    lelaki: parseInt(tr.querySelector('.d-lelaki').value) || 0,
+                    perempuan: parseInt(tr.querySelector('.d-perempuan').value) || 0,
+                    hpnm: tr.querySelector('.d-hpnm').value,
+                    theme: tr.querySelector('.d-theme').value
+                });
+            });
+
+            // 3. Extract Staff
+            const newStaff = [];
+            document.querySelectorAll('#cms-staff-tbody tr').forEach(tr => {
+                newStaff.push({
+                    nama: tr.querySelector('.s-nama').value,
+                    jawatan: tr.querySelector('.s-jawatan').value,
+                    tel: tr.querySelector('.s-tel').value,
+                    emel: tr.querySelector('.s-emel').value
+                });
+            });
+
+            // Update appData
+            appData.heroSlides = newHero;
+            appData.stats.departments = newDepts;
+            appData.staff = newStaff;
+            
+            appData.introB1 = { title: document.getElementById('cms-b1-title').value, desc: document.getElementById('cms-b1-desc').value, list: document.getElementById('cms-b1-list').value };
+            appData.introB2 = { title: document.getElementById('cms-b2-title').value, desc: document.getElementById('cms-b2-desc').value, list: document.getElementById('cms-b2-list').value };
+            appData.stats.cgpa = document.getElementById('cms-stat-cgpa').value;
+            appData.stats.pass = document.getElementById('cms-stat-pass').value;
+            appData.komunitiDesc = document.getElementById('cms-komuniti-desc').value;
+            appData.komuniti = document.getElementById('cms-komuniti-list').value;
+            appData.faq = document.getElementById('cms-faq-list').value;
+            appData.footer = { tel: document.getElementById('cms-footer-tel').value, faks: document.getElementById('cms-footer-faks').value, emel: document.getElementById('cms-footer-emel').value };
+
+            // Handle Image Upload
+            const fileInput = document.getElementById('cms-carta-img');
+            if(fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = async function(ev) {
+                    appData.orgImage = ev.target.result;
+                    await completeSave();
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                await completeSave();
+            }
+        }
+
+        async function completeSave() {
+            renderPublicUI();
+            await saveData();
+        }
+
+        // --- Toasts & Auth ---
+        function showToast(msg, type='success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast-enter-active px-5 py-3 rounded text-white text-sm font-bold shadow-lg flex items-center gap-2 ${type==='success'?'bg-indigo-600':'bg-red-600'}`;
+            toast.innerHTML = `<i class="fas ${type==='success'?'fa-check-circle':'fa-exclamation-triangle'}"></i> ${msg}`;
+            container.appendChild(toast);
+            setTimeout(() => { toast.classList.replace('toast-enter-active', 'toast-exit-active'); setTimeout(()=>toast.remove(), 300); }, 3000);
+        }
+
+        function openLoginModal() { document.getElementById('login-modal').classList.remove('hidden'); setTimeout(()=>document.getElementById('login-card').classList.remove('scale-95'), 10); }
+        function closeLoginModal() { document.getElementById('login-card').classList.add('scale-95'); setTimeout(()=>document.getElementById('login-modal').classList.add('hidden'), 200); }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            if(document.getElementById('userid').value.toLowerCase() === 'admin') {
+                closeLoginModal();
+                document.getElementById('landing-view').classList.add('hidden');
+                document.getElementById('dashboard-view').classList.remove('hidden');
+                populateCMSForm();
+                window.scrollTo(0,0);
+            } else {
+                showToast("ID Pengguna salah. (Guna: admin)", "error");
+            }
+        }
+
+        function handleLogout() {
+            document.getElementById('dashboard-view').classList.add('hidden');
+            document.getElementById('landing-view').classList.remove('hidden');
+            renderPublicUI();
+            window.scrollTo(0,0);
+            showToast("Berjaya Log Keluar.");
+        }
+
+        // Init
+        window.onload = async () => { renderPublicUI(); await loadData(); };
+    </script>
+</body>
+</html>
