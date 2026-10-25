@@ -43,38 +43,95 @@
     <!-- NAVBAR AWAM (FRONTEND - RESPONSIF)         -->
     <!-- ========================================== -->
     <nav class="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-gray-100" id="main-nav">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex justify-between items-center h-20 gap-2 xl:gap-4">
             <!-- Logo -->
             <div class="flex items-center cursor-pointer group shrink-0" onclick="navigate('utama')">
-                <img id="nav-logo" src="https://placehold.co/100x100/e11d48/ffffff?text=J" class="h-10 w-10 sm:h-11 sm:w-11 rounded-xl mr-3 shadow-sm object-cover group-hover:scale-105 transition" alt="Logo PTSS">
+                <img id="nav-logo" src="https://placehold.co/100x100/e11d48/ffffff?text=J" class="h-10 w-10 sm:h-11 sm:w-11 rounded-xl mr-2.5 sm:mr-3 shadow-sm object-cover group-hover:scale-105 transition" alt="Logo PTSS">
                 <div>
-                    <h1 class="font-extrabold text-gray-900 leading-tight tracking-tight text-base sm:text-lg">JHEP DIGITAL</h1>
-                    <p class="text-[9px] sm:text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Politeknik Tuanku Syed Sirajuddin</p>
+                    <h1 class="font-extrabold text-gray-900 leading-tight tracking-tight text-sm sm:text-base xl:text-lg whitespace-nowrap">JHEP DIGITAL</h1>
+                    <p class="text-[8px] sm:text-[9px] xl:text-[10px] text-gray-500 uppercase tracking-wider font-semibold whitespace-nowrap">Politeknik Tuanku Syed Sirajuddin</p>
                 </div>
             </div>
-            <!-- Menu Navigasi Desktop (FAQ paling akhir sebelum WhatsApp & Log Masuk, Tanpa Lencana Masa Nyata) -->
-            <div class="hidden lg:flex items-center space-x-3 xl:space-x-5 text-sm font-medium text-gray-500">
-                <button onclick="navigate('utama')" class="nav-link px-2 py-2 border-b-2 border-transparent hover:text-[#2b1b54] transition" data-target="utama">Utama</button>
-                <button onclick="navigate('pengenalan')" class="nav-link px-2 py-2 border-b-2 border-transparent hover:text-[#2b1b54] transition" data-target="pengenalan">Pengenalan</button>
-                <button onclick="navigate('kakitangan')" class="nav-link px-2 py-2 border-b-2 border-transparent hover:text-[#2b1b54] transition" data-target="kakitangan">Kakitangan</button>
-                <button onclick="navigate('komuniti')" class="nav-link px-2 py-2 border-b-2 border-transparent hover:text-[#2b1b54] transition" data-target="komuniti">Kelab</button>
-                <button onclick="navigate('perkhidmatan')" class="nav-link px-2 py-2 border-b-2 border-transparent hover:text-[#2b1b54] transition" data-target="perkhidmatan">Perkhidmatan</button>
-                <button onclick="navigate('kpi')" class="nav-link px-2 py-2 border-b-2 border-transparent hover:text-[#2b1b54] transition flex items-center" data-target="kpi">
-                    <i class="fas fa-bullseye mr-1.5 text-indigo-600"></i> KPI
-                </button>
-                <button onclick="navigate('statistik')" class="nav-link px-2 py-2 border-b-2 border-transparent hover:text-[#2b1b54] transition flex items-center" data-target="statistik">
-                    <i class="fas fa-chart-line mr-1.5 text-pink-600"></i> Statistik
-                </button>
-                <button onclick="navigate('faq')" class="nav-link px-2 py-2 border-b-2 border-transparent hover:text-[#2b1b54] transition" data-target="faq">FAQ</button>
+
+            <!-- Menu Navigasi Desktop (Susunan Satu Baris Kemas, Kapsul Moden & Tanpa Teks Terlipat) -->
+            <div class="hidden lg:flex items-center bg-slate-100/80 p-1.5 rounded-full border border-slate-200/70 space-x-0.5 xl:space-x-1 text-xs xl:text-[13px] font-semibold text-gray-600 shrink-0">
+                <button onclick="navigate('utama')" class="nav-link whitespace-nowrap px-3 xl:px-3.5 py-2 rounded-full hover:text-[#2b1b54] hover:bg-white/70 transition-all duration-200" data-target="utama">Utama</button>
+                <button onclick="navigate('pengenalan')" class="nav-link whitespace-nowrap px-3 xl:px-3.5 py-2 rounded-full hover:text-[#2b1b54] hover:bg-white/70 transition-all duration-200" data-target="pengenalan">Pengenalan</button>
+                
+                <!-- Dropdown 1: Program Pengajian (Selepas Pengenalan) -->
+                <div class="relative group">
+                    <button onclick="navigate('program')" class="nav-link whitespace-nowrap px-3 xl:px-3.5 py-2 rounded-full hover:text-[#2b1b54] hover:bg-white/70 transition-all duration-200 inline-flex items-center gap-1.5" data-target="program">
+                        <span>Program Pengajian</span>
+                        <i class="fas fa-chevron-down text-[9px] opacity-60 group-hover:rotate-180 transition-transform duration-200"></i>
+                    </button>
+                    <div class="absolute left-0 top-full pt-2.5 w-56 hidden group-hover:block z-50">
+                        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 border-t-4 border-t-amber-500 p-1.5 overflow-hidden">
+                            <button onclick="navigate('program')" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition flex items-center justify-between">
+                                <span>Senarai Program</span>
+                                <i class="fas fa-graduation-cap text-amber-500 text-xs"></i>
+                            </button>
+                            <button onclick="navigate('permohonan')" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition flex items-center justify-between mt-0.5">
+                                <span>Cara Memohon</span>
+                                <i class="fas fa-user-check text-blue-600 text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="navigate('kakitangan')" class="nav-link whitespace-nowrap px-3 xl:px-3.5 py-2 rounded-full hover:text-[#2b1b54] hover:bg-white/70 transition-all duration-200" data-target="kakitangan">Kakitangan</button>
+                <button onclick="navigate('komuniti')" class="nav-link whitespace-nowrap px-3 xl:px-3.5 py-2 rounded-full hover:text-[#2b1b54] hover:bg-white/70 transition-all duration-200" data-target="komuniti">Kelab</button>
+                
+                <!-- Dropdown 2: Perkhidmatan & Muat Turun Borang (Selepas Perkhidmatan) -->
+                <div class="relative group">
+                    <button onclick="navigate('perkhidmatan')" class="nav-link whitespace-nowrap px-3 xl:px-3.5 py-2 rounded-full hover:text-[#2b1b54] hover:bg-white/70 transition-all duration-200 inline-flex items-center gap-1.5" data-target="perkhidmatan">
+                        <span>Perkhidmatan</span>
+                        <i class="fas fa-chevron-down text-[9px] opacity-60 group-hover:rotate-180 transition-transform duration-200"></i>
+                    </button>
+                    <div class="absolute left-0 top-full pt-2.5 w-60 hidden group-hover:block z-50">
+                        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 border-t-4 border-t-pink-600 p-1.5 overflow-hidden">
+                            <button onclick="navigate('perkhidmatan')" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition flex items-center justify-between">
+                                <span>Perkhidmatan & Galeri</span>
+                                <i class="fas fa-concierge-bell text-pink-500 text-xs"></i>
+                            </button>
+                            <button onclick="navigate('borang')" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition flex items-center justify-between mt-0.5">
+                                <span>Muat Turun Borang HEP</span>
+                                <i class="fas fa-file-download text-blue-600 text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dropdown 3: Data & Info (KPI, Statistik & FAQ) -->
+                <div class="relative group">
+                    <button onclick="navigate('kpi')" class="nav-link whitespace-nowrap px-3 xl:px-3.5 py-2 rounded-full hover:text-[#2b1b54] hover:bg-white/70 transition-all duration-200 inline-flex items-center gap-1.5" data-target="kpi">
+                        <i class="fas fa-chart-pie text-indigo-600 text-xs"></i>
+                        <span>Data & Info</span>
+                        <i class="fas fa-chevron-down text-[9px] opacity-60 group-hover:rotate-180 transition-transform duration-200"></i>
+                    </button>
+                    <div class="absolute right-0 top-full pt-2.5 w-56 hidden group-hover:block z-50">
+                        <div class="bg-white rounded-2xl shadow-xl border border-gray-100 border-t-4 border-t-indigo-600 p-1.5 overflow-hidden">
+                            <button onclick="navigate('kpi')" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition flex items-center">
+                                <i class="fas fa-bullseye mr-2.5 text-indigo-600 w-4 text-center"></i> Pencapaian KPI
+                            </button>
+                            <button onclick="navigate('statistik')" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition flex items-center mt-0.5">
+                                <i class="fas fa-chart-line mr-2.5 text-pink-600 w-4 text-center"></i> Statistik Pelajar
+                            </button>
+                            <button onclick="navigate('faq')" class="w-full text-left px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-gray-700 hover:bg-amber-50 hover:text-amber-700 transition flex items-center mt-0.5">
+                                <i class="fas fa-question-circle mr-2.5 text-amber-500 w-4 text-center"></i> Soalan Lazim (FAQ)
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- Butang WhatsApp, Log Masuk & Menu Mobile/Tablet -->
-            <div class="flex items-center gap-2 sm:gap-2.5">
-                <a id="nav-whatsapp-btn" href="https://wa.me/6049886200" target="_blank" rel="noopener noreferrer" class="bg-[#0b2545] hover:bg-[#133b6e] text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm transition shadow-sm flex items-center gap-1.5">
-                    <i class="fab fa-whatsapp text-emerald-400 text-sm sm:text-base"></i>
+
+            <!-- Butang WhatsApp, Log Masuk (Saiz Seragam) & Menu Mobile/Tablet -->
+            <div class="flex items-center gap-2 shrink-0">
+                <a id="nav-whatsapp-btn" href="https://wa.me/6049886200" target="_blank" rel="noopener noreferrer" class="bg-[#0b2545] hover:bg-[#133b6e] text-white h-10 px-4 xl:px-5 min-w-[110px] xl:min-w-[122px] rounded-full font-bold text-xs xl:text-sm transition shadow-sm inline-flex items-center justify-center gap-1.5 whitespace-nowrap">
+                    <i class="fab fa-whatsapp text-emerald-400 text-sm xl:text-base"></i>
                     <span>WhatsApp</span>
                 </a>
-                <button onclick="document.getElementById('login-modal').classList.remove('hidden')" class="bg-pink-600 hover:bg-pink-700 text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-full font-semibold text-xs sm:text-sm transition shadow-md shadow-pink-500/20">
-                    Log Masuk
+                <button onclick="document.getElementById('login-modal').classList.remove('hidden')" class="bg-pink-600 hover:bg-pink-700 text-white h-10 px-4 xl:px-5 min-w-[110px] xl:min-w-[122px] rounded-full font-bold text-xs xl:text-sm transition shadow-md shadow-pink-500/20 inline-flex items-center justify-center whitespace-nowrap">
+                    <span>Log Masuk</span>
                 </button>
                 <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="lg:hidden p-2.5 rounded-xl bg-gray-50 text-gray-600 hover:text-gray-900 border border-gray-200 focus:outline-none" aria-label="Menu Navigasi">
                     <i class="fas fa-bars text-lg"></i>
@@ -85,9 +142,14 @@
         <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 pt-3 pb-5 space-y-1.5 shadow-xl">
             <button onclick="navigate('utama'); document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition">Utama</button>
             <button onclick="navigate('pengenalan'); document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition">Pengenalan</button>
+            <div class="pl-3 border-l-2 border-amber-400 space-y-1 my-1">
+                <button onclick="navigate('program'); document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-amber-700 bg-amber-50/70 hover:bg-amber-100 transition"><i class="fas fa-graduation-cap mr-2"></i> Program Pengajian</button>
+                <button onclick="navigate('permohonan'); document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-blue-700 bg-blue-50/60 hover:bg-blue-100 transition"><i class="fas fa-user-check mr-2"></i> Cara Memohon</button>
+            </div>
             <button onclick="navigate('kakitangan'); document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition">Carta & Kakitangan</button>
             <button onclick="navigate('komuniti'); document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition">Kelab & Komuniti</button>
             <button onclick="navigate('perkhidmatan'); document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition">Perkhidmatan & Galeri</button>
+            <button onclick="navigate('borang'); document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold text-blue-700 bg-blue-50/60 hover:bg-blue-100 transition"><i class="fas fa-file-download mr-2"></i> Muat Turun Borang HEP</button>
             <button onclick="navigate('kpi'); document.getElementById('mobile-menu').classList.add('hidden')" class="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-indigo-700 bg-indigo-50/60 hover:bg-indigo-100 transition"><i class="fas fa-bullseye mr-2"></i> Pencapaian KPI</button>
             <button onclick="navigate('statistik'); document.getElementById('mobile-menu').classList.add('hidden')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold text-pink-600 bg-pink-50/80 flex items-center">
                 <i class="fas fa-chart-line mr-2"></i> Statistik Pelajar
@@ -205,6 +267,126 @@
             </div>
         </section>
 
+        <!-- 2B. HALAMAN BAHARU: PROGRAM PENGAJIAN (SELEPAS PENGENALAN) -->
+        <section id="sec-program" class="page-section pb-16 sm:pb-20">
+            <!-- Banner Header Gelap Seperti Imej Rujukan -->
+            <div class="bg-gradient-to-r from-slate-900 via-[#1a153a] to-slate-900 text-white py-12 sm:py-16 px-4 text-center relative overflow-hidden mb-12 sm:mb-16">
+                <div class="max-w-4xl mx-auto relative z-10">
+                    <h1 id="program-banner-title" class="text-2xl sm:text-4xl md:text-5xl font-extrabold mb-3 tracking-tight">Program Pengajian @ PTSS</h1>
+                    <p class="text-xs sm:text-sm text-gray-300 font-semibold flex items-center justify-center gap-2">
+                        <span onclick="navigate('utama')" class="cursor-pointer hover:text-white"><i class="fas fa-home mr-1"></i> Utama</span>
+                        <span>::</span>
+                        <span class="text-amber-400">Program Pengajian @ PTSS</span>
+                    </p>
+                    <div class="mt-6 flex justify-center gap-3">
+                        <button onclick="navigate('program')" class="px-5 py-2 rounded-full bg-amber-500 text-slate-950 font-extrabold text-xs sm:text-sm shadow">Senarai Program</button>
+                        <button onclick="navigate('permohonan')" class="px-5 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm transition">Cara Memohon &rarr;</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Senarai Program Pengajian Berselang-seli (Alternating Layout) -->
+            <div id="program-list-container" class="max-w-6xl mx-auto px-4 sm:px-6 space-y-14 sm:space-y-20">
+                <!-- Dijana secara dinamik oleh JS -->
+            </div>
+        </section>
+
+        <!-- 2C. HALAMAN BAHARU: CARA MEMOHON (SUB-MENU PROGRAM PENGAJIAN) -->
+        <section id="sec-permohonan" class="page-section pb-16 sm:pb-20">
+            <!-- Banner Header -->
+            <div class="bg-gradient-to-r from-slate-900 via-[#1a153a] to-slate-900 text-white py-12 sm:py-16 px-4 text-center relative overflow-hidden mb-12 sm:mb-16">
+                <div class="max-w-4xl mx-auto relative z-10">
+                    <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold mb-3 tracking-tight">Cara Memohon</h1>
+                    <p class="text-xs sm:text-sm text-gray-300 font-semibold flex items-center justify-center gap-2">
+                        <span onclick="navigate('utama')" class="cursor-pointer hover:text-white"><i class="fas fa-home mr-1"></i> Utama</span>
+                        <span>::</span>
+                        <span class="text-amber-400">Cara Memohon</span>
+                    </p>
+                    <div class="mt-6 flex justify-center gap-3">
+                        <button onclick="navigate('program')" class="px-5 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm transition">&larr; Program Pengajian</button>
+                        <button onclick="navigate('permohonan')" class="px-5 py-2 rounded-full bg-amber-500 text-slate-950 font-extrabold text-xs sm:text-sm shadow">Cara Memohon</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-16">
+                <!-- Kad 1: Sambung Diploma? -->
+                <div class="bg-white rounded-3xl shadow-md border border-gray-100 overflow-hidden grid md:grid-cols-2 items-center">
+                    <div class="p-8 sm:p-12 lg:p-14">
+                        <h2 id="apply-hero-title" class="text-2xl sm:text-3xl font-extrabold text-[#0b2545] mb-3">Sambung Diploma?</h2>
+                        <div class="w-12 h-1 bg-[#0b2545] mb-6"></div>
+                        <div id="apply-hero-desc" class="space-y-4 text-xs sm:text-sm text-gray-600 leading-relaxed">
+                            <!-- Dijana oleh JS -->
+                        </div>
+                    </div>
+                    <div class="h-full min-h-[280px] sm:min-h-[380px] bg-gray-100">
+                        <img id="apply-hero-img" src="https://placehold.co/600x500/f1f5f9/0f172a?text=Sambung+Diploma+PTSS" alt="Sambung Diploma" class="w-full h-full object-cover">
+                    </div>
+                </div>
+
+                <!-- Bahagian 2: Permohonan Kemasukan Politeknik (UPU & MyPolyCC) -->
+                <div>
+                    <h2 class="text-center text-2xl sm:text-3xl font-extrabold text-[#0b2545] mb-10">Permohonan Kemasukan Politeknik</h2>
+                    <div class="grid md:grid-cols-2 gap-8 sm:gap-10">
+                        <!-- Kolum i: UPUonline -->
+                        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <div class="h-36 flex items-center justify-center mb-6 bg-slate-50 rounded-2xl p-4">
+                                    <img id="apply-upu-img" src="https://placehold.co/280x160/ffffff/db2777?text=UPU+ONLINE" alt="UPU Online" class="max-h-28 object-contain">
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-extrabold text-[#0b2545] mb-4">i) Permohonan Melalui UPUonline</h3>
+                                <ul class="list-disc pl-5 space-y-2.5 text-xs sm:text-sm text-gray-700 mb-8">
+                                    <li>Keutamaan permohonan pengajian <strong class="underline">SESI I</strong></li>
+                                    <li>Isi borang permohonan melalui <strong>UPU online</strong></li>
+                                    <li>Tarikh penting UPU berkaitan panggilan temuduga, keputusan, rayuan dan lain-lain sila rujuk <a id="apply-upu-date-link" href="https://upu.mohe.gov.my" target="_blank" rel="noopener noreferrer" class="text-amber-600 underline font-semibold hover:text-amber-700">Tarikh Penting UPU</a></li>
+                                </ul>
+                            </div>
+                            <div class="text-center pt-2">
+                                <a id="apply-upu-btn" href="https://upu.mohe.gov.my" target="_blank" rel="noopener noreferrer" class="inline-block px-8 py-3 rounded-xl border-2 border-blue-500 text-blue-600 hover:bg-blue-600 hover:text-white font-bold text-xs sm:text-sm transition">
+                                    UPU Online
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Kolum ii: Portal MyPolyCC -->
+                        <div class="bg-white p-6 sm:p-8 rounded-3xl border border-gray-100 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <div class="h-36 flex items-center justify-center mb-6 bg-slate-50 rounded-2xl p-4">
+                                    <img id="apply-poly-img" src="https://placehold.co/280x160/ffffff/1e3a8a?text=eBorang+MyPolyCC" alt="eBorang MyPolyCC" class="max-h-28 object-contain">
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-extrabold text-[#0b2545] mb-4">ii) Permohonan Melalui Portal MyPolyCC</h3>
+                                <ul class="list-disc pl-5 space-y-2.5 text-xs sm:text-sm text-gray-700 mb-8">
+                                    <li>Keutamaan permohonan pengajian <strong class="underline">SESI II</strong></li>
+                                    <li>Permohonan kemasukan adalah melalui Portal Pengambilan Pelajar Politeknik dan Kolej Komuniti (MyPolyCC) di pautan <strong>Portal Ambilan MyPolyCC</strong></li>
+                                    <li>Tarikh penting ambilan boleh dirujuk di portal yang sama</li>
+                                </ul>
+                            </div>
+                            <div class="text-center pt-2">
+                                <a id="apply-poly-btn" href="http://ambilan.mypolycc.edu.my" target="_blank" rel="noopener noreferrer" class="inline-block px-8 py-3 rounded-xl border-2 border-blue-500 text-blue-600 hover:bg-blue-600 hover:text-white font-bold text-xs sm:text-sm transition">
+                                    Portal MyPolyCC
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bahagian 3: Semak Kelayakan -->
+                <div class="bg-white rounded-3xl p-6 sm:p-10 border border-gray-100 shadow-sm">
+                    <h3 class="text-center text-xl sm:text-2xl font-extrabold text-[#0b2545] mb-8">Semakan Kelayakan Program Pengajian</h3>
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-8 max-w-3xl mx-auto">
+                        <img id="apply-check-img" src="https://placehold.co/240x220/fff7ed/ea580c?text=Semak+Kelayakan" alt="Semak Kelayakan" class="w-44 h-44 object-cover rounded-2xl shadow-sm shrink-0">
+                        <div class="text-center md:text-left">
+                            <h4 id="apply-check-title" class="text-lg sm:text-xl font-extrabold text-[#0b2545] mb-2">Tak tahu nak pilih program pengajian apa?</h4>
+                            <p id="apply-check-desc" class="text-xs sm:text-sm text-gray-600 mb-5">Masukkan keputusan SPM dan semak kelayakan program pengajian yang bersesuaian dengan anda di bawah:</p>
+                            <a id="apply-check-btn" href="http://ambilan.mypolycc.edu.my" target="_blank" rel="noopener noreferrer" class="inline-block px-7 py-3 rounded-xl border-2 border-blue-500 text-blue-600 hover:bg-blue-600 hover:text-white font-bold text-xs sm:text-sm transition">
+                                Semak Kelayakan
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- 3. HALAMAN KAKITANGAN -->
         <section id="sec-kakitangan" class="page-section max-w-7xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-16 sm:pb-20">
             <div class="mb-8 sm:mb-10 text-center">
@@ -300,6 +482,35 @@
                 </div>
                 <div id="galeri-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Kad Galeri & Aktiviti dengan 3-Image Carousel dijana oleh JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 5B. HALAMAN BAHARU: MUAT TURUN BORANG HEP (SELEPAS PERKHIDMATAN) -->
+        <section id="sec-borang" class="page-section pb-16 sm:pb-20">
+            <!-- Banner Header Gelap Seperti Imej Rujukan -->
+            <div class="bg-gradient-to-r from-slate-900 via-[#1a153a] to-slate-900 text-white py-12 sm:py-16 px-4 text-center relative overflow-hidden mb-10 sm:mb-14">
+                <div class="max-w-4xl mx-auto relative z-10">
+                    <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold mb-3 tracking-tight">Muat Turun Dokumen</h1>
+                    <p class="text-xs sm:text-sm text-gray-300 font-semibold flex items-center justify-center gap-2">
+                        <span onclick="navigate('utama')" class="cursor-pointer hover:text-white"><i class="fas fa-home mr-1"></i> Utama</span>
+                        <span>::</span>
+                        <span class="text-amber-400">Muat Turun Dokumen</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="max-w-5xl mx-auto px-4 sm:px-6">
+                <div class="bg-white rounded-3xl p-6 sm:p-10 md:p-12 shadow-sm border border-gray-100">
+                    <h2 id="borang-hep-title" class="text-2xl sm:text-3xl font-extrabold text-[#0b2545] mb-4">Borang HEP</h2>
+                    <div id="borang-hep-notes" class="space-y-3 text-xs sm:text-base text-[#1e3a5f] mb-10 leading-relaxed border-b border-gray-100 pb-8">
+                        <!-- Dijana oleh JS -->
+                    </div>
+
+                    <!-- Grid 2 Lajur Senarai Borang HEP Seperti Imej Rujukan -->
+                    <div id="borang-hep-grid" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                        <!-- Dijana oleh JS -->
+                    </div>
                 </div>
             </div>
         </section>
@@ -661,11 +872,16 @@
                     </div>
                     <div class="pt-1 flex flex-col gap-2">
                         <button type="submit" class="w-full py-2.5 bg-[#0b2545] hover:bg-[#163a66] text-white font-extrabold rounded-xl shadow transition flex items-center justify-center gap-2">
-                            <i class="fas fa-paper-plane"></i> Hantar ke Sistem Admin JHEP
+                            <i class="fas fa-envelope"></i> Hantar ke E-mel & Sistem Admin JHEP
                         </button>
-                        <button type="button" onclick="sendInquiryViaWhatsApp()" class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition flex items-center justify-center gap-1.5">
-                            <i class="fab fa-whatsapp text-sm"></i> Hantar Terus Melalui WhatsApp
-                        </button>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button type="button" onclick="sendInquiryViaEmail()" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition flex items-center justify-center gap-1.5">
+                                <i class="fas fa-paper-plane text-xs"></i> Buka E-mel Terus
+                            </button>
+                            <button type="button" onclick="sendInquiryViaWhatsApp()" class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition flex items-center justify-center gap-1.5">
+                                <i class="fab fa-whatsapp text-sm"></i> WhatsApp
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -730,9 +946,11 @@
                 <a href="#cms-sec-1" onclick="closeAdminSidebarMobile()" class="block px-3 py-2.5 rounded-lg hover:bg-white/10">1. Logo & 3 Slide Carousel</a>
                 <a href="#cms-sec-2" onclick="closeAdminSidebarMobile()" class="block px-3 py-2.5 rounded-lg hover:bg-white/10">2. Pautan 4 Kad Modul Utama</a>
                 <a href="#cms-sec-3" onclick="closeAdminSidebarMobile()" class="block px-3 py-2.5 rounded-lg hover:bg-white/10">3. Halaman Pengenalan</a>
+                <a href="#cms-sec-3b" onclick="closeAdminSidebarMobile()" class="block px-3 py-2.5 rounded-lg bg-indigo-500/20 text-indigo-200 font-semibold hover:bg-indigo-500/30">3B. Program Pengajian & Mohon</a>
                 <a href="#cms-sec-4" onclick="closeAdminSidebarMobile()" class="block px-3 py-2.5 rounded-lg hover:bg-white/10">4. Carta Organisasi & Staf</a>
                 <a href="#cms-sec-5" onclick="closeAdminSidebarMobile()" class="block px-3 py-2.5 rounded-lg hover:bg-white/10">5. Kelab (Link Luar) & QR</a>
                 <a href="#cms-sec-6" onclick="closeAdminSidebarMobile()" class="block px-3 py-2.5 rounded-lg hover:bg-white/10">6. Perkhidmatan & Galeri (3 Imej)</a>
+                <a href="#cms-sec-6c" onclick="closeAdminSidebarMobile()" class="block px-3 py-2.5 rounded-lg bg-blue-500/20 text-blue-200 font-semibold hover:bg-blue-500/30">6C. Muat Turun Borang HEP</a>
                 <a href="#cms-sec-7" onclick="closeAdminSidebarMobile()" class="block px-3 py-2.5 rounded-lg hover:bg-white/10">7. Pencapaian KPI & Laporan</a>
                 <a href="#cms-sec-8" onclick="closeAdminSidebarMobile()" class="block px-3 py-2.5 rounded-lg hover:bg-white/10">8. Soalan Lazim (FAQ)</a>
                 <a href="#cms-sec-9" onclick="closeAdminSidebarMobile()" class="block px-3 py-2.5 rounded-lg hover:bg-white/10">9. Statistik Sesi & Jabatan</a>
@@ -885,6 +1103,65 @@
                             </div>
                         </div>
 
+                        <!-- 3B. Program Pengajian & Cara Memohon (CRUD Baharu) -->
+                        <div id="cms-sec-3b">
+                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-2 mb-4 gap-2">
+                                <div>
+                                    <h3 class="text-base sm:text-lg font-bold text-[#2b1b54]">3B. Halaman Program Pengajian & Cara Memohon (CRUD)</h3>
+                                    <p class="text-xs text-gray-500">Urus senarai program diploma yang ditawarkan serta pautan permohonan UPU / MyPolyCC.</p>
+                                </div>
+                                <button type="button" onclick="addRow('table-programs')" class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 shrink-0"><i class="fas fa-plus mr-1"></i> Tambah Program Pengajian</button>
+                            </div>
+
+                            <div class="border rounded-xl overflow-x-auto mb-6">
+                                <table class="w-full text-sm text-left min-w-[780px]">
+                                    <thead class="bg-gray-100 font-bold text-gray-700 text-xs uppercase">
+                                        <tr>
+                                            <th class="p-2.5 w-28">Gambar</th>
+                                            <th class="p-2.5 w-56">Nama Program & Kod</th>
+                                            <th class="p-2.5">Penerangan Program</th>
+                                            <th class="p-2.5 w-48">Muat Naik / URL Gambar & Pautan</th>
+                                            <th class="p-2.5 w-10 text-center">X</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-programs" class="divide-y divide-gray-200"></tbody>
+                                </table>
+                            </div>
+
+                            <!-- Tetapan Cara Memohon -->
+                            <div class="bg-blue-50/60 p-4 rounded-xl border border-blue-100 space-y-4">
+                                <h4 class="font-bold text-sm text-[#0b2545]"><i class="fas fa-user-check mr-1.5 text-blue-600"></i> Tetapan Halaman "Cara Memohon"</h4>
+                                <div class="grid sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Tajuk Kad Utama (Cth: Sambung Diploma?)</label>
+                                        <input type="text" id="cms-apply-title" class="w-full p-2 border rounded bg-white text-xs sm:text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">URL Gambar Pelajar (Sebelah Kanan)</label>
+                                        <input type="text" id="cms-apply-img" class="w-full p-2 border rounded bg-white text-xs sm:text-sm font-mono">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">Penerangan "Sambung Diploma?" (1 Perenggan = 1 Baris)</label>
+                                    <textarea id="cms-apply-desc" rows="4" class="w-full p-2 border rounded bg-white text-xs"></textarea>
+                                </div>
+                                <div class="grid sm:grid-cols-3 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Pautan UPU Online (Sesi I)</label>
+                                        <input type="text" id="cms-apply-upu-url" class="w-full p-2 border rounded bg-white text-xs font-mono text-blue-600">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Pautan Portal MyPolyCC (Sesi II)</label>
+                                        <input type="text" id="cms-apply-poly-url" class="w-full p-2 border rounded bg-white text-xs font-mono text-blue-600">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Pautan Butang Semak Kelayakan</label>
+                                        <input type="text" id="cms-apply-check-url" class="w-full p-2 border rounded bg-white text-xs font-mono text-blue-600">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- 4. Carta Organisasi & Kakitangan -->
                         <div id="cms-sec-4">
                             <div class="flex justify-between items-center border-b pb-2 mb-4">
@@ -988,6 +1265,44 @@
                             </div>
                         </div>
 
+                        <!-- 6C. Muat Turun Dokumen / Borang HEP (CRUD Baharu) -->
+                        <div id="cms-sec-6c">
+                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-2 mb-4 gap-2">
+                                <div>
+                                    <h3 class="text-base sm:text-lg font-bold text-[#2b1b54]">6C. Halaman Muat Turun Dokumen / Borang HEP (CRUD)</h3>
+                                    <p class="text-xs text-gray-500">Urus senarai borang rasmi HEP seperti Tangguh Pengajian, Tukar Politeknik, Rayuan Saman, dan lain-lain.</p>
+                                </div>
+                                <button type="button" onclick="addRow('table-borang')" class="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700 shrink-0"><i class="fas fa-plus mr-1"></i> Tambah Borang HEP</button>
+                            </div>
+
+                            <div class="grid sm:grid-cols-3 gap-4 mb-4 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">Tajuk Bahagian Borang</label>
+                                    <input type="text" id="cms-borang-title" class="w-full p-2 border rounded bg-white text-xs sm:text-sm font-bold">
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">Nota Arahan Kepada Pelajar (1 Baris = 1 Arahan)</label>
+                                    <textarea id="cms-borang-notes" rows="3" class="w-full p-2 border rounded bg-white text-xs"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="border rounded-xl overflow-x-auto">
+                                <table class="w-full text-sm text-left min-w-[760px]">
+                                    <thead class="bg-gray-100 font-bold text-gray-700 text-xs uppercase">
+                                        <tr>
+                                            <th class="p-2.5 w-36">Ikon FontAwesome</th>
+                                            <th class="p-2.5 w-48">Nama Borang / Dokumen</th>
+                                            <th class="p-2.5 w-36">Teks Pautan</th>
+                                            <th class="p-2.5 w-52">Nota Tambahan (Pilihan)</th>
+                                            <th class="p-2.5">Pautan Muat Turun (URL Drive/PDF)</th>
+                                            <th class="p-2.5 w-10 text-center">X</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-borang" class="divide-y divide-gray-200"></tbody>
+                                </table>
+                            </div>
+                        </div>
+
                         <!-- 7. Pencapaian KPI & Link Google Drive Laporan KPI -->
                         <div id="cms-sec-7">
                             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-2 mb-4 gap-2">
@@ -1056,15 +1371,16 @@
                                 <button type="button" onclick="addRow('table-sessions')" class="text-xs bg-pink-600 text-white px-3 py-1.5 rounded-lg hover:bg-pink-700 shrink-0"><i class="fas fa-plus mr-1"></i> Tambah Tahun / Sesi</button>
                             </div>
                             <div class="border rounded-xl overflow-x-auto mb-8">
-                                <table class="w-full text-sm text-left min-w-[720px]">
+                                <table class="w-full text-sm text-left min-w-[780px]">
                                     <thead class="bg-gray-100 font-bold text-gray-700 text-xs uppercase">
                                         <tr>
                                             <th class="p-2.5">Tahun & Sesi (cth: Sesi I 2025/2026)</th>
-                                            <th class="p-2.5 w-24 text-center">JTMK</th>
-                                            <th class="p-2.5 w-24 text-center">JKE</th>
-                                            <th class="p-2.5 w-24 text-center">JKM</th>
-                                            <th class="p-2.5 w-24 text-center">JP</th>
-                                            <th class="p-2.5 w-24 text-center">JRKV</th>
+                                            <th class="p-2.5 w-20 text-center">JTMK</th>
+                                            <th class="p-2.5 w-20 text-center">JKE</th>
+                                            <th class="p-2.5 w-20 text-center">JKM</th>
+                                            <th class="p-2.5 w-20 text-center">JP</th>
+                                            <th class="p-2.5 w-20 text-center">JRKV</th>
+                                            <th class="p-2.5 w-20 text-center">JPH</th>
                                             <th class="p-2.5 w-10 text-center">X</th>
                                         </tr>
                                     </thead>
@@ -1279,19 +1595,20 @@
                 b2List: "Menguruskan Bantuan Kewangan | Kebanyakan pelajar kursus diploma mendapat tajaan daripada Perbadanan Tabung Pendidikan Tinggi Nasional (PTPTN). Sebilangan kecil pelajar mendapat tajaan daripada sumber lain seperti JPA, KUOK Foundation, Yayasan Sime Darby, Yayasan Negeri, MARA dan penaja lain.\nMenguruskan Kebajikan Pelajar | Menguruskan tuntutan insurans berkelompok, bantuan kecemasan kematian, serta kebajikan kesihatan pelajar.\nPengurusan Disiplin Pelajar | Memastikan peraturan am institusi dan akta pendidikan tinggi dipatuhi oleh setiap pelajar."
             },
             sessionStats: [
-                { session: "Sesi I 2023/2024", JTMK: 280, JKE: 310, JKM: 250, JP: 290, JRKV: 190 },
-                { session: "Sesi II 2023/2024", JTMK: 295, JKE: 325, JKM: 260, JP: 305, JRKV: 205 },
-                { session: "Sesi I 2024/2025", JTMK: 310, JKE: 340, JKM: 275, JP: 315, JRKV: 215 },
-                { session: "Sesi II 2024/2025", JTMK: 330, JKE: 355, JKM: 290, JP: 325, JRKV: 225 },
-                { session: "Sesi I 2025/2026", JTMK: 345, JKE: 370, JKM: 300, JP: 340, JRKV: 235 },
-                { session: "Sesi II 2025/2026", JTMK: 360, JKE: 390, JKM: 315, JP: 350, JRKV: 245 }
+                { session: "Sesi I 2023/2024", JTMK: 280, JKE: 310, JKM: 250, JP: 290, JRKV: 190, JPH: 210 },
+                { session: "Sesi II 2023/2024", JTMK: 295, JKE: 325, JKM: 260, JP: 305, JRKV: 205, JPH: 225 },
+                { session: "Sesi I 2024/2025", JTMK: 310, JKE: 340, JKM: 275, JP: 315, JRKV: 215, JPH: 235 },
+                { session: "Sesi II 2024/2025", JTMK: 330, JKE: 355, JKM: 290, JP: 325, JRKV: 225, JPH: 245 },
+                { session: "Sesi I 2025/2026", JTMK: 345, JKE: 370, JKM: 300, JP: 340, JRKV: 235, JPH: 260 },
+                { session: "Sesi II 2025/2026", JTMK: 360, JKE: 390, JKM: 315, JP: 350, JRKV: 245, JPH: 275 }
             ],
             departments: [
                 { acronym: "JTMK", name: "Jabatan Teknologi Maklumat & Komunikasi", jumlah: 360, lelaki: 200, perempuan: 160, hpnm: "3.78", theme: "blue" },
                 { acronym: "JKE", name: "Jabatan Kejuruteraan Elektrik", jumlah: 390, lelaki: 250, perempuan: 140, hpnm: "3.55", theme: "purple" },
                 { acronym: "JKM", name: "Jabatan Kejuruteraan Mekanikal", jumlah: 315, lelaki: 235, perempuan: 80, hpnm: "3.43", theme: "pink" },
                 { acronym: "JP", name: "Jabatan Perdagangan", jumlah: 350, lelaki: 130, perempuan: 220, hpnm: "3.74", theme: "green" },
-                { acronym: "JRKV", name: "Jabatan Rekabentuk & Komunikasi Visual", jumlah: 245, lelaki: 115, perempuan: 130, hpnm: "3.77", theme: "orange" }
+                { acronym: "JRKV", name: "Jabatan Rekabentuk & Komunikasi Visual", jumlah: 245, lelaki: 115, perempuan: 130, hpnm: "3.77", theme: "orange" },
+                { acronym: "JPH", name: "Jabatan Pelancongan & Hospitaliti", jumlah: 275, lelaki: 110, perempuan: 165, hpnm: "3.72", theme: "blue" }
             ],
             staff: [
                 { nama: "Nasrul Effendy bin Mat Nasir", jawatan: "Ketua Jabatan Hal Ehwal Pelajar", tel: "6202", emel: "nasrul.effendy" },
@@ -1311,6 +1628,51 @@
                 "Bantuan Kewangan & Biasiswa", 
                 "Perkhidmatan Kaunseling dan Kerjaya"
             ],
+            programsData: {
+                bannerTitle: "Program Pengajian @ PTSS",
+                items: [
+                    {
+                        title: "Diploma Teknologi Maklumat (DIT)",
+                        desc: "Program pengajian Diploma Teknologi Maklumat ini menyediakan pendidikan dan latihan di dalam bidang Pengkomputeran dengan penekanan khusus pada bidang Teknologi Maklumat. Kursus-kursus yang ditawarkan dikelompokkan kepada modul seperti Platform Technologies, Computing Foundation, Programming Essentials, Industry-Led modules dan Industry Domain Cluster yang merujuk kepada tugas tertentu. Kursus-kursus yang ditawarkan memberi peluang kepada para pelajar untuk mencapai pelbagai kerjaya dalam pelbagai sektor ICT.",
+                        img: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?auto=format&fit=crop&w=800&q=80",
+                        link: "http://ambilan.mypolycc.edu.my"
+                    },
+                    {
+                        title: "Diploma Rekabentuk Grafik (DRG)",
+                        desc: "Bidang pengajian rekabentuk grafik merangkumi bidang asas seni lukis, rekabentuk komunikasi visual, teknologi serta amalan perniagaan. Program ini merangkumi tempoh pengajian selama lima semester akademik serta satu semester latihan industri iaitu pada semester keenam untuk mendapat pengalaman dan pendedahan bekerja di dalam bidang. Penekanan juga diberikan pada pengurusan acara dan portfolio serta teknik persembahan yang dapat menunjukkan keupayaan para pelajar untuk menterjemahkan hasil kreatif yang menarik ke dalam rekabentuk cetak mahupun berasaskan web.",
+                        img: "https://images.unsplash.com/photo-1572044162444-ad60f128bdea?auto=format&fit=crop&w=800&q=80",
+                        link: "http://ambilan.mypolycc.edu.my"
+                    },
+                    {
+                        title: "Diploma Kejuruteraan Elektronik (Komunikasi) (DEP)",
+                        desc: "Program ini direka bentuk untuk melahirkan pembantu jurutera mahir dalam bidang telekomunikasi, rangkaian wayarles, sistem gentian optik, serta peranti pintar IoT selaras dengan keperluan revolusi industri semasa.",
+                        img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
+                        link: "http://ambilan.mypolycc.edu.my"
+                    }
+                ],
+                applyInfo: {
+                    heroTitle: "Sambung Diploma?",
+                    heroDesc: "Ada antara kita rasa macam nak cepat masuk pasaran kerja. Jika ini menggambarkan perasaan anda, diploma adalah pilihan yang sesuai untuk anda.\nAnda boleh mengambil bidang pengajian yang serupa dengan ijazah, tetapi anda akan menghabiskan lebih sedikit masa. Diploma di politeknik hanya akan mengambil masa 3 tahun dengan 60% praktikal dan 40% teori.\nSebaik sahaja anda menamatkan diploma anda, anda boleh memilih untuk mula bekerja dengan segera atau meneruskan ke program ijazah. Ijazah Sarjana Muda anda akan mengambil masa yang lebih singkat.",
+                    heroImg: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=700&q=80",
+                    upuUrl: "https://upu.mohe.gov.my",
+                    polyUrl: "http://ambilan.mypolycc.edu.my",
+                    checkUrl: "http://ambilan.mypolycc.edu.my"
+                }
+            },
+            borangData: {
+                title: "Borang HEP",
+                notes: "Pelajar perlu mengisi dan mendapatkan tandatangan Pegawai bagi setiap seksyen borang.\nBorang perlu diserahkan ke kaunter JHEP untuk tandatangan Ketua Jabatan Hal Ehwal Pelajar dan Pengarah Politeknik.\nPelajar masih berstatus AKTIF sehingga mendapat kelulusan Pengarah.",
+                items: [
+                    { icon: "fa-pause", title: "Tangguh Pengajian", linkText: "Muat turun borang", note: "(Permohonan sehingga Minggu ke-11)", url: "https://drive.google.com/drive/folders/1pHjWF-WYlZolWwqpP0STOeSYAen4IEkw" },
+                    { icon: "fa-exchange-alt", title: "Tukar Politeknik", linkText: "Muat turun borang", note: "(Permohonan Minggu ke-8 hingga ke-12)", url: "https://drive.google.com/drive/folders/1pHjWF-WYlZolWwqpP0STOeSYAen4IEkw" },
+                    { icon: "fa-random", title: "Tukar Program", linkText: "Muat turun borang", note: "", url: "https://drive.google.com/drive/folders/1pHjWF-WYlZolWwqpP0STOeSYAen4IEkw" },
+                    { icon: "fa-walking", title: "Berhenti Pengajian", linkText: "Muat turun borang", note: "", url: "https://drive.google.com/drive/folders/1pHjWF-WYlZolWwqpP0STOeSYAen4IEkw" },
+                    { icon: "fa-hourglass-half", title: "Lewat Lapor Diri", linkText: "Muat turun borang", note: "", url: "https://drive.google.com/drive/folders/1pHjWF-WYlZolWwqpP0STOeSYAen4IEkw" },
+                    { icon: "fa-user-shield", title: "Rayuan Saman", linkText: "Muat turun surat", note: "", url: "https://drive.google.com/drive/folders/1pHjWF-WYlZolWwqpP0STOeSYAen4IEkw" },
+                    { icon: "fa-calendar-alt", title: "Kalendar Akademik", linkText: "Muat turun", note: "", url: "https://drive.google.com/drive/folders/1pHjWF-WYlZolWwqpP0STOeSYAen4IEkw" },
+                    { icon: "fa-id-card", title: "Gantian Kad Pelajar", linkText: "Muat turun", note: "", url: "https://drive.google.com/drive/folders/1pHjWF-WYlZolWwqpP0STOeSYAen4IEkw" }
+                ]
+            },
             galeri: [
                 { 
                     title: "Minggu Suai Kenal Pelajar Baharu", 
@@ -1703,13 +2065,17 @@
             const target = document.getElementById('sec-' + pageId);
             if(target) target.classList.add('active');
 
+            // Highlight parent nav link termasuk jika sub-page dipilih (Gaya Kapsul Aktif)
+            let activeMenuTarget = pageId;
+            if (pageId === 'permohonan') activeMenuTarget = 'program';
+            if (pageId === 'borang') activeMenuTarget = 'perkhidmatan';
+            if (pageId === 'statistik' || pageId === 'faq') activeMenuTarget = 'kpi';
+
             document.querySelectorAll('.nav-link').forEach(el => {
-                if(el.dataset.target === pageId) {
-                    el.classList.add('text-[#2b1b54]', 'font-bold', 'border-[#2b1b54]');
-                    el.classList.remove('border-transparent');
+                if(el.dataset.target === activeMenuTarget) {
+                    el.classList.add('bg-white', 'text-[#2b1b54]', 'font-extrabold', 'shadow-sm');
                 } else {
-                    el.classList.remove('text-[#2b1b54]', 'font-bold', 'border-[#2b1b54]');
-                    el.classList.add('border-transparent');
+                    el.classList.remove('bg-white', 'text-[#2b1b54]', 'font-extrabold', 'shadow-sm');
                 }
             });
 
@@ -1747,6 +2113,16 @@
                     }
                 }
             } catch(e) { console.warn("Guna data sedia ada."); }
+
+            // Pastikan JPH wujud dalam senarai Jabatan jika data lama dimuatkan
+            if (Array.isArray(appData.departments) && !appData.departments.some(d => (d.acronym || '').toUpperCase() === 'JPH')) {
+                appData.departments.push({ acronym: "JPH", name: "Jabatan Pelancongan & Hospitaliti", jumlah: 275, lelaki: 110, perempuan: 165, hpnm: "3.72", theme: "blue" });
+            }
+            if (Array.isArray(appData.sessionStats)) {
+                appData.sessionStats.forEach(s => {
+                    if (typeof s.JPH === 'undefined') s.JPH = 0;
+                });
+            }
             
             renderFrontend();
             startCarousel();
@@ -1892,6 +2268,10 @@
 
             renderGaleriGrid();
 
+            // 7B. Render Halaman Program Pengajian, Cara Memohon & Muat Turun Borang HEP
+            renderProgramsAndApplyPage();
+            renderBorangHepPage();
+
             // 8. Halaman Pencapaian KPI
             renderKpiPage();
 
@@ -2000,6 +2380,99 @@
             }
 
             renderSessionChart();
+        }
+
+        // ==========================================
+        // RENDER PROGRAM PENGAJIAN, CARA MEMOHON & BORANG HEP
+        // ==========================================
+        function renderProgramsAndApplyPage() {
+            const progData = appData.programsData || { bannerTitle: "Program Pengajian @ PTSS", items: [], applyInfo: {} };
+            if (document.getElementById('program-banner-title')) {
+                document.getElementById('program-banner-title').innerText = progData.bannerTitle || "Program Pengajian @ PTSS";
+            }
+
+            const listContainer = document.getElementById('program-list-container');
+            if (listContainer) {
+                const items = progData.items || [];
+                listContainer.innerHTML = items.map((p, idx) => {
+                    const isEven = idx % 2 === 1;
+                    const imgSrc = p.img || 'https://placehold.co/600x400/e2e8f0/1e293b?text=Program+PTSS';
+                    const linkHref = (p.link || 'http://ambilan.mypolycc.edu.my').trim();
+                    return `
+                    <div class="grid md:grid-cols-2 gap-8 sm:gap-12 items-center bg-white p-6 sm:p-10 rounded-3xl shadow-sm border border-gray-100">
+                        <div class="${isEven ? 'md:order-2' : ''}">
+                            <div class="rounded-2xl overflow-hidden shadow-md h-[250px] sm:h-[320px] bg-gray-100">
+                                <img src="${imgSrc}" alt="${p.title}" class="w-full h-full object-cover hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x400/e2e8f0/1e293b?text=Program+PTSS'">
+                            </div>
+                        </div>
+                        <div class="${isEven ? 'md:order-1' : ''}">
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-[#12324a] mb-4 leading-snug">${p.title || 'Program Diploma'}</h2>
+                            <p class="text-xs sm:text-sm text-gray-600 leading-relaxed mb-6">${p.desc || ''}</p>
+                            <a href="${linkHref}" target="_blank" rel="noopener noreferrer" class="inline-block px-6 py-2.5 rounded-full bg-[#4a78df] hover:bg-[#3662c9] text-white font-bold text-xs sm:text-sm shadow transition">
+                                Baca lagi...
+                            </a>
+                        </div>
+                    </div>`;
+                }).join('');
+            }
+
+            // Cara Memohon
+            const apply = progData.applyInfo || {};
+            if (document.getElementById('apply-hero-title')) {
+                document.getElementById('apply-hero-title').innerText = apply.heroTitle || "Sambung Diploma?";
+            }
+            if (document.getElementById('apply-hero-img') && apply.heroImg) {
+                document.getElementById('apply-hero-img').src = apply.heroImg;
+            }
+            if (document.getElementById('apply-hero-desc')) {
+                const paragraphs = (apply.heroDesc || "").split('\n').filter(line => line.trim() !== '');
+                document.getElementById('apply-hero-desc').innerHTML = paragraphs.map(para => `<p>${para}</p>`).join('');
+            }
+            if (document.getElementById('apply-upu-btn')) {
+                document.getElementById('apply-upu-btn').href = apply.upuUrl || "https://upu.mohe.gov.my";
+            }
+            if (document.getElementById('apply-upu-date-link')) {
+                document.getElementById('apply-upu-date-link').href = apply.upuUrl || "https://upu.mohe.gov.my";
+            }
+            if (document.getElementById('apply-poly-btn')) {
+                document.getElementById('apply-poly-btn').href = apply.polyUrl || "http://ambilan.mypolycc.edu.my";
+            }
+            if (document.getElementById('apply-check-btn')) {
+                document.getElementById('apply-check-btn').href = apply.checkUrl || "http://ambilan.mypolycc.edu.my";
+            }
+        }
+
+        function renderBorangHepPage() {
+            const bData = appData.borangData || { title: "Borang HEP", notes: "", items: [] };
+            if (document.getElementById('borang-hep-title')) {
+                document.getElementById('borang-hep-title').innerText = bData.title || "Borang HEP";
+            }
+            if (document.getElementById('borang-hep-notes')) {
+                const lines = (bData.notes || "").split('\n').filter(l => l.trim() !== '');
+                document.getElementById('borang-hep-notes').innerHTML = lines.map(l => `<p>${l}</p>`).join('');
+            }
+            const grid = document.getElementById('borang-hep-grid');
+            if (grid) {
+                const items = bData.items || [];
+                grid.innerHTML = items.map(item => {
+                    const iconClass = item.icon || 'fa-file-alt';
+                    const rawUrl = (item.url || '#').trim();
+                    const hrefUrl = rawUrl.startsWith('http') || rawUrl === '#' ? rawUrl : 'https://' + rawUrl;
+                    return `
+                    <div class="flex items-start gap-5 pb-6 border-b border-gray-100">
+                        <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-2 border-[#4a78df] flex items-center justify-center shrink-0 text-slate-900 text-xl sm:text-2xl shadow-sm bg-white">
+                            <i class="fas ${iconClass}"></i>
+                        </div>
+                        <div class="pt-1">
+                            <h4 class="font-extrabold text-[#0b2545] text-sm sm:text-base mb-1">${item.title || 'Dokumen HEP'}</h4>
+                            <a href="${hrefUrl}" target="_blank" rel="noopener noreferrer" class="text-amber-500 hover:text-amber-600 underline font-semibold text-xs sm:text-sm inline-block mb-1">
+                                ${item.linkText || 'Muat turun borang'}
+                            </a>
+                            ${item.note ? `<p class="text-xs text-[#1e3a5f]">${item.note}</p>` : ''}
+                        </div>
+                    </div>`;
+                }).join('');
+            }
         }
 
         // ==========================================
@@ -2165,7 +2638,23 @@
             sendBtn.innerText = 'Hantar';
         }
 
-        // HANTAR PERTANYAAN / MAKLUM BALAS PELAJAR KE SISTEM ADMIN & GOOGLE SHEETS
+        // HANTAR PERTANYAAN / MAKLUM BALAS PELAJAR KE E-MEL, SISTEM ADMIN & GOOGLE SHEETS
+        function triggerAdminEmailClient(name, matric, phone, category, message) {
+            const rawEmail = (appData.footer?.emel || 'info@ptss.edu.my').replace('[at]', '@').trim();
+            const subject = `[PORTAL JHEP PTSS] ${category} - ${name} (${matric})`;
+            const body = `Salam Sejahtera Pentadbir JHEP PTSS,\n\nBerikut adalah butiran pertanyaan / maklum balas pelajar daripada Portal JHEP Digital:\n\nNama Pelajar: ${name}\nNo. Matrik / IC: ${matric}\nNo. Telefon / WhatsApp: ${phone}\nKategori Urusan: ${category}\n\nPertanyaan / Maklum Balas:\n${message}\n\nTerima kasih.`;
+            window.location.href = `mailto:${rawEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+
+        function sendInquiryViaEmail() {
+            const name = document.getElementById('inq-name').value.trim() || 'Pelajar PTSS';
+            const matric = document.getElementById('inq-matric').value.trim() || '-';
+            const phone = document.getElementById('inq-phone').value.trim() || '-';
+            const category = document.getElementById('inq-category').value;
+            const message = document.getElementById('inq-message').value.trim() || 'Ingin membuat pertanyaan.';
+            triggerAdminEmailClient(name, matric, phone, category, message);
+        }
+
         async function handleStudentInquirySubmit(e) {
             e.preventDefault();
             const name = document.getElementById('inq-name').value.trim();
@@ -2202,15 +2691,19 @@
                 }
             } catch (err) { console.warn(err); }
 
+            // Buka aplikasi e-mel untuk menghantar terus ke e-mel JHEP
+            triggerAdminEmailClient(name, matric, phone, category, message);
+
             // Reset borang & beri maklum balas dalam chat
             document.getElementById('inq-name').value = '';
             document.getElementById('inq-matric').value = '';
             document.getElementById('inq-phone').value = '';
             document.getElementById('inq-message').value = '';
 
+            const targetEmail = (appData.footer?.emel || 'info@ptss.edu.my').replace('[at]', '@');
             switchChatTab('ai');
-            appendChatMessage('bot', `<span class="text-emerald-700 font-bold"><i class="fas fa-check-circle mr-1"></i> Maklum Balas Diterima!</span><br>Terima kasih <b>${name}</b> (${matric}). Pertanyaan anda di bawah kategori <i>${category}</i> telah direkodkan ke dalam Papan Pemuka Admin JHEP.`);
-            showToast("Pertanyaan anda telah dihantar kepada Admin JHEP!");
+            appendChatMessage('bot', `<span class="text-emerald-700 font-bold"><i class="fas fa-check-circle mr-1"></i> Maklum Balas Disimpan & Dihantar ke E-mel!</span><br>Terima kasih <b>${name}</b> (${matric}). Pertanyaan anda di bawah kategori <i>${category}</i> telah direkodkan ke dalam sistem Admin dan pautan e-mel ke <b>${targetEmail}</b> telah dibuka.`);
+            showToast("Maklum balas direkodkan & sedia dihantar ke E-mel JHEP!");
         }
 
         function sendInquiryViaWhatsApp() {
@@ -2350,7 +2843,8 @@
             items.forEach(item => {
                 const p = parseFloat(item.percent) || 0;
                 sumPct += p;
-                if ((item.status || '').toLowerCase().includes('tercapai') || p >= 100) {
+                const st = (item.status || '').toLowerCase();
+                if ((st.includes('tercapai') && !st.includes('belum')) || p >= 100) {
                     achievedCount++;
                 }
             });
@@ -2362,11 +2856,23 @@
 
             document.getElementById('kpi-public-tbody').innerHTML = items.map(item => {
                 const pct = Math.min(100, Math.max(0, parseFloat(item.percent) || 0));
-                const isDone = (item.status || '').toLowerCase().includes('tercapai') || pct >= 100;
-                const badgeClass = isDone 
-                    ? 'bg-emerald-100 text-emerald-700 border-emerald-200' 
-                    : 'bg-amber-100 text-amber-700 border-amber-200';
-                const barClass = isDone ? 'bg-emerald-500' : 'bg-indigo-600';
+                const statusLower = (item.status || '').toLowerCase();
+                const isBelum = statusLower.includes('belum');
+                const isDalamTindakan = statusLower.includes('tindakan') || statusLower.includes('dalam');
+
+                let badgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-200';
+                let barClass = 'bg-emerald-500';
+
+                if (isBelum) {
+                    // KPI Belum Tercapai -> Merah
+                    badgeClass = 'bg-red-100 text-red-700 border-red-200';
+                    barClass = 'bg-red-500';
+                } else if (isDalamTindakan) {
+                    // KPI Dalam Tindakan -> Kuning
+                    badgeClass = 'bg-amber-100 text-amber-800 border-amber-300';
+                    barClass = 'bg-amber-400';
+                }
+
                 const repLink = (item.reportUrl || kpiObj.driveLink || '').trim();
 
                 return `
@@ -2384,10 +2890,10 @@
                         </div>
                     </td>
                     <td class="p-4 sm:p-5 text-center">
-                        <span class="px-3 py-1 rounded-full text-xs font-bold border ${badgeClass}">${item.status || 'Tercapai'}</span>
+                        <span class="inline-block whitespace-nowrap px-3.5 py-1 rounded-full text-xs font-bold border ${badgeClass}">${item.status || 'Tercapai'}</span>
                     </td>
                     <td class="p-4 sm:p-5 text-center">
-                        ${repLink ? `<a href="${repLink.startsWith('http') ? repLink : 'https://' + repLink}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-xs font-bold transition"><i class="fab fa-google-drive mr-1.5"></i> Folder Bukti</a>` : '<span class="text-gray-400 text-xs">-</span>'}
+                        ${repLink ? `<a href="${repLink.startsWith('http') ? repLink : 'https://' + repLink}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center whitespace-nowrap px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-xs font-bold transition"><i class="fab fa-google-drive mr-1.5"></i> Folder Bukti</a>` : '<span class="text-gray-400 text-xs">-</span>'}
                     </td>
                 </tr>`;
             }).join('');
@@ -2415,7 +2921,7 @@
 
             const values = sessionsArr.map(s => {
                 if (filterVal === 'ALL') {
-                    return (parseInt(s.JTMK)||0) + (parseInt(s.JKE)||0) + (parseInt(s.JKM)||0) + (parseInt(s.JP)||0) + (parseInt(s.JRKV)||0);
+                    return (parseInt(s.JTMK)||0) + (parseInt(s.JKE)||0) + (parseInt(s.JKM)||0) + (parseInt(s.JP)||0) + (parseInt(s.JRKV)||0) + (parseInt(s.JPH)||0);
                 } else {
                     return parseInt(s[filterVal]) || 0;
                 }
@@ -2600,7 +3106,8 @@
                     <td class="p-1.5"><input type="number" class="w-full p-2 border rounded text-xs text-center" value="${data?.JKE ?? 0}"></td>
                     <td class="p-1.5"><input type="number" class="w-full p-2 border rounded text-xs text-center" value="${data?.JKM ?? 0}"></td>
                     <td class="p-1.5"><input type="number" class="w-full p-2 border rounded text-xs text-center" value="${data?.JP ?? 0}"></td>
-                    <td class="p-1.5"><input type="number" class="w-full p-2 border rounded text-xs text-center" value="${data?.JRKV ?? 0}"></td>`;
+                    <td class="p-1.5"><input type="number" class="w-full p-2 border rounded text-xs text-center" value="${data?.JRKV ?? 0}"></td>
+                    <td class="p-1.5"><input type="number" class="w-full p-2 border rounded text-xs text-center" value="${data?.JPH ?? 0}"></td>`;
             } else if(tableId === 'table-kelab') {
                 const kName = typeof data === 'string' ? data : (data?.name || '');
                 const kLink = typeof data === 'string' ? '' : (data?.link || '');
@@ -2687,10 +3194,53 @@
                     <td class="p-1.5 text-center align-middle">
                         ${formattedWa ? `<a href="${replyUrl}" target="_blank" class="inline-flex items-center px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold"><i class="fab fa-whatsapp mr-1"></i> Balas</a>` : '<span class="text-xs text-gray-400">-</span>'}
                     </td>`;
+            } else if(tableId === 'table-programs') {
+                const pImg = data?.img || 'https://placehold.co/300x200/e2e8f0/475569?text=Program';
+                html = `
+                    <td class="p-1.5 text-center align-top">
+                        <img src="${pImg}" class="prog-preview w-24 h-16 object-cover rounded border mx-auto bg-gray-100">
+                        <input type="hidden" class="prog-img-data" value="${pImg}">
+                    </td>
+                    <td class="p-1.5 align-top">
+                        <input type="text" class="prog-title w-full p-2 border rounded text-xs font-bold" placeholder="Diploma Teknologi Maklumat (DIT)" value="${data?.title || ''}">
+                    </td>
+                    <td class="p-1.5 align-top">
+                        <textarea rows="3" class="prog-desc w-full p-2 border rounded text-xs" placeholder="Penerangan program pengajian...">${data?.desc || ''}</textarea>
+                    </td>
+                    <td class="p-1.5 align-top space-y-1">
+                        <input type="file" accept="image/*" onchange="handleProgramRowImage(this)" class="w-full text-[10px]">
+                        <input type="text" placeholder="URL Gambar" value="${pImg.startsWith('http') ? pImg : ''}" onchange="handleProgramRowUrl(this)" class="w-full p-1 border rounded text-[10px]">
+                        <input type="text" class="prog-link w-full p-1 border rounded text-[10px] font-mono text-blue-600" placeholder="Link Baca Lagi (https://...)" value="${data?.link || 'http://ambilan.mypolycc.edu.my'}">
+                    </td>`;
+            } else if(tableId === 'table-borang') {
+                html = `
+                    <td class="p-1.5"><input type="text" class="w-full p-2 border rounded text-xs font-mono" placeholder="fa-pause" value="${data?.icon || 'fa-file-alt'}"></td>
+                    <td class="p-1.5"><input type="text" class="w-full p-2 border rounded text-xs font-bold" placeholder="Tangguh Pengajian" value="${data?.title || ''}"></td>
+                    <td class="p-1.5"><input type="text" class="w-full p-2 border rounded text-xs text-amber-600 font-semibold" placeholder="Muat turun borang" value="${data?.linkText || 'Muat turun borang'}"></td>
+                    <td class="p-1.5"><input type="text" class="w-full p-2 border rounded text-xs" placeholder="(Permohonan sehingga Minggu ke-11)" value="${data?.note || ''}"></td>
+                    <td class="p-1.5"><input type="text" class="w-full p-2 border rounded text-xs font-mono text-blue-600" placeholder="https://drive.google.com/..." value="${data?.url || ''}"></td>`;
             }
             html += `<td class="p-1.5 text-center align-middle"><button type="button" onclick="this.parentElement.parentElement.remove()" class="text-red-500 hover:bg-red-100 bg-red-50 p-2 rounded-lg" title="Padam Baris"><i class="fas fa-trash"></i></button></td>`;
             tr.innerHTML = html;
             tbody.appendChild(tr);
+        }
+
+        async function handleProgramRowImage(fileInput) {
+            if (fileInput.files && fileInput.files[0]) {
+                const compressed = await compressUniformGalleryImage(fileInput.files[0], 600, 380, 0.7);
+                const tr = fileInput.closest('tr');
+                tr.querySelector('.prog-preview').src = compressed;
+                tr.querySelector('.prog-img-data').value = compressed;
+            }
+        }
+
+        function handleProgramRowUrl(urlInput) {
+            const val = urlInput.value.trim();
+            if (val !== '') {
+                const tr = urlInput.closest('tr');
+                tr.querySelector('.prog-preview').src = val;
+                tr.querySelector('.prog-img-data').value = val;
+            }
         }
 
         // HANDLER GAMBAR CAROUSEL UTAMA (AUTO-CROP SAIZ BANNER SERAGAM 1280x440 & KEKAL WARNA TEMPLATE)
@@ -2803,12 +3353,23 @@
                     return;
                 }
 
+                if (tableId === 'table-programs') {
+                    data.push({
+                        title: row.querySelector('.prog-title')?.value || '',
+                        desc: row.querySelector('.prog-desc')?.value || '',
+                        img: row.querySelector('.prog-img-data')?.value || '',
+                        link: row.querySelector('.prog-link')?.value || ''
+                    });
+                    return;
+                }
+
                 const i = row.querySelectorAll('input:not([type="file"]), select, textarea');
                 if(tableId === 'table-home-cards') data.push({ title: i[0].value, desc: i[1].value, btnText: i[2].value, link: i[3].value });
                 else if(tableId === 'table-kakitangan') data.push({ nama: i[0].value, jawatan: i[1].value, tel: i[2].value, emel: i[3].value });
                 else if(tableId === 'table-jabatan') data.push({ acronym: i[0].value, name: i[1].value, jumlah: i[2].value, lelaki: i[3].value, perempuan: i[4].value, hpnm: i[5].value, theme: i[6].value });
-                else if(tableId === 'table-sessions') data.push({ session: i[0].value, JTMK: parseInt(i[1].value)||0, JKE: parseInt(i[2].value)||0, JKM: parseInt(i[3].value)||0, JP: parseInt(i[4].value)||0, JRKV: parseInt(i[5].value)||0 });
+                else if(tableId === 'table-sessions') data.push({ session: i[0].value, JTMK: parseInt(i[1].value)||0, JKE: parseInt(i[2].value)||0, JKM: parseInt(i[3].value)||0, JP: parseInt(i[4].value)||0, JRKV: parseInt(i[5].value)||0, JPH: parseInt(i[6].value)||0 });
                 else if(tableId === 'table-kelab') data.push({ name: i[0].value, link: i[1].value });
+                else if(tableId === 'table-borang') data.push({ icon: i[0].value, title: i[1].value, linkText: i[2].value, note: i[3].value, url: i[4].value });
                 else if(tableId === 'table-kpi') data.push({ code: i[0].value, name: i[1].value, target: i[2].value, achieved: i[3].value, percent: parseFloat(i[4].value)||0, status: i[5].value, reportUrl: i[6].value });
                 else if(tableId === 'table-faq') data.push({ q: i[0].value, a: i[1].value });
                 else if(tableId === 'table-inquiries') data.push({ date: i[0].value, name: i[1].value, matric: i[2].value, phone: i[3].value, category: i[4].value, message: i[5].value, status: i[6].value });
@@ -2869,6 +3430,23 @@
                 kelab: extractTableData('table-kelab'),
                 perkhidmatan: extractTableData('table-perkhidmatan'),
                 galeri: extractTableData('table-galeri'),
+                programsData: {
+                    bannerTitle: "Program Pengajian @ PTSS",
+                    items: extractTableData('table-programs'),
+                    applyInfo: {
+                        heroTitle: document.getElementById('cms-apply-title').value,
+                        heroImg: document.getElementById('cms-apply-img').value,
+                        heroDesc: document.getElementById('cms-apply-desc').value,
+                        upuUrl: document.getElementById('cms-apply-upu-url').value,
+                        polyUrl: document.getElementById('cms-apply-poly-url').value,
+                        checkUrl: document.getElementById('cms-apply-check-url').value
+                    }
+                },
+                borangData: {
+                    title: document.getElementById('cms-borang-title').value,
+                    notes: document.getElementById('cms-borang-notes').value,
+                    items: extractTableData('table-borang')
+                },
                 kpiData: {
                     title: document.getElementById('cms-kpi-title').value,
                     desc: document.getElementById('cms-kpi-desc').value,
@@ -2952,6 +3530,19 @@
             document.getElementById('cms-komuniti-desc').value = appData.komuniti?.desc || ""; 
             document.getElementById('cms-drive-link').value = appData.komuniti?.driveLink || "";
 
+            // Populate Program Pengajian & Cara Memohon
+            const applyInfo = appData.programsData?.applyInfo || {};
+            document.getElementById('cms-apply-title').value = applyInfo.heroTitle || "Sambung Diploma?";
+            document.getElementById('cms-apply-img').value = applyInfo.heroImg || "";
+            document.getElementById('cms-apply-desc').value = applyInfo.heroDesc || "";
+            document.getElementById('cms-apply-upu-url').value = applyInfo.upuUrl || "https://upu.mohe.gov.my";
+            document.getElementById('cms-apply-poly-url').value = applyInfo.polyUrl || "http://ambilan.mypolycc.edu.my";
+            document.getElementById('cms-apply-check-url').value = applyInfo.checkUrl || "http://ambilan.mypolycc.edu.my";
+
+            // Populate Borang HEP
+            document.getElementById('cms-borang-title').value = appData.borangData?.title || "Borang HEP";
+            document.getElementById('cms-borang-notes').value = appData.borangData?.notes || "";
+
             document.getElementById('cms-kpi-title').value = appData.kpiData?.title || "Pencapaian KPI JHEP PTSS";
             document.getElementById('cms-kpi-desc').value = appData.kpiData?.desc || "";
             document.getElementById('cms-kpi-drive').value = appData.kpiData?.driveLink || "";
@@ -2979,6 +3570,8 @@
             document.getElementById('table-kelab').innerHTML = ''; (appData.kelab || []).forEach(k => addRow('table-kelab', k));
             document.getElementById('table-perkhidmatan').innerHTML = ''; (appData.perkhidmatan || []).forEach(p => addRow('table-perkhidmatan', p));
             document.getElementById('table-galeri').innerHTML = ''; (appData.galeri || []).forEach(g => addRow('table-galeri', g));
+            document.getElementById('table-programs').innerHTML = ''; (appData.programsData?.items || []).forEach(pr => addRow('table-programs', pr));
+            document.getElementById('table-borang').innerHTML = ''; (appData.borangData?.items || []).forEach(br => addRow('table-borang', br));
             document.getElementById('table-kpi').innerHTML = ''; (appData.kpiData?.items || []).forEach(k => addRow('table-kpi', k));
             document.getElementById('table-faq').innerHTML = ''; (appData.faq || []).forEach(f => addRow('table-faq', f));
             document.getElementById('table-inquiries').innerHTML = ''; (appData.inquiries || []).forEach(inq => addRow('table-inquiries', inq));
