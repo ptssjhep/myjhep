@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JHEP Digital - Politeknik Tuanku Syed Sirajuddin</title>
+    <!-- Dynamic Favicon (Ikon Tab Browser) -->
+    <link id="site-favicon" rel="icon" type="image/png" href="https://placehold.co/100x100/db2777/ffffff?text=JHEP">
+    <link id="site-apple-icon" rel="apple-touch-icon" href="https://placehold.co/100x100/db2777/ffffff?text=JHEP">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome -->
@@ -797,7 +800,7 @@
         <aside id="admin-sidebar" class="fixed lg:static inset-y-0 left-0 z-50 w-72 bg-[#1a103c] text-white flex flex-col shrink-0 h-full transform -translate-x-full lg:translate-x-0 transition-transform duration-300 shadow-2xl lg:shadow-none">
             <div class="p-5 border-b border-white/10 flex items-center justify-between gap-3">
                 <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-xl bg-pink-600 flex items-center justify-center font-extrabold shadow-md">J</div>
+                    <div id="admin-sidebar-logo-box" class="w-9 h-9 rounded-xl bg-pink-600 flex items-center justify-center font-extrabold shadow-md overflow-hidden shrink-0">J</div>
                     <div>
                         <span class="font-extrabold tracking-wide text-sm block leading-none">JHEP ADMIN</span>
                         <span class="text-[10px] text-pink-300 font-semibold">Panel Kawalan CMS</span>
@@ -868,8 +871,8 @@
                                 <div class="flex items-center gap-3">
                                     <img id="preview-logo-cms" src="https://placehold.co/100x100/db2777/ffffff?text=JHEP" class="w-14 h-14 rounded-xl object-contain bg-white border p-1">
                                     <div class="flex-1">
-                                        <label class="block text-xs font-bold text-slate-700 mb-1">Muat Naik Logo</label>
-                                        <input type="file" id="cms-logo-img" accept="image/*" class="w-full text-xs">
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Muat Naik Logo & Ikon Tab</label>
+                                        <input type="file" id="cms-logo-img" accept="image/*" onchange="previewLogoAndFavicon(this)" class="w-full text-xs">
                                     </div>
                                 </div>
                                 <div>
@@ -1694,14 +1697,47 @@
 
         function renderGeneral() {
             if (appData.images?.logo && appData.images.logo.trim() !== "") {
-                document.getElementById('nav-logo').src = appData.images.logo;
+                const logoSrc = appData.images.logo;
+                document.getElementById('nav-logo').src = logoSrc;
                 const prev = document.getElementById('preview-logo-cms');
-                if (prev) prev.src = appData.images.logo;
+                if (prev) prev.src = logoSrc;
+                updateFaviconAndAdminLogo(logoSrc);
             }
             const heroHead = document.getElementById('main-hero-heading');
             const heroSub = document.getElementById('main-hero-subheading');
             if(heroHead) heroHead.innerText = appData.hero?.mainHeading || "Satu portal. Semua urusan.";
             if(heroSub) heroSub.innerText = appData.hero?.mainSubheading || "Pengurusan hal ehwal pelajar yang lebih mudah, tersusun dan berhubung.";
+        }
+
+        function updateFaviconAndAdminLogo(logoSrc) {
+            if (!logoSrc) return;
+            // Kemaskini ikon pada tab browser (Favicon)
+            let fav = document.getElementById('site-favicon');
+            if (!fav) {
+                fav = document.createElement('link');
+                fav.id = 'site-favicon';
+                fav.rel = 'icon';
+                document.head.appendChild(fav);
+            }
+            fav.href = logoSrc;
+
+            let appleFav = document.getElementById('site-apple-icon');
+            if (appleFav) appleFav.href = logoSrc;
+
+            // Kemaskini logo pada penjuru kiri atas Sidebar Admin
+            const adminLogoBox = document.getElementById('admin-sidebar-logo-box');
+            if (adminLogoBox) {
+                adminLogoBox.innerHTML = `<img src="${logoSrc}" alt="Logo" class="w-full h-full object-contain bg-white p-0.5">`;
+            }
+        }
+
+        async function previewLogoAndFavicon(input) {
+            if (!input.files || !input.files[0]) return;
+            const dataUrl = await compressImageFile(input.files[0], 200, 200, 0.85);
+            const prev = document.getElementById('preview-logo-cms');
+            if (prev) prev.src = dataUrl;
+            document.getElementById('nav-logo').src = dataUrl;
+            updateFaviconAndAdminLogo(dataUrl);
         }
 
         function handleLinkAction(url) {
