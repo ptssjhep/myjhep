@@ -1634,7 +1634,7 @@
                     document.getElementById('nav-logo').src = appData.images.logo;
                 }
                 document.getElementById('main-hero-heading').innerText = appData.hero?.mainHeading || "Satu portal. Semua urusan.";
-                document.getElementById('main-hero-subheading').innerText = appData.hero?.mainSubheading || "";
+                document.getElementById('main-hero-subheading').innerText = appData.hero?.mainSubheading || "Pengurusan hal ehwal pelajar yang lebih mudah, tersusun dan berhubung.";
 
                 // 3 Slide Carousel
                 renderCarouselSlides();
@@ -2325,8 +2325,8 @@
 
         function populateCmsForm() {
             if (appData.images?.logo) document.getElementById('preview-logo-cms').src = appData.images.logo;
-            document.getElementById('cms-main-heading').value = appData.hero?.mainHeading || "";
-            document.getElementById('cms-main-subheading').value = appData.hero?.mainSubheading || "";
+            document.getElementById('cms-main-heading').value = appData.hero?.mainHeading || "Satu portal. Semua urusan.";
+            document.getElementById('cms-main-subheading').value = appData.hero?.mainSubheading || "Pengurusan hal ehwal pelajar yang lebih mudah, tersusun dan berhubung.";
 
             document.getElementById('table-slides').innerHTML = '';
             (appData.slides || []).forEach(s => addRow('table-slides', s));
@@ -2582,7 +2582,7 @@
                     <td class="p-2"><input type="text" class="w-full p-1.5 border rounded text-xs" value="${data?.name || ''}"></td>
                     <td class="p-2"><input type="text" class="w-full p-1.5 border rounded text-xs text-center" value="${data?.target || ''}"></td>
                     <td class="p-2"><input type="text" class="w-full p-1.5 border rounded text-xs text-center font-bold" value="${data?.achieved || ''}"></td>
-                    <td class="p-2"><input type="number" class="w-full p-1.5 border rounded text-xs text-center" value="${data?.pct ?? 100}"></td>
+                    <td class="p-2"><input type="number" class="w-full p-1.5 border rounded text-xs text-center" value="${data?.pct !== undefined ? data.pct : 0}"></td>
                     <td class="p-2">
                         <select class="w-full p-1.5 border rounded text-xs font-bold">
                             <option value="Tercapai" ${data?.status === 'Tercapai' ? 'selected' : ''}>Tercapai (Hijau)</option>
