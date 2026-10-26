@@ -786,7 +786,9 @@
                     <input type="password" id="login-pass" required placeholder="••••••••" class="w-full p-3 border rounded-xl text-sm">
                 </div>
                 <p id="login-error" class="hidden text-xs font-bold text-red-600 text-center">ID Pengguna atau Kata Laluan tidak sah!</p>
-                <button type="submit" class="w-full py-3 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-extrabold text-sm shadow-lg shadow-pink-200 transition">Masuk Papan Pemuka</button>
+                <button id="login-submit-btn" type="submit" class="w-full py-3 rounded-xl bg-pink-600 hover:bg-pink-700 text-white font-extrabold text-sm shadow-lg shadow-pink-200 transition flex items-center justify-center gap-2">
+                    <span>Masuk Papan Pemuka</span>
+                </button>
             </form>
         </div>
     </div>
@@ -825,6 +827,9 @@
                 <a href="#cms-sec-9" onclick="closeAdminSidebarOnMobile()" class="block px-3 py-2.5 rounded-xl hover:bg-white/10 transition">9. Statistik Sesi & Jabatan</a>
                 <a href="#cms-sec-10" onclick="closeAdminSidebarOnMobile()" class="block px-3 py-2.5 rounded-xl hover:bg-white/10 transition">10. Footer & Drive Admin</a>
                 <a href="#cms-sec-11" onclick="closeAdminSidebarOnMobile()" class="block px-3 py-2.5 rounded-xl hover:bg-white/10 transition">11. Tetapan Chat AI & WhatsApp</a>
+                <a href="#cms-sec-12" onclick="closeAdminSidebarOnMobile()" class="block px-3 py-2.5 rounded-xl bg-emerald-500/20 text-emerald-300 font-extrabold hover:bg-emerald-500/30 transition mt-2 border border-emerald-500/30">
+                    <i class="fas fa-shield-halved mr-1.5"></i> 12. Akaun USERS & Log Aktiviti
+                </a>
             </div>
             <div class="p-4 border-t border-white/10 space-y-2 bg-[#140c2e]">
                 <a id="admin-only-drive-sidebar" href="#" target="_blank" class="w-full py-2.5 px-3 bg-indigo-600/40 hover:bg-indigo-600 text-indigo-100 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition border border-indigo-400/30">
@@ -1367,6 +1372,84 @@
                             </div>
                         </div>
 
+                        <!-- 12. Pengurusan Keselamatan Pengguna (Tab USERS) & Rekod Aktiviti (Tab ACTIVITY_LOG) -->
+                        <div id="cms-sec-12" class="bg-slate-50 p-5 sm:p-6 rounded-3xl border border-slate-200 space-y-6">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
+                                <div>
+                                    <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold uppercase tracking-wider">Keselamatan Pangkalan Data Google Sheets</span>
+                                    <h3 class="text-base sm:text-lg font-extrabold text-[#1a103c] mt-1">12. Pengurusan Akaun Pengguna (Tab USERS) & Log Aktiviti</h3>
+                                    <p class="text-xs text-slate-500">Semua kata laluan disimpan secara sulit (SHA-256 Hash) di dalam tab <strong>USERS</strong> Google Sheets dan tidak disimpan di dalam kod HTML.</p>
+                                </div>
+                                <button type="button" onclick="loadAdminSecurityData()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold flex items-center gap-1.5 self-start sm:self-auto">
+                                    <i class="fas fa-sync-alt"></i> Muat Semula Data Keselamatan
+                                </button>
+                            </div>
+
+                            <!-- Borang Tambah / Kemaskini Pengguna -->
+                            <div class="bg-white p-4 rounded-2xl border border-slate-200">
+                                <h4 class="text-xs font-extrabold text-[#1a103c] uppercase tracking-wider mb-3"><i class="fas fa-user-plus text-pink-600 mr-1.5"></i> Tambah / Kemaskini Pentadbir (Tab USERS)</h4>
+                                <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                                    <input type="text" id="sec-user-id" placeholder="ID Pengguna (Cth: admin2)" class="p-2 border rounded-xl text-xs font-bold">
+                                    <input type="email" id="sec-user-email" placeholder="E-mel (@ptss.edu.my)" class="p-2 border rounded-xl text-xs">
+                                    <input type="password" id="sec-user-pass" placeholder="Kata Laluan Baharu" class="p-2 border rounded-xl text-xs">
+                                    <select id="sec-user-role" class="p-2 border rounded-xl text-xs font-semibold">
+                                        <option value="Pentadbir Utama">Pentadbir Utama</option>
+                                        <option value="Pegawai JHEP">Pegawai JHEP</option>
+                                        <option value="Staf Sokongan">Staf Sokongan</option>
+                                    </select>
+                                    <button type="button" onclick="handleSaveDatabaseUser()" class="py-2 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-sm">
+                                        <i class="fas fa-key mr-1"></i> Simpan ke Tab USERS
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Senarai Akaun Pengguna & Log Aktiviti -->
+                            <div class="grid lg:grid-cols-2 gap-6">
+                                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                                    <div class="px-4 py-3 bg-slate-100 border-b font-extrabold text-xs text-slate-700 flex justify-between items-center">
+                                        <span>Senarai Akaun dalam Tab <code>USERS</code></span>
+                                        <span class="text-[10px] text-emerald-700 font-bold">Disulitkan (SHA-256)</span>
+                                    </div>
+                                    <div class="overflow-x-auto">
+                                        <table class="w-full text-xs text-left">
+                                            <thead class="bg-slate-50 text-slate-500 uppercase text-[10px] border-b">
+                                                <tr>
+                                                    <th class="p-2.5">ID Pengguna & E-mel</th>
+                                                    <th class="p-2.5">Peranan</th>
+                                                    <th class="p-2.5 text-center">Status</th>
+                                                    <th class="p-2.5 text-center">Tindakan</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="table-db-users" class="divide-y">
+                                                <tr><td colspan="4" class="p-4 text-center text-slate-400">Memuatkan senarai pengguna dari Google Sheets...</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+                                    <div class="px-4 py-3 bg-slate-100 border-b font-extrabold text-xs text-slate-700 flex justify-between items-center">
+                                        <span>Rekod Aktiviti Terkini (Tab <code>ACTIVITY_LOG</code>)</span>
+                                        <span class="text-[10px] text-indigo-700 font-bold">30 Rekod Terakhir</span>
+                                    </div>
+                                    <div class="overflow-y-auto max-h-64">
+                                        <table class="w-full text-xs text-left">
+                                            <thead class="bg-slate-50 text-slate-500 uppercase text-[10px] border-b sticky top-0">
+                                                <tr>
+                                                    <th class="p-2.5 w-32">Masa</th>
+                                                    <th class="p-2.5 w-24">Pengguna</th>
+                                                    <th class="p-2.5">Aktiviti</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="table-db-logs" class="divide-y">
+                                                <tr><td colspan="3" class="p-4 text-center text-slate-400">Memuatkan log aktiviti dari Google Sheets...</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <!-- Bar Simpan Kekal di Bawah -->
@@ -1601,6 +1684,7 @@
         let gallerySlideIndices = {};
         let activeLightboxImgs = [];
         let activeLightboxIdx = 0;
+        let currentAdminUser = null;
 
         // ==========================================
         // GABUNGAN PINTAR DATA (PASTIKAN DATA ASAL TIDAK HILANG)
@@ -1660,13 +1744,18 @@
             }
         }
 
-        async function saveToDatabase() {
+        async function saveToDatabase(logNote = "Kemaskini kandungan penuh portal melalui CMS") {
             localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appData));
             try {
                 await fetch(DATABASE_URL, {
                     method: "POST",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
-                    body: JSON.stringify({ action: "saveData", payload: appData })
+                    body: JSON.stringify({
+                        action: "saveData",
+                        actor: currentAdminUser?.username || "Pentadbir",
+                        logNote: logNote,
+                        payload: appData
+                    })
                 });
             } catch (e) {
                 console.error("Ralat simpan awan:", e);
@@ -1676,495 +1765,249 @@
         // ==========================================
         // FUNGSI RENDER FRONTEND (SEPADAN DENGAN SCREENSHOT ASAL)
         // ==========================================
-        function renderFrontend() {
-            try { renderGeneral(); } catch(e) { console.error(e); }
-            try { renderCarousel(); } catch(e) { console.error(e); }
-            try { renderLatestNews(); } catch(e) { console.error(e); }
-            try { renderHomeCards(); } catch(e) { console.error(e); }
-            try { renderIntro(); } catch(e) { console.error(e); }
-            try { renderPrograms(); } catch(e) { console.error(e); }
-            try { renderApplyInfo(); } catch(e) { console.error(e); }
-            try { renderStaff(); } catch(e) { console.error(e); }
-            try { renderClubs(); } catch(e) { console.error(e); }
-            try { renderServicesAndGallery(); } catch(e) { console.error(e); }
-            try { renderForms(); } catch(e) { console.error(e); }
-            try { renderKPI(); } catch(e) { console.error(e); }
-            try { renderStats(); } catch(e) { console.error(e); }
-            try { renderFAQ(); } catch(e) { console.error(e); }
-            try { renderFooter(); } catch(e) { console.error(e); }
-            try { renderChatSetup(); } catch(e) { console.error(e); }
+        function setText(id, val) {
+            const el = document.getElementById(id);
+            if (el) el.innerText = val ?? "";
         }
 
-        function renderGeneral() {
-            if (appData.images?.logo && appData.images.logo.trim() !== "") {
-                const logoSrc = appData.images.logo;
-                document.getElementById('nav-logo').src = logoSrc;
-                const prev = document.getElementById('preview-logo-cms');
-                if (prev) prev.src = logoSrc;
-                updateFaviconAndAdminLogo(logoSrc);
-            }
-            const heroHead = document.getElementById('main-hero-heading');
-            const heroSub = document.getElementById('main-hero-subheading');
-            if(heroHead) heroHead.innerText = appData.hero?.mainHeading || "Satu portal. Semua urusan.";
-            if(heroSub) heroSub.innerText = appData.hero?.mainSubheading || "Pengurusan hal ehwal pelajar yang lebih mudah, tersusun dan berhubung.";
-        }
+        function updateFaviconAndAdminLogo(logoUrl) {
+            const finalUrl = (logoUrl && logoUrl.trim() !== "")
+                ? logoUrl
+                : "https://placehold.co/100x100/db2777/ffffff?text=JHEP";
 
-        function updateFaviconAndAdminLogo(logoSrc) {
-            if (!logoSrc) return;
-            // Kemaskini ikon pada tab browser (Favicon)
-            let fav = document.getElementById('site-favicon');
-            if (!fav) {
-                fav = document.createElement('link');
-                fav.id = 'site-favicon';
-                fav.rel = 'icon';
-                document.head.appendChild(fav);
-            }
-            fav.href = logoSrc;
+            const navLogo = document.getElementById('nav-logo');
+            if (navLogo) navLogo.src = finalUrl;
 
-            let appleFav = document.getElementById('site-apple-icon');
-            if (appleFav) appleFav.href = logoSrc;
+            const prevLogo = document.getElementById('preview-logo-cms');
+            if (prevLogo) prevLogo.src = finalUrl;
 
-            // Kemaskini logo pada penjuru kiri atas Sidebar Admin
-            const adminLogoBox = document.getElementById('admin-sidebar-logo-box');
-            if (adminLogoBox) {
-                adminLogoBox.innerHTML = `<img src="${logoSrc}" alt="Logo" class="w-full h-full object-contain bg-white p-0.5">`;
+            const fav = document.getElementById('site-favicon');
+            if (fav) fav.href = finalUrl;
+
+            const appleFav = document.getElementById('site-apple-icon');
+            if (appleFav) appleFav.href = finalUrl;
+
+            const adminBox = document.getElementById('admin-sidebar-logo-box');
+            if (adminBox) {
+                if (logoUrl && logoUrl.trim() !== "") {
+                    adminBox.innerHTML = `<img src="${logoUrl}" alt="Logo" class="w-full h-full object-contain bg-white p-0.5 rounded-xl">`;
+                } else {
+                    adminBox.innerHTML = `J`;
+                }
             }
         }
 
         async function previewLogoAndFavicon(input) {
             if (!input.files || !input.files[0]) return;
             const dataUrl = await compressImageFile(input.files[0], 200, 200, 0.85);
-            const prev = document.getElementById('preview-logo-cms');
-            if (prev) prev.src = dataUrl;
-            document.getElementById('nav-logo').src = dataUrl;
+            appData.images.logo = dataUrl;
             updateFaviconAndAdminLogo(dataUrl);
+            showToast("Pratonton logo & ikon tab pelayar dikemaskini!");
         }
 
-        function handleLinkAction(url) {
-            if (!url) return;
-            if (url.startsWith('#')) {
-                const target = url.replace('#', '');
-                navigate(target);
-            } else {
-                window.open(url, '_blank');
+        function compressImageFile(file, maxW = 800, maxH = 500, quality = 0.78) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let w = img.width;
+                        let h = img.height;
+                        if (w > maxW || h > maxH) {
+                            const ratio = Math.min(maxW / w, maxH / h);
+                            w = Math.round(w * ratio);
+                            h = Math.round(h * ratio);
+                        }
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, w, h);
+                        resolve(canvas.toDataURL('image/jpeg', quality));
+                    };
+                    img.onerror = () => resolve(e.target.result);
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function handleApplyImageUpload(input, previewId, urlInputId) {
+            if (!input.files || !input.files[0]) return;
+            const dataUrl = await compressImageFile(input.files[0], 700, 500, 0.8);
+            const prev = document.getElementById(previewId);
+            const urlInp = document.getElementById(urlInputId);
+            if (prev) prev.src = dataUrl;
+            if (urlInp) urlInp.value = dataUrl;
+        }
+
+        function navigate(sectionId) {
+            const cleanId = String(sectionId || 'utama').replace('#', '');
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            const target = document.getElementById('sec-' + cleanId) || document.getElementById('sec-utama');
+            if (target) target.classList.add('active');
+
+            document.querySelectorAll('.nav-pill').forEach(btn => {
+                btn.classList.remove('active');
+                const t = btn.getAttribute('data-target');
+                if (t === cleanId ||
+                    (t === 'pengenalan' && ['pengenalan', 'kakitangan', 'faq'].includes(cleanId)) ||
+                    (t === 'program' && ['program', 'permohonan'].includes(cleanId)) ||
+                    (t === 'perkhidmatan' && ['perkhidmatan', 'borang', 'komuniti'].includes(cleanId)) ||
+                    (t === 'statistik' && ['statistik', 'kpi'].includes(cleanId))) {
+                    btn.classList.add('active');
+                }
+            });
+
+            const mobMenu = document.getElementById('mobile-menu');
+            if (mobMenu) mobMenu.classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (cleanId === 'statistik') {
+                setTimeout(() => updateSessionChart(), 60);
             }
         }
 
-        // 1B. Render Info Terkini & Pengumuman JHEP (Seperti Imej #1)
-        function renderLatestNews() {
-            const grid = document.getElementById('info-terkini-grid');
-            const heading = document.getElementById('info-terkini-heading');
-            if(heading) heading.innerText = appData.latestNewsData?.heading || "Info Terkini & Pengumuman JHEP";
-            if(!grid) return;
-            const news = appData.latestNewsData?.items || [];
-            grid.innerHTML = news.map(n => `
-                <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 flex flex-col group h-full hover:shadow-lg transition duration-300">
-                    <div class="h-52 overflow-hidden relative bg-slate-100">
-                        <img src="${n.img || 'https://placehold.co/600x400/f8fafc/94a3b8?text=Imej+Hebahan'}" alt="${n.title}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105">
-                        <span class="absolute top-3.5 left-3.5 px-3 py-1 bg-[#1a103c]/90 backdrop-blur-sm text-white text-[10px] font-extrabold rounded-full uppercase tracking-wider shadow-sm">${n.badge || 'PENGUMUMAN'}</span>
-                    </div>
-                    <div class="p-6 flex flex-col flex-1">
-                        <span class="text-[11px] font-bold text-slate-400 mb-2 flex items-center gap-1.5">
-                            <i class="far fa-calendar-alt text-pink-600"></i> ${n.date || ''}
-                        </span>
-                        <h4 class="text-base sm:text-lg font-extrabold text-[#1a103c] mb-2.5 leading-snug">${n.title || ''}</h4>
-                        <p class="text-xs text-slate-500 mb-5 flex-1 leading-relaxed">${n.desc || ''}</p>
-                        <button type="button" onclick="handleLinkAction('${n.link || '#'}')" class="text-xs font-extrabold text-pink-600 hover:text-pink-700 inline-flex items-center gap-1.5 mt-auto pt-3 border-t border-slate-100 w-full text-left">
-                            Maklumat Lanjut <i class="fas fa-arrow-right text-[10px]"></i>
-                        </button>
+        function renderCarousel() {
+            const wrapper = document.getElementById('carousel-slides-wrapper');
+            const dots = document.getElementById('carousel-dots');
+            if (!wrapper || !dots) return;
+
+            const slides = Array.isArray(appData.slides) && appData.slides.length > 0
+                ? appData.slides
+                : defaultAppData.slides;
+
+            if (currentSlide >= slides.length) currentSlide = 0;
+
+            const themeMap = {
+                purple: "from-[#2b1b54] via-[#3b1d6e] to-[#5b21b6]",
+                blue: "from-[#0b2545] via-[#133b6e] to-[#1d4ed8]",
+                pink: "from-[#4a0e2e] via-[#831843] to-[#db2777]",
+                green: "from-[#064e3b] via-[#047857] to-[#10b981]"
+            };
+
+            const s = slides[currentSlide] || slides[0];
+            const grad = themeMap[s.theme] || themeMap.purple;
+            const hasBg = s.bg && s.bg.trim() !== "";
+
+            wrapper.innerHTML = `
+                <div class="relative w-full min-h-[300px] sm:min-h-[390px] flex items-center px-12 sm:px-16 py-10 bg-gradient-to-r ${grad} text-white">
+                    ${hasBg ? `<img src="${s.bg}" alt="Banner" class="absolute inset-0 w-full h-full object-cover ${s.mode === 'full' ? 'opacity-100' : 'opacity-35 mix-blend-overlay'}">` : ''}
+                    ${hasBg && s.mode === 'full' ? `<div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent"></div>` : ''}
+                    <div class="relative z-10 max-w-2xl">
+                        <span class="inline-block px-3.5 py-1 rounded-full bg-white/15 border border-white/20 text-[10px] sm:text-xs font-extrabold tracking-widest uppercase mb-4">${s.tag || 'INFO JHEP'}</span>
+                        <h3 class="text-2xl sm:text-5xl font-extrabold leading-tight tracking-tight">${s.title1 || ''}</h3>
+                        <h4 class="text-2xl sm:text-5xl font-extrabold text-sky-300 leading-tight tracking-tight mb-4">${s.title2 || ''}</h4>
+                        <p class="text-xs sm:text-base text-purple-100 leading-relaxed max-w-xl">${s.desc || ''}</p>
                     </div>
                 </div>
+            `;
+
+            dots.innerHTML = slides.map((_, idx) => `
+                <button onclick="goToSlide(${idx})" aria-label="Slide ${idx + 1}" class="h-2 rounded-full transition-all ${idx === currentSlide ? 'w-7 bg-white' : 'w-2 bg-white/40 hover:bg-white/70'}"></button>
             `).join('');
         }
 
-        // 2. Render 4 Kad Modul Berwarna Gelap (Seperti Imej #2)
-        function renderHomeCards() {
-            const grid = document.getElementById('home-cards-grid');
-            if(!grid) return;
-            const cards = appData.homeCards || [];
-            const cardStyles = [
-                { bg: "bg-[#0f1d56]", iconBox: "bg-blue-500/20 text-sky-400", icon: "fa-user-graduate", linkColor: "text-sky-400 hover:text-sky-300" },
-                { bg: "bg-[#3c0d6d]", iconBox: "bg-purple-500/20 text-sky-400", icon: "fa-magnifying-glass", linkColor: "text-sky-400 hover:text-sky-300" },
-                { bg: "bg-[#590d3b]", iconBox: "bg-pink-500/20 text-sky-400", icon: "fa-file-lines", linkColor: "text-sky-400 hover:text-sky-300" },
-                { bg: "bg-[#111526]", iconBox: "bg-slate-500/20 text-sky-400", icon: "fa-calendar-check", linkColor: "text-sky-400 hover:text-sky-300" }
-            ];
-
-            grid.innerHTML = cards.map((c, idx) => {
-                const st = cardStyles[idx % cardStyles.length];
-                return `
-                <div onclick="handleLinkAction('${c.url || '#'}')" class="${st.bg} rounded-3xl p-7 shadow-lg flex flex-col h-full hover:-translate-y-1 transition duration-300 cursor-pointer group text-left">
-                    <div class="w-12 h-12 rounded-2xl ${st.iconBox} flex items-center justify-center text-lg mb-6">
-                        <i class="fas ${st.icon}"></i>
-                    </div>
-                    <h4 class="text-lg font-extrabold text-white mb-2.5">${c.title || ''}</h4>
-                    <p class="text-xs text-slate-300 mb-6 flex-1 leading-relaxed">${c.desc || ''}</p>
-                    <span class="text-xs font-extrabold ${st.linkColor} inline-flex items-center gap-1.5 mt-auto">
-                        ${c.linkText || 'Buka modul'} <i class="fas fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
-                    </span>
-                </div>`;
-            }).join('');
+        function nextSlide() {
+            const len = (appData.slides && appData.slides.length) ? appData.slides.length : 1;
+            currentSlide = (currentSlide + 1) % len;
+            renderCarousel();
         }
 
-        // 3. Render Halaman Pengenalan (Seperti Imej #3 & #4)
-        function renderIntro() {
-            const intro = appData.intro || {};
-            if(document.getElementById('intro-p1')) document.getElementById('intro-p1').innerText = intro.p1 || '';
-            if(document.getElementById('intro-p2')) document.getElementById('intro-p2').innerText = intro.p2 || '';
-            
-            if(document.getElementById('b1-title')) document.getElementById('b1-title').innerText = intro.b1Title || '';
-            if(document.getElementById('b1-desc')) document.getElementById('b1-desc').innerText = intro.b1Desc || '';
-            const b1List = document.getElementById('b1-list');
-            if(b1List && intro.b1List) {
-                b1List.innerHTML = intro.b1List.split('\n').filter(l=>l.trim()).map((l,i) => `
-                    <div class="p-3 rounded-2xl bg-slate-50/70 border border-slate-100 flex gap-3.5 items-center">
-                        <span class="px-2.5 py-1 rounded-lg bg-indigo-100/80 text-indigo-700 text-[11px] font-extrabold shrink-0">0${i+1}</span>
-                        <p class="text-xs sm:text-sm font-extrabold text-[#1a103c]">${l}</p>
-                    </div>
-                `).join('');
-            }
-            
-            if(document.getElementById('b2-title')) document.getElementById('b2-title').innerText = intro.b2Title || '';
-            if(document.getElementById('b2-desc')) document.getElementById('b2-desc').innerText = intro.b2Desc || '';
-            const b2List = document.getElementById('b2-accordion');
-            if(b2List && intro.b2List) {
-                b2List.innerHTML = intro.b2List.split('\n').filter(l=>l.trim()).map((l,i) => {
-                    const parts = l.split('|');
-                    const isFirst = i === 0;
-                    return `
-                    <div class="py-3.5">
-                        <button type="button" onclick="toggleB2Item(${i})" class="w-full flex items-center justify-between text-left gap-3">
-                            <div class="flex gap-3.5 items-center">
-                                <span class="px-2.5 py-1 rounded-lg bg-rose-100/80 text-rose-600 text-[11px] font-extrabold shrink-0">0${i+1}</span>
-                                <h5 class="text-sm font-extrabold text-[#1a103c]">${parts[0]?.trim()}</h5>
-                            </div>
-                            <i id="b2-icon-${i}" class="fas ${isFirst ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs text-slate-400"></i>
-                        </button>
-                        <div id="b2-body-${i}" class="${isFirst ? 'mt-3' : 'hidden mt-3'} pl-11">
-                            <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 text-xs text-slate-600 leading-relaxed">
-                                ${parts[1]?.trim() || ''}
-                            </div>
-                        </div>
-                    </div>`;
-                }).join('');
+        function prevSlide() {
+            const len = (appData.slides && appData.slides.length) ? appData.slides.length : 1;
+            currentSlide = (currentSlide - 1 + len) % len;
+            renderCarousel();
+        }
+
+        function goToSlide(idx) {
+            currentSlide = idx;
+            renderCarousel();
+        }
+
+        function toggleAccordionB2(idx) {
+            const content = document.getElementById('b2-acc-body-' + idx);
+            const icon = document.getElementById('b2-acc-icon-' + idx);
+            if (!content) return;
+            content.classList.toggle('hidden');
+            if (icon) {
+                icon.className = content.classList.contains('hidden')
+                    ? "fas fa-chevron-down text-xs text-slate-400"
+                    : "fas fa-chevron-up text-xs text-rose-600";
             }
         }
 
-        function toggleB2Item(idx) {
-            const body = document.getElementById(`b2-body-${idx}`);
-            const icon = document.getElementById(`b2-icon-${idx}`);
+        function toggleFaqItem(idx) {
+            const body = document.getElementById('faq-body-' + idx);
+            const icon = document.getElementById('faq-icon-' + idx);
             if (!body) return;
             body.classList.toggle('hidden');
-            if (body.classList.contains('hidden')) {
-                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
-            } else {
-                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+            if (icon) {
+                icon.innerText = body.classList.contains('hidden') ? '+' : '−';
             }
         }
 
-        // 3A. Render Halaman Program Pengajian (Seperti Imej #5)
-        function renderPrograms() {
-            if(document.getElementById('program-banner-title')) document.getElementById('program-banner-title').innerText = appData.programsData?.bannerTitle || "Program Pengajian @ PTSS";
-            const container = document.getElementById('programs-list-container');
-            if(!container) return;
-            const progs = appData.programsData?.items || [];
-            
-            container.innerHTML = progs.map((p, idx) => {
-                const isEven = idx % 2 !== 0;
-                return `
-                <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-100 flex flex-col ${isEven ? 'md:flex-row-reverse' : 'md:flex-row'} gap-8 items-center">
-                    <div class="w-full md:w-5/12 h-64 sm:h-72 rounded-2xl overflow-hidden relative bg-slate-100 shrink-0 shadow-sm">
-                        <img src="${p.img || 'https://placehold.co/600x400/e2e8f0/475569?text=Program'}" alt="${p.title}" class="w-full h-full object-cover">
-                        <span class="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-sm text-white text-[10px] font-extrabold uppercase tracking-wider">DIPLOMA SEPENUH MASA</span>
-                    </div>
-                    <div class="w-full md:w-7/12 flex flex-col justify-center">
-                        <span class="inline-block px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-[11px] font-extrabold w-fit mb-3">Program TVET Pilihan</span>
-                        <h3 class="text-2xl sm:text-3xl font-extrabold text-[#0b2545] mb-4">${p.title}</h3>
-                        <p class="text-xs sm:text-sm text-slate-600 mb-6 leading-relaxed">${p.desc}</p>
-                        <div class="flex flex-wrap items-center gap-3">
-                            <a href="${p.link || 'http://ambilan.mypolycc.edu.my'}" target="_blank" class="inline-flex items-center px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs shadow-sm transition">
-                                Semak Syarat Khas <i class="fas fa-arrow-up-right-from-square ml-2 text-[10px]"></i>
-                            </a>
-                            <button type="button" onclick="navigate('permohonan')" class="inline-flex items-center px-5 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs transition">
-                                Panduan Permohonan <i class="fas fa-chevron-right ml-2 text-[10px]"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>`;
-            }).join('');
-        }
-
-        function renderApplyInfo() {
-            const apply = appData.programsData?.applyInfo || {};
-            if(document.getElementById('apply-hero-title')) document.getElementById('apply-hero-title').innerText = apply.heroTitle || 'Sambung Diploma?';
-            if(document.getElementById('apply-hero-desc')) {
-                document.getElementById('apply-hero-desc').innerHTML = (apply.heroDesc || '').split('\n').map(p => `<p>${p}</p>`).join('');
-            }
-            if(document.getElementById('apply-hero-img') && apply.heroImg) document.getElementById('apply-hero-img').src = apply.heroImg;
-            if(document.getElementById('apply-upu-img') && apply.upuImg) document.getElementById('apply-upu-img').src = apply.upuImg;
-            if(document.getElementById('apply-poly-img') && apply.polyImg) document.getElementById('apply-poly-img').src = apply.polyImg;
-            if(document.getElementById('apply-check-img') && apply.checkImg) document.getElementById('apply-check-img').src = apply.checkImg;
-            
-            if(document.getElementById('apply-upu-date-link')) document.getElementById('apply-upu-date-link').href = apply.upuUrl || '#';
-            if(document.getElementById('apply-upu-btn')) document.getElementById('apply-upu-btn').href = apply.upuUrl || '#';
-            if(document.getElementById('apply-poly-btn')) document.getElementById('apply-poly-btn').href = apply.polyUrl || '#';
-            if(document.getElementById('apply-check-btn')) document.getElementById('apply-check-btn').href = apply.checkUrl || '#';
-        }
-
-        function renderStaff() {
-            if(document.getElementById('org-chart-container')) {
-                const container = document.getElementById('org-chart-container');
-                if (appData.images?.orgChart) {
-                    container.innerHTML = `<img src="${appData.images.orgChart}" class="w-full max-w-4xl mx-auto rounded-xl object-contain shadow-sm">`;
-                    container.classList.remove('p-10', 'border-2', 'border-dashed');
-                } else {
-                    container.innerHTML = `<i class="fas fa-sitemap text-4xl mb-3 text-slate-300"></i><p class="text-xs font-bold">Imej Carta Organisasi Belum Dimuat Naik</p>`;
-                    container.classList.add('p-10', 'border-2', 'border-dashed');
-                }
-            }
-            
-            const tbody = document.getElementById('staff-table-body');
-            if(!tbody) return;
-            tbody.innerHTML = (appData.staff || []).map((s, idx) => `
-                <tr class="hover:bg-slate-50/50">
-                    <td class="p-4 text-center font-bold text-slate-400">${idx + 1}</td>
-                    <td class="p-4 font-extrabold text-[#1a103c]">${s.nama}</td>
-                    <td class="p-4 text-slate-600 font-medium">${s.jawatan}</td>
-                    <td class="p-4 text-center font-bold">${s.tel}</td>
-                    <td class="p-4 text-center text-blue-600">${s.emel}</td>
-                </tr>
-            `).join('');
-        }
-
-        function renderClubs() {
-            if(document.getElementById('komuniti-desc')) document.getElementById('komuniti-desc').innerText = appData.komuniti?.desc || '';
-            if(document.getElementById('komuniti-gdrive-btn')) document.getElementById('komuniti-gdrive-btn').href = appData.komuniti?.driveLink || '#';
-            if(document.getElementById('komuniti-qr-img') && appData.images?.qrCode) {
-                document.getElementById('komuniti-qr-img').src = appData.images.qrCode;
-            }
-            
-            const grid = document.getElementById('komuniti-grid');
-            if(!grid) return;
-            grid.innerHTML = (appData.kelab || []).map(k => `
-                <div class="px-4 py-3.5 rounded-2xl border border-slate-200 flex items-center justify-between group hover:border-pink-300 transition bg-white">
-                    <span class="text-xs font-bold text-slate-700">${k.name || k}</span>
-                    ${k.url ? `<a href="${k.url}" target="_blank" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-pink-100 text-slate-500 hover:text-pink-600 flex items-center justify-center shrink-0 transition"><i class="fas fa-external-link-alt text-[10px]"></i></a>` : ''}
-                </div>
-            `).join('');
-        }
-
-        function renderServicesAndGallery() {
-            const svcList = document.getElementById('perkhidmatan-list');
-            if(svcList) {
-                svcList.innerHTML = (appData.perkhidmatan || []).map(p => `
-                    <li class="flex items-center gap-3 p-3.5 sm:p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                        <div class="w-6 h-6 rounded-full bg-pink-600 text-white flex items-center justify-center shrink-0"><i class="fas fa-check text-[10px]"></i></div>
-                        <span class="text-xs sm:text-sm font-bold text-slate-700">${p}</span>
-                    </li>
-                `).join('');
-            }
-
-            const galGrid = document.getElementById('galeri-grid');
-            if(!galGrid) return;
-            galGrid.innerHTML = (appData.galeri || []).map((g, idx) => {
-                const imgs = Array.isArray(g.imgs) && g.imgs.length > 0 ? g.imgs : ['https://placehold.co/600x400/f8fafc/94a3b8?text=Aktiviti'];
-                gallerySlideIndices[idx] = 0;
-                
-                return `
-                <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 group flex flex-col">
-                    <div class="relative h-52 bg-slate-100 overflow-hidden">
-                        <img id="gal-card-img-${idx}" onclick="openLightbox(${idx})" src="${imgs[0]}" class="w-full h-full object-cover transition duration-500 group-hover:scale-105 cursor-pointer">
-                        ${imgs.length > 1 ? `
-                            <button type="button" onclick="changeCardGallerySlide(${idx}, -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/50 text-white flex items-center justify-center text-[10px] hover:bg-black"><i class="fas fa-chevron-left"></i></button>
-                            <button type="button" onclick="changeCardGallerySlide(${idx}, 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/50 text-white flex items-center justify-center text-[10px] hover:bg-black"><i class="fas fa-chevron-right"></i></button>
-                            <div class="absolute bottom-2 right-2 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] font-bold"><i class="fas fa-images mr-1"></i> ${imgs.length}</div>
-                        ` : ''}
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <span class="text-[10px] font-extrabold text-pink-600 uppercase mb-1.5 block">${g.date || ''}</span>
-                        <h4 class="text-base font-extrabold text-[#1a103c] mb-2">${g.title || ''}</h4>
-                        <p class="text-xs text-slate-500 leading-relaxed">${g.desc || ''}</p>
-                    </div>
-                </div>
-                `;
-            }).join('');
-        }
-
-        function changeCardGallerySlide(cardIdx, dir) {
-            const g = appData.galeri?.[cardIdx];
-            if (!g || !Array.isArray(g.imgs) || g.imgs.length <= 1) return;
-            gallerySlideIndices[cardIdx] = ((gallerySlideIndices[cardIdx] || 0) + dir + g.imgs.length) % g.imgs.length;
+        function changeGalleryCardSlide(cardIdx, dir, e) {
+            if (e) e.stopPropagation();
+            const item = appData.galeri?.[cardIdx];
+            if (!item || !Array.isArray(item.imgs) || item.imgs.length <= 1) return;
+            const cur = gallerySlideIndices[cardIdx] || 0;
+            const next = (cur + dir + item.imgs.length) % item.imgs.length;
+            gallerySlideIndices[cardIdx] = next;
             const imgEl = document.getElementById(`gal-card-img-${cardIdx}`);
-            if (imgEl) imgEl.src = g.imgs[gallerySlideIndices[cardIdx]];
-        }
-
-        function renderForms() {
-            if(document.getElementById('borang-main-title')) document.getElementById('borang-main-title').innerText = appData.borangData?.title || 'Borang HEP';
-            if(document.getElementById('borang-instructions')) {
-                document.getElementById('borang-instructions').innerHTML = (appData.borangData?.instructions || '').split('\n').map(l => `<p>${l}</p>`).join('');
-            }
-            const grid = document.getElementById('borang-grid-container');
-            if(!grid) return;
-            grid.innerHTML = (appData.borangData?.items || []).map(b => `
-                <div class="py-5 flex items-start gap-4">
-                    <div class="w-12 h-12 rounded-full border-2 border-blue-600 text-blue-600 flex items-center justify-center text-lg shrink-0"><i class="fas ${b.icon || 'fa-file-alt'}"></i></div>
-                    <div>
-                        <h4 class="text-sm font-extrabold text-[#1a103c] mb-1">${b.title}</h4>
-                        <a href="${b.url || '#'}" target="_blank" class="text-xs font-bold text-amber-600 hover:text-amber-700 underline decoration-amber-500/40 underline-offset-4">${b.linkText}</a>
-                        ${b.note ? `<p class="text-[11px] text-slate-500 mt-1">${b.note}</p>` : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function renderKPI() {
-            const kpis = appData.kpiData?.items || [];
-            let achieved = 0;
-            let totalPct = 0;
-            const tbody = document.getElementById('kpi-table-body');
-            
-            if(document.getElementById('kpi-page-title')) document.getElementById('kpi-page-title').innerText = appData.kpiData?.title || 'Pencapaian KPI JHEP PTSS';
-            if(document.getElementById('kpi-page-desc')) document.getElementById('kpi-page-desc').innerText = appData.kpiData?.desc || '';
-            if(document.getElementById('kpi-main-drive-btn')) document.getElementById('kpi-main-drive-btn').href = appData.kpiData?.driveUrl || '#';
-            
-            let html = '';
-            kpis.forEach(k => {
-                if (k.status === 'Tercapai') achieved++;
-                const pct = parseInt(k.pct || 0);
-                totalPct += pct;
-                
-                let color = 'bg-rose-500';
-                let badge = 'bg-rose-50 text-rose-600 border border-rose-200';
-                if(k.status === 'Tercapai') { color = 'bg-emerald-500'; badge = 'bg-emerald-50 text-emerald-600 border border-emerald-200'; }
-                else if(k.status === 'Dalam Tindakan') { color = 'bg-amber-500'; badge = 'bg-amber-50 text-amber-700 border border-amber-200'; }
-                
-                html += `<tr>
-                    <td class="p-4 font-extrabold text-[#1a103c]">${k.code}</td>
-                    <td class="p-4 text-slate-700 font-semibold">${k.name}</td>
-                    <td class="p-4 text-center font-bold text-slate-600">${k.target}</td>
-                    <td class="p-4 text-center font-extrabold text-[#1a103c]">${k.achieved}</td>
-                    <td class="p-4">
-                        <div class="flex flex-col gap-1">
-                            <span class="text-[11px] font-extrabold text-slate-700">${pct}%</span>
-                            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden"><div class="${color} h-full rounded-full" style="width:${pct}%"></div></div>
-                        </div>
-                    </td>
-                    <td class="p-4 text-center"><span class="px-3 py-1 rounded-full text-[11px] font-extrabold whitespace-nowrap ${badge}">${k.status}</span></td>
-                    <td class="p-4 text-center"><a href="${k.link || appData.kpiData?.driveUrl || '#'}" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white text-[11px] font-extrabold transition inline-flex items-center justify-center gap-1.5 whitespace-nowrap"><i class="fab fa-google-drive text-sm"></i> Folder Bukti</a></td>
-                </tr>`;
-            });
-            if(tbody) tbody.innerHTML = html;
-            
-            if(document.getElementById('kpi-total-count')) document.getElementById('kpi-total-count').innerText = kpis.length;
-            if(document.getElementById('kpi-achieved-count')) document.getElementById('kpi-achieved-count').innerText = achieved;
-            if(document.getElementById('kpi-avg-pct')) document.getElementById('kpi-avg-pct').innerText = kpis.length > 0 ? Math.round(totalPct / kpis.length) + '%' : '0%';
-        }
-
-        // Render Statistik & Graf Aliran (Seperti Imej #6)
-        function renderStats() {
-            const depts = appData.departments || [];
-            let totalStudents = 0;
-            let totalMale = 0;
-            let totalFemale = 0;
-            
-            depts.forEach(d => {
-                totalStudents += parseInt(d.jumlah || 0);
-                totalMale += parseInt(d.lelaki || 0);
-                totalFemale += parseInt(d.perempuan || 0);
-            });
-
-            if(document.getElementById('stat-total-students')) document.getElementById('stat-total-students').innerText = totalStudents.toLocaleString();
-            if(document.getElementById('stat-dept-count-inline')) document.getElementById('stat-dept-count-inline').innerText = depts.length;
-
-            const malePct = totalStudents > 0 ? Math.round((totalMale / totalStudents) * 100) : 0;
-            const femalePct = totalStudents > 0 ? (100 - malePct) : 0;
-
-            if(document.getElementById('stat-male-label')) document.getElementById('stat-male-label').innerText = `Lelaki: ${totalMale} (${malePct}%)`;
-            if(document.getElementById('stat-female-label')) document.getElementById('stat-female-label').innerText = `Perempuan: ${totalFemale} (${femalePct}%)`;
-            if(document.getElementById('stat-male-bar')) document.getElementById('stat-male-bar').style.width = `${malePct}%`;
-            if(document.getElementById('stat-female-bar')) document.getElementById('stat-female-bar').style.width = `${femalePct}%`;
-
-            if(document.getElementById('stat-dept-badge')) document.getElementById('stat-dept-badge').innerText = `${depts.length} Jabatan Berdaftar`;
-            
-            const grid = document.getElementById('jabatan-grid');
-            if(grid) {
-                grid.innerHTML = depts.map(d => {
-                    const pct = totalStudents > 0 ? Math.round((parseInt(d.jumlah || 0) / totalStudents) * 100) : 0;
-                    const barColor = getThemeColor(d.theme);
-                    return `
-                    <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm flex flex-col justify-between hover:shadow-md transition">
-                        <div>
-                            <div class="flex justify-between items-start mb-3">
-                                <span class="px-3 py-1 rounded-xl bg-slate-50 text-xs font-extrabold text-[#1a103c] border border-slate-200">${d.acronym || ''}</span>
-                                <span class="text-xs font-extrabold text-white px-3 py-1 rounded-xl ${barColor}">${pct}%</span>
-                            </div>
-                            <h4 class="text-base font-extrabold text-[#1a103c] mb-4 pb-3 border-b border-slate-100">${d.name || ''}</h4>
-                        </div>
-                        <div class="space-y-2 text-xs">
-                            <div class="flex justify-between">
-                                <span class="text-slate-500 font-semibold">Jumlah Pelajar:</span>
-                                <span class="font-extrabold text-[#1a103c]">${d.jumlah || 0} Orang</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-slate-500 font-semibold">Lelaki / Perempuan:</span>
-                                <span class="font-extrabold text-[#1a103c]">${d.lelaki || 0} L / ${d.perempuan || 0} P</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-slate-500 font-semibold">Purata HPNM:</span>
-                                <span class="font-extrabold text-emerald-600">${d.hpnm || '3.65'}</span>
-                            </div>
-                            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden pt-0 mt-2">
-                                <div class="${barColor} h-full rounded-full" style="width:${Math.min(100, (parseFloat(d.hpnm || 3.5) / 4) * 100)}%"></div>
-                            </div>
-                        </div>
-                    </div>`;
-                }).join('');
-            }
-            updateSessionChart();
-        }
-
-        function getThemeColor(theme) {
-            switch(theme) {
-                case 'blue': return 'bg-blue-500';
-                case 'pink': return 'bg-pink-500';
-                case 'green': return 'bg-emerald-500';
-                case 'orange': return 'bg-amber-500';
-                case 'purple': return 'bg-purple-500';
-                default: return 'bg-indigo-500';
-            }
+            if (imgEl) imgEl.src = item.imgs[next];
         }
 
         function updateSessionChart() {
-            const ctx = document.getElementById('sessionTrendChart');
-            if(!ctx) return;
-            const filter = document.getElementById('stat-dept-filter')?.value || 'ALL';
-            const sessions = appData.sessionStats || [];
-            const labels = sessions.map(s => s.session);
-            let dataPoints = [];
-            
-            if (filter === 'ALL') {
-                dataPoints = sessions.map(s => (parseInt(s.JTMK||0) + parseInt(s.JKE||0) + parseInt(s.JKM||0) + parseInt(s.JP||0) + parseInt(s.JRKV||0) + parseInt(s.JPH||0)));
-            } else {
-                dataPoints = sessions.map(s => parseInt(s[filter] || 0));
+            const canvas = document.getElementById('sessionTrendChart');
+            if (!canvas) return;
+
+            const filterEl = document.getElementById('stat-dept-filter');
+            const selectedDept = filterEl ? filterEl.value : 'ALL';
+            const subtitleEl = document.getElementById('chart-subtitle-dept');
+            if (subtitleEl) {
+                subtitleEl.innerText = selectedDept === 'ALL'
+                    ? 'Paparan Keseluruhan Semua Jabatan Akademik PTSS'
+                    : `Paparan Enrolmen Pelajar bagi Jabatan ${selectedDept}`;
             }
 
-            if (trendChartInstance) trendChartInstance.destroy();
-            
+            const sessions = Array.isArray(appData.sessionStats) && appData.sessionStats.length > 0
+                ? appData.sessionStats
+                : defaultAppData.sessionStats;
+
+            const labels = sessions.map(s => s.session || '');
+            const values = sessions.map(s => {
+                if (selectedDept === 'ALL') {
+                    return Number(s.JTMK || 0) + Number(s.JKE || 0) + Number(s.JKM || 0) + Number(s.JP || 0) + Number(s.JRKV || 0) + Number(s.JPH || 0);
+                }
+                return Number(s[selectedDept] || 0);
+            });
+
+            if (trendChartInstance) {
+                trendChartInstance.destroy();
+            }
+
+            const ctx = canvas.getContext('2d');
+            const grad = ctx.createLinearGradient(0, 0, 0, 260);
+            grad.addColorStop(0, 'rgba(219, 39, 119, 0.22)');
+            grad.addColorStop(1, 'rgba(219, 39, 119, 0.01)');
+
             trendChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: filter === 'ALL' ? 'Jumlah Pelajar' : `Pelajar ${filter}`,
-                        data: dataPoints,
+                        label: 'Jumlah Pelajar',
+                        data: values,
                         borderColor: '#db2777',
-                        backgroundColor: 'rgba(219, 39, 119, 0.1)',
+                        backgroundColor: grad,
                         borderWidth: 3,
                         pointBackgroundColor: '#ffffff',
                         pointBorderColor: '#db2777',
                         pointBorderWidth: 3,
                         pointRadius: 5,
-                        fill: true,
-                        tension: 0.25
+                        tension: 0.35,
+                        fill: true
                     }]
                 },
                 options: {
@@ -2177,229 +2020,448 @@
                     }
                 }
             });
-            
+
             const cardsGrid = document.getElementById('session-cards-grid');
-            if(cardsGrid) {
-                cardsGrid.innerHTML = sessions.map((s, i) => `
+            if (cardsGrid) {
+                cardsGrid.innerHTML = sessions.map((s, idx) => `
                     <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-100 text-center">
-                        <span class="text-[11px] font-bold text-slate-500 block mb-1 truncate">${s.session}</span>
-                        <span class="text-base font-extrabold text-[#1a103c]">${dataPoints[i]} Pelajar</span>
+                        <span class="text-[11px] font-bold text-slate-500 block">${s.session || ''}</span>
+                        <span class="text-xl font-extrabold text-[#1a103c] mt-1 block">${values[idx].toLocaleString()}</span>
+                        <span class="text-[10px] font-extrabold text-pink-600">${selectedDept === 'ALL' ? 'Semua Jabatan' : selectedDept}</span>
                     </div>
                 `).join('');
             }
         }
 
-        function renderFAQ() {
-            const cont = document.getElementById('faq-container');
-            if(!cont) return;
-            cont.innerHTML = (appData.faq || []).map((f, i) => `
-                <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden transition-all duration-300">
-                    <button type="button" onclick="toggleFaq(${i})" class="w-full px-6 py-4 flex items-center justify-between font-extrabold text-sm text-[#1a103c] text-left hover:bg-slate-50">
-                        <span>${f.q}</span> <i id="faq-icon-${i}" class="fas ${i===0 ? 'fa-minus' : 'fa-plus'} text-slate-400 text-xs transition-transform duration-300"></i>
-                    </button>
-                    <div id="faq-body-${i}" class="${i===0 ? '' : 'hidden'} bg-slate-50/60">
-                        <div class="px-6 py-4 text-xs sm:text-sm text-slate-600 border-t border-slate-100 leading-relaxed">${f.a}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
+        function renderFrontend() {
+            try {
+                updateFaviconAndAdminLogo(appData.images?.logo);
 
-        function toggleFaq(idx) {
-            const body = document.getElementById(`faq-body-${idx}`);
-            const icon = document.getElementById(`faq-icon-${idx}`);
-            if (!body) return;
-            body.classList.toggle('hidden');
-            if (body.classList.contains('hidden')) {
-                icon.classList.replace('fa-minus', 'fa-plus');
-            } else {
-                icon.classList.replace('fa-plus', 'fa-minus');
-            }
-        }
+                setText('main-hero-heading', appData.hero?.mainHeading || defaultAppData.hero.mainHeading);
+                setText('main-hero-subheading', appData.hero?.mainSubheading || defaultAppData.hero.mainSubheading);
 
-        function renderFooter() {
-            const f = appData.footer || {};
-            if(document.getElementById('footer-tel')) document.getElementById('footer-tel').innerText = f.tel || '04 988 6200';
-            if(document.getElementById('footer-faks')) document.getElementById('footer-faks').innerText = f.faks || '04 988 6300';
-            if(document.getElementById('footer-emel')) document.getElementById('footer-emel').innerText = f.emel || 'info@ptss.edu.my';
-            if(document.getElementById('footer-copyright')) document.getElementById('footer-copyright').innerText = f.copyright || 'Hak Cipta Terpelihara © 2026 Politeknik Tuanku Syed Sirajuddin';
-            
-            const adminDriveUrl = f.adminDriveUrl || '#';
-            if(document.getElementById('admin-only-drive-sidebar')) document.getElementById('admin-only-drive-sidebar').href = adminDriveUrl;
-            if(document.getElementById('admin-only-drive-top')) document.getElementById('admin-only-drive-top').href = adminDriveUrl;
-        }
+                renderCarousel();
 
-        function renderChatSetup() {
-            const c = appData.chatConfig || {};
-            const waNumber = c.whatsappNumber || '6049886200';
-            const waText = encodeURIComponent(c.whatsappDefaultText || 'Salam Sejahtera JHEP PTSS');
-            const waUrl = `https://wa.me/${waNumber}?text=${waText}`;
-            document.querySelectorAll('#nav-whatsapp-btn, #mobile-whatsapp-btn, #chat-header-wa').forEach(el => el.href = waUrl);
-            if(document.getElementById('ai-welcome-msg')) document.getElementById('ai-welcome-msg').innerText = c.welcomeMsg || "Hai! Saya Pembantu AI JHEP PTSS. Pilih topik pantas di bawah atau taip soalan anda.";
-        }
+                // 1B. Info Terkini & Pengumuman
+                setText('info-terkini-heading', appData.latestNewsData?.heading || 'Info Terkini & Pengumuman JHEP');
+                const infoGrid = document.getElementById('info-terkini-grid');
+                if (infoGrid) {
+                    const newsItems = appData.latestNewsData?.items || defaultAppData.latestNewsData.items;
+                    infoGrid.innerHTML = newsItems.map(item => {
+                        const isInternal = (item.link || '').startsWith('#');
+                        const actionAttr = isInternal
+                            ? `onclick="navigate('${item.link.replace('#', '')}')"`
+                            : `onclick="window.open('${item.link || '#'}', '_blank')"`;
+                        return `
+                            <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 flex flex-col justify-between hover:shadow-md transition">
+                                <div>
+                                    <div class="relative h-48 bg-slate-100 overflow-hidden">
+                                        <img src="${item.img || 'https://placehold.co/600x400/1a103c/ffffff?text=JHEP+PTSS'}" alt="${item.title || ''}" class="w-full h-full object-cover">
+                                        <span class="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-[#1a103c] text-white text-[10px] font-extrabold uppercase tracking-wider shadow">${item.badge || 'PENGUMUMAN'}</span>
+                                    </div>
+                                    <div class="p-6">
+                                        <div class="flex items-center gap-1.5 text-pink-600 text-xs font-bold mb-2">
+                                            <i class="far fa-calendar-alt"></i>
+                                            <span>${item.date || ''}</span>
+                                        </div>
+                                        <h4 class="font-extrabold text-base sm:text-lg text-[#1a103c] mb-2 leading-snug">${item.title || ''}</h4>
+                                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">${item.desc || ''}</p>
+                                    </div>
+                                </div>
+                                <div class="px-6 pb-6 pt-2">
+                                    <button ${actionAttr} class="text-xs font-extrabold text-pink-600 hover:text-pink-700 inline-flex items-center gap-1.5">
+                                        <span>Maklumat Lanjut</span>
+                                        <i class="fas fa-arrow-right text-[10px]"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
 
-        // ==========================================
-        // SISTEM CAROUSEL UTAMA (SLIDER)
-        // ==========================================
-        function renderCarousel() {
-            const wrapper = document.getElementById('carousel-slides-wrapper');
-            const dots = document.getElementById('carousel-dots');
-            if (!wrapper || !dots) return;
-            const slides = appData.slides || [];
-            wrapper.innerHTML = '';
-            dots.innerHTML = '';
-            if (slides.length === 0) return;
+                // 2. 4 Kad Modul Utama Berwarna Gelap
+                const homeGrid = document.getElementById('home-cards-grid');
+                if (homeGrid) {
+                    const cardStyles = [
+                        { bg: "bg-[#0f1d56]", iconBox: "bg-white/10 text-sky-300", icon: "fa-user-graduate", linkColor: "text-sky-300 hover:text-white" },
+                        { bg: "bg-[#3c0d6d]", iconBox: "bg-white/10 text-purple-300", icon: "fa-magnifying-glass", linkColor: "text-purple-300 hover:text-white" },
+                        { bg: "bg-[#590d3b]", iconBox: "bg-white/10 text-pink-300", icon: "fa-file-lines", linkColor: "text-sky-300 hover:text-white" },
+                        { bg: "bg-[#111526]", iconBox: "bg-white/10 text-sky-300", icon: "fa-calendar-check", linkColor: "text-sky-300 hover:text-white" }
+                    ];
+                    const cards = appData.homeCards || defaultAppData.homeCards;
+                    homeGrid.innerHTML = cards.map((c, idx) => {
+                        const st = cardStyles[idx % cardStyles.length];
+                        const isInternal = (c.url || '').startsWith('#');
+                        const clickAttr = isInternal
+                            ? `onclick="navigate('${c.url.replace('#', '')}')"`
+                            : `onclick="window.open('${c.url || '#'}', '_blank')"`;
+                        return `
+                            <div ${clickAttr} class="${st.bg} text-white rounded-3xl p-7 shadow-lg hover:-translate-y-1 transition cursor-pointer flex flex-col justify-between min-h-[230px]">
+                                <div>
+                                    <div class="w-11 h-11 rounded-2xl ${st.iconBox} flex items-center justify-center text-lg mb-5">
+                                        <i class="fas ${st.icon}"></i>
+                                    </div>
+                                    <h4 class="font-extrabold text-lg mb-2">${c.title || ''}</h4>
+                                    <p class="text-xs text-slate-300 leading-relaxed">${c.desc || ''}</p>
+                                </div>
+                                <div class="mt-6">
+                                    <span class="text-xs font-extrabold ${st.linkColor} inline-flex items-center gap-1.5">
+                                        ${c.linkText || 'Buka modul'} <i class="fas fa-arrow-right text-[10px]"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
 
-            slides.forEach((slide, idx) => {
-                const slideDiv = document.createElement('div');
-                slideDiv.className = 'carousel-slide-item w-full h-full flex flex-col justify-center px-12 sm:px-20 absolute inset-0 transition-opacity duration-700';
-                slideDiv.style.display = idx === 0 ? 'flex' : 'none';
-                slideDiv.style.opacity = idx === 0 ? '1' : '0';
-                
-                let bgStyle = getThemeGradient(slide.theme || 'purple');
-                if (slide.bg && slide.bg.trim() !== "") {
-                    if (slide.mode === 'full') {
-                        bgStyle = `url('${slide.bg}')`;
+                // 3A. Halaman Pengenalan
+                setText('intro-short-desc', appData.intro?.desc || '');
+                setText('intro-p1', appData.intro?.p1 || '');
+                setText('intro-p2', appData.intro?.p2 || '');
+                setText('b1-title', appData.intro?.b1Title || '');
+                setText('b1-desc', appData.intro?.b1Desc || '');
+                setText('b2-title', appData.intro?.b2Title || '');
+                setText('b2-desc', appData.intro?.b2Desc || '');
+
+                const b1ListEl = document.getElementById('b1-list');
+                if (b1ListEl) {
+                    const items = String(appData.intro?.b1List || '').split('\n').map(s => s.trim()).filter(Boolean);
+                    b1ListEl.innerHTML = items.map((line, i) => `
+                        <div class="flex items-center gap-3.5 py-2 border-b border-slate-100 last:border-0">
+                            <span class="px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 font-extrabold text-[11px]">${String(i + 1).padStart(2, '0')}</span>
+                            <span class="text-xs sm:text-sm font-bold text-[#1a103c]">${line}</span>
+                        </div>
+                    `).join('');
+                }
+
+                const b2AccEl = document.getElementById('b2-accordion');
+                if (b2AccEl) {
+                    const lines = String(appData.intro?.b2List || '').split('\n').map(s => s.trim()).filter(Boolean);
+                    b2AccEl.innerHTML = lines.map((line, i) => {
+                        const parts = line.split('|');
+                        const title = (parts[0] || '').trim();
+                        const desc = (parts[1] || 'Maklumat lanjut di kaunter JHEP PTSS.').trim();
+                        return `
+                            <div class="py-3">
+                                <button type="button" onclick="toggleAccordionB2(${i})" class="w-full flex items-center justify-between text-left gap-3 py-1">
+                                    <div class="flex items-center gap-3.5">
+                                        <span class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-600 font-extrabold text-[11px]">${String(i + 1).padStart(2, '0')}</span>
+                                        <span class="text-xs sm:text-sm font-extrabold text-[#1a103c]">${title}</span>
+                                    </div>
+                                    <i id="b2-acc-icon-${i}" class="fas ${i === 0 ? 'fa-chevron-up text-rose-600' : 'fa-chevron-down text-slate-400'} text-xs"></i>
+                                </button>
+                                <div id="b2-acc-body-${i}" class="${i === 0 ? '' : 'hidden'} mt-2.5 ml-11 p-3.5 rounded-2xl bg-slate-50 text-xs sm:text-sm text-slate-600">
+                                    ${desc}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+
+                // 3B. Program Pengajian & Cara Memohon
+                setText('program-banner-title', appData.programsData?.bannerTitle || 'Program Pengajian @ PTSS');
+                const progContainer = document.getElementById('programs-list-container');
+                if (progContainer) {
+                    const progs = appData.programsData?.items || defaultAppData.programsData.items;
+                    progContainer.innerHTML = progs.map(p => `
+                        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-100 grid md:grid-cols-12 gap-8 items-center">
+                            <div class="md:col-span-5 relative rounded-2xl overflow-hidden bg-slate-100 h-60 sm:h-64">
+                                <img src="${p.img || 'https://placehold.co/600x400/1a103c/ffffff?text=Program+PTSS'}" alt="${p.title || ''}" class="w-full h-full object-cover">
+                                <span class="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-slate-900/80 text-white text-[10px] font-extrabold uppercase">DIPLOMA SEPENUH MASA</span>
+                            </div>
+                            <div class="md:col-span-7">
+                                <span class="inline-block px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-[11px] font-extrabold mb-3">Program TVET Pilihan</span>
+                                <h3 class="text-xl sm:text-3xl font-extrabold text-[#0b2545] mb-3">${p.title || ''}</h3>
+                                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">${p.desc || ''}</p>
+                                <div class="flex flex-wrap gap-3">
+                                    <a href="${p.link || 'http://ambilan.mypolycc.edu.my'}" target="_blank" class="px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-extrabold inline-flex items-center gap-2 shadow-sm transition">
+                                        <span>Semak Syarat Khas</span>
+                                        <i class="fas fa-arrow-up-right-from-square text-[10px]"></i>
+                                    </a>
+                                    <button onclick="navigate('permohonan')" class="px-5 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-extrabold inline-flex items-center gap-1.5 transition">
+                                        <span>Panduan Permohonan</span>
+                                        <i class="fas fa-chevron-right text-[10px]"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                const ap = appData.programsData?.applyInfo || defaultAppData.programsData.applyInfo;
+                setText('apply-hero-title', ap.heroTitle || 'Sambung Diploma?');
+                const applyDescEl = document.getElementById('apply-hero-desc');
+                if (applyDescEl) {
+                    applyDescEl.innerHTML = String(ap.heroDesc || '').split('\n').filter(Boolean).map(p => `<p>${p}</p>`).join('');
+                }
+                const applyHeroImg = document.getElementById('apply-hero-img');
+                if (applyHeroImg && ap.heroImg) applyHeroImg.src = ap.heroImg;
+                const applyUpuImg = document.getElementById('apply-upu-img');
+                if (applyUpuImg && ap.upuImg) applyUpuImg.src = ap.upuImg;
+                const applyPolyImg = document.getElementById('apply-poly-img');
+                if (applyPolyImg && ap.polyImg) applyPolyImg.src = ap.polyImg;
+                const applyCheckImg = document.getElementById('apply-check-img');
+                if (applyCheckImg && ap.checkImg) applyCheckImg.src = ap.checkImg;
+
+                const upuBtn = document.getElementById('apply-upu-btn');
+                if (upuBtn && ap.upuUrl) upuBtn.href = ap.upuUrl;
+                const upuDateLink = document.getElementById('apply-upu-date-link');
+                if (upuDateLink && ap.upuUrl) upuDateLink.href = ap.upuUrl;
+                const polyBtn = document.getElementById('apply-poly-btn');
+                if (polyBtn && ap.polyUrl) polyBtn.href = ap.polyUrl;
+                const checkBtn = document.getElementById('apply-check-btn');
+                if (checkBtn && ap.checkUrl) checkBtn.href = ap.checkUrl;
+
+                // 4. Carta Organisasi & Kakitangan
+                const orgBox = document.getElementById('org-chart-container');
+                if (orgBox) {
+                    if (appData.images?.orgChart && appData.images.orgChart.trim() !== "") {
+                        orgBox.innerHTML = `<img src="${appData.images.orgChart}" alt="Carta Organisasi JHEP" class="max-h-[520px] w-auto mx-auto rounded-xl object-contain">`;
                     } else {
-                        const rgba = getThemeRgba(slide.theme || 'purple');
-                        bgStyle = `linear-gradient(to right, ${rgba} 15%, rgba(15, 23, 42, 0.35) 100%), url('${slide.bg}')`;
+                        orgBox.innerHTML = `<i class="fas fa-sitemap text-4xl mb-3 text-slate-300"></i><p class="text-xs font-bold">Imej Carta Organisasi Belum Dimuat Naik</p>`;
                     }
                 }
-                slideDiv.style.background = bgStyle;
-                slideDiv.style.backgroundSize = 'cover';
-                slideDiv.style.backgroundPosition = 'center';
 
-                slideDiv.innerHTML = `
-                    <div class="relative z-10 max-w-2xl text-white drop-shadow-md">
-                        ${slide.tag ? `<span class="inline-block px-3.5 py-1 rounded-full border border-white/40 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest mb-4 bg-white/15 backdrop-blur-md shadow-sm">${slide.tag}</span>` : ''}
-                        <h2 class="text-2xl sm:text-5xl font-extrabold mb-2 tracking-tight leading-tight">${slide.title1 || ''} <br class="hidden sm:block"> <span class="text-sky-300">${slide.title2 || ''}</span></h2>
-                        <p class="text-xs sm:text-sm text-white/90 max-w-lg mt-3 leading-relaxed font-medium">${slide.desc || ''}</p>
-                    </div>
-                `;
-                wrapper.appendChild(slideDiv);
-
-                const dot = document.createElement('button');
-                dot.type = 'button';
-                dot.className = `carousel-dot h-2 sm:h-2.5 rounded-full transition-all duration-300 ${idx === 0 ? 'bg-white w-6 sm:w-8' : 'bg-white/40 w-2 sm:w-2.5 hover:bg-white/70'}`;
-                dot.onclick = () => goToSlide(idx);
-                dots.appendChild(dot);
-            });
-        }
-        
-        function getThemeGradient(theme) {
-            switch(theme) {
-                case 'blue': return 'linear-gradient(135deg, #0b2545 0%, #1d4ed8 100%)';
-                case 'pink': return 'linear-gradient(135deg, #831843 0%, #db2777 100%)';
-                case 'green': return 'linear-gradient(135deg, #064e3b 0%, #059669 100%)';
-                case 'indigo': return 'linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%)';
-                default: return 'linear-gradient(135deg, #2b1b54 0%, #5b21b6 100%)';
-            }
-        }
-        function getThemeRgba(theme) {
-            switch(theme) {
-                case 'blue': return 'rgba(11, 37, 69, 0.92)';
-                case 'pink': return 'rgba(131, 24, 67, 0.92)';
-                case 'green': return 'rgba(6, 78, 59, 0.92)';
-                case 'indigo': return 'rgba(30, 27, 75, 0.92)';
-                default: return 'rgba(43, 27, 84, 0.92)';
-            }
-        }
-
-        function nextSlide() {
-            const slides = appData.slides || [];
-            if (slides.length <= 1) return;
-            currentSlide = (currentSlide + 1) % slides.length;
-            goToSlide(currentSlide);
-        }
-        function prevSlide() {
-            const slides = appData.slides || [];
-            if (slides.length <= 1) return;
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            goToSlide(currentSlide);
-        }
-        function goToSlide(idx) {
-            const items = document.querySelectorAll('.carousel-slide-item');
-            const dots = document.querySelectorAll('.carousel-dot');
-            if (items.length === 0) return;
-            currentSlide = idx;
-            items.forEach((s, i) => {
-                if (i === idx) {
-                    s.style.display = 'flex';
-                    setTimeout(() => s.style.opacity = '1', 30);
-                } else {
-                    s.style.opacity = '0';
-                    setTimeout(() => { if(currentSlide !== i) s.style.display = 'none'; }, 500);
+                const staffTbody = document.getElementById('staff-table-body');
+                if (staffTbody) {
+                    staffTbody.innerHTML = (appData.staff || []).map((s, idx) => `
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-4 text-center font-bold text-slate-400">${idx + 1}</td>
+                            <td class="p-4 font-extrabold text-[#1a103c]">${s.nama || ''}</td>
+                            <td class="p-4 text-slate-600">${s.jawatan || ''}</td>
+                            <td class="p-4 text-center font-semibold">${s.tel || ''}</td>
+                            <td class="p-4 text-center text-pink-600 font-semibold">${s.emel || ''}</td>
+                        </tr>
+                    `).join('');
                 }
-            });
-            dots.forEach((d, i) => {
-                d.className = `carousel-dot h-2 sm:h-2.5 rounded-full transition-all duration-300 ${i === idx ? 'bg-white w-6 sm:w-8 shadow-sm' : 'bg-white/40 w-2 sm:w-2.5 hover:bg-white/70'}`;
-            });
-        }
 
-        function navigate(targetId) {
-            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.nav-pill').forEach(btn => btn.classList.remove('active'));
-            
-            const targetSec = document.getElementById('sec-' + targetId);
-            if (targetSec) targetSec.classList.add('active');
-            
-            const navGroupMap = {
-                utama: 'utama',
-                pengenalan: 'pengenalan', kakitangan: 'pengenalan', faq: 'pengenalan',
-                program: 'program', permohonan: 'program',
-                perkhidmatan: 'perkhidmatan', borang: 'perkhidmatan', komuniti: 'perkhidmatan',
-                statistik: 'statistik', kpi: 'statistik'
-            };
-            const pillTarget = navGroupMap[targetId] || targetId;
-            const targetBtn = document.querySelector(`.nav-pill[data-target="${pillTarget}"]`);
-            if (targetBtn) targetBtn.classList.add('active');
-            
-            const mobMenu = document.getElementById('mobile-menu');
-            if (mobMenu) mobMenu.classList.add('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+                // 5. Kelab & Komuniti
+                setText('komuniti-desc', appData.komuniti?.desc || '');
+                const gdriveBtn = document.getElementById('komuniti-gdrive-btn');
+                if (gdriveBtn) gdriveBtn.href = appData.komuniti?.driveLink || '#';
+                const qrImg = document.getElementById('komuniti-qr-img');
+                if (qrImg && appData.images?.qrCode) qrImg.src = appData.images.qrCode;
 
-            if (targetId === 'statistik') {
-                setTimeout(updateSessionChart, 100);
+                const komGrid = document.getElementById('komuniti-grid');
+                if (komGrid) {
+                    komGrid.innerHTML = (appData.kelab || []).map(k => {
+                        const name = typeof k === 'string' ? k : (k.name || '');
+                        const url = typeof k === 'object' ? (k.url || '') : '';
+                        return url ? `
+                            <a href="${url}" target="_blank" class="p-4 rounded-2xl border border-slate-200 hover:border-pink-500 hover:bg-pink-50/30 transition flex items-center justify-between font-bold text-xs sm:text-sm text-[#1a103c]">
+                                <span>${name}</span>
+                                <i class="fas fa-arrow-up-right-from-square text-xs text-pink-600"></i>
+                            </a>
+                        ` : `
+                            <div class="p-4 rounded-2xl border border-slate-200 font-bold text-xs sm:text-sm text-[#1a103c]">${name}</div>
+                        `;
+                    }).join('');
+                }
+
+                // 6A. Perkhidmatan & Galeri
+                const svcList = document.getElementById('perkhidmatan-list');
+                if (svcList) {
+                    svcList.innerHTML = (appData.perkhidmatan || []).map(item => `
+                        <li class="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex items-center gap-3 text-xs sm:text-sm font-bold text-[#1a103c]">
+                            <i class="fas fa-check-circle text-pink-600 text-base"></i>
+                            <span>${item}</span>
+                        </li>
+                    `).join('');
+                }
+
+                const galGrid = document.getElementById('galeri-grid');
+                if (galGrid) {
+                    galGrid.innerHTML = (appData.galeri || []).map((g, idx) => {
+                        const imgs = Array.isArray(g.imgs) && g.imgs.length > 0
+                            ? g.imgs
+                            : ['https://placehold.co/600x380/1a103c/ffffff?text=Galeri+JHEP'];
+                        const curIdx = gallerySlideIndices[idx] || 0;
+                        return `
+                            <div onclick="openLightbox(${idx})" class="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-100 cursor-pointer group">
+                                <div class="relative h-52 bg-slate-900 overflow-hidden">
+                                    <img id="gal-card-img-${idx}" src="${imgs[curIdx] || imgs[0]}" alt="${g.title || ''}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                                    ${imgs.length > 1 ? `
+                                        <button onclick="changeGalleryCardSlide(${idx}, -1, event)" class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/50 text-white text-xs flex items-center justify-center"><i class="fas fa-chevron-left"></i></button>
+                                        <button onclick="changeGalleryCardSlide(${idx}, 1, event)" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/50 text-white text-xs flex items-center justify-center"><i class="fas fa-chevron-right"></i></button>
+                                    ` : ''}
+                                </div>
+                                <div class="p-5">
+                                    <span class="text-[10px] font-extrabold uppercase text-pink-600">${g.date || ''}</span>
+                                    <h4 class="font-extrabold text-base text-[#1a103c] mt-1 mb-1">${g.title || ''}</h4>
+                                    <p class="text-xs text-slate-500">${g.desc || ''}</p>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+
+                // 6B. Borang HEP
+                setText('borang-main-title', appData.borangData?.title || 'Borang HEP');
+                const borangInst = document.getElementById('borang-instructions');
+                if (borangInst) {
+                    borangInst.innerHTML = String(appData.borangData?.instructions || '').split('\n').filter(Boolean).map(l => `<p>${l}</p>`).join('');
+                }
+                const borangGrid = document.getElementById('borang-grid-container');
+                if (borangGrid) {
+                    borangGrid.innerHTML = (appData.borangData?.items || []).map(b => `
+                        <div class="flex items-start gap-4 pt-4 md:pt-0">
+                            <div class="w-14 h-14 rounded-full border-2 border-blue-500 text-slate-900 flex items-center justify-center text-xl shrink-0">
+                                <i class="fas ${b.icon || 'fa-file-alt'}"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-extrabold text-sm sm:text-base text-[#0b2545]">${b.title || ''}</h4>
+                                <a href="${b.url || '#'}" target="_blank" class="text-xs sm:text-sm font-bold text-amber-500 hover:text-amber-600 underline block mt-0.5">${b.linkText || 'Muat turun borang'}</a>
+                                ${b.note ? `<span class="text-xs text-slate-500 block mt-0.5">${b.note}</span>` : ''}
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                // 7. Pencapaian KPI
+                setText('kpi-page-title', appData.kpiData?.title || 'Pencapaian KPI JHEP PTSS');
+                setText('kpi-page-desc', appData.kpiData?.desc || '');
+                const kpiDriveBtn = document.getElementById('kpi-main-drive-btn');
+                if (kpiDriveBtn) kpiDriveBtn.href = appData.kpiData?.driveUrl || '#';
+
+                const kpiItems = appData.kpiData?.items || [];
+                setText('kpi-total-count', kpiItems.length);
+                const achievedCount = kpiItems.filter(k => k.status === 'Tercapai').length;
+                setText('kpi-achieved-count', achievedCount);
+                const avgPct = kpiItems.length > 0
+                    ? Math.round(kpiItems.reduce((acc, k) => acc + Number(k.pct || 0), 0) / kpiItems.length)
+                    : 0;
+                setText('kpi-avg-pct', avgPct + '%');
+
+                const kpiTbody = document.getElementById('kpi-table-body');
+                if (kpiTbody) {
+                    kpiTbody.innerHTML = kpiItems.map(k => {
+                        const pct = Math.min(100, Math.max(0, Number(k.pct || 0)));
+                        let badgeClass = "bg-emerald-50 text-emerald-700 border border-emerald-200";
+                        let barClass = "bg-emerald-500";
+                        if (k.status === 'Dalam Tindakan') {
+                            badgeClass = "bg-amber-50 text-amber-700 border border-amber-200";
+                            barClass = "bg-amber-500";
+                        } else if (k.status === 'Belum Tercapai') {
+                            badgeClass = "bg-rose-50 text-rose-700 border border-rose-200";
+                            barClass = "bg-rose-600";
+                        }
+                        return `
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 font-extrabold text-indigo-950">${k.code || ''}</td>
+                                <td class="p-4 font-bold text-[#1a103c]">${k.name || ''}</td>
+                                <td class="p-4 text-center font-semibold text-slate-600">${k.target || ''}</td>
+                                <td class="p-4 text-center font-extrabold text-[#1a103c]">${k.achieved || ''}</td>
+                                <td class="p-4">
+                                    <div class="text-xs font-extrabold text-slate-700 mb-1">${pct}%</div>
+                                    <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                                        <div class="${barClass} h-full rounded-full" style="width:${pct}%"></div>
+                                    </div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <span class="px-3 py-1 rounded-full text-[11px] font-extrabold whitespace-nowrap inline-block ${badgeClass}">${k.status || 'Tercapai'}</span>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <a href="${k.link || appData.kpiData?.driveUrl || '#'}" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 font-extrabold text-xs whitespace-nowrap">
+                                        <i class="fab fa-google-drive"></i> Folder Bukti
+                                    </a>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
+
+                // 8. Statistik Pelajar
+                const depts = appData.departments || defaultAppData.departments;
+                const totalStudents = depts.reduce((sum, d) => sum + Number(d.jumlah || 0), 0);
+                const totalMale = depts.reduce((sum, d) => sum + Number(d.lelaki || 0), 0);
+                const totalFemale = depts.reduce((sum, d) => sum + Number(d.perempuan || 0), 0);
+                const malePct = totalStudents > 0 ? Math.round((totalMale / totalStudents) * 100) : 50;
+                const femalePct = totalStudents > 0 ? (100 - malePct) : 50;
+
+                setText('stat-total-students', totalStudents.toLocaleString());
+                setText('stat-dept-count-inline', depts.length);
+                setText('stat-dept-badge', `${depts.length} Jabatan Berdaftar`);
+                setText('stat-male-label', `Lelaki: ${totalMale} (${malePct}%)`);
+                setText('stat-female-label', `Perempuan: ${totalFemale} (${femalePct}%)`);
+
+                const maleBar = document.getElementById('stat-male-bar');
+                const femaleBar = document.getElementById('stat-female-bar');
+                if (maleBar) maleBar.style.width = malePct + '%';
+                if (femaleBar) femaleBar.style.width = femalePct + '%';
+
+                const jabGrid = document.getElementById('jabatan-grid');
+                if (jabGrid) {
+                    const badgeColors = {
+                        pink: "bg-pink-500 text-white",
+                        orange: "bg-amber-500 text-white",
+                        green: "bg-emerald-500 text-white",
+                        blue: "bg-blue-600 text-white",
+                        purple: "bg-purple-600 text-white"
+                    };
+                    jabGrid.innerHTML = depts.map(d => {
+                        const pct = totalStudents > 0 ? Math.round((Number(d.jumlah || 0) / totalStudents) * 100) : 0;
+                        const bCol = badgeColors[d.theme] || badgeColors.blue;
+                        return `
+                            <div class="p-6 rounded-3xl border border-slate-100 bg-slate-50/60 hover:bg-white hover:shadow-md transition">
+                                <div class="flex justify-between items-start mb-3">
+                                    <span class="px-3 py-1 rounded-xl bg-white border border-slate-200 font-extrabold text-xs text-[#1a103c]">${d.acronym || ''}</span>
+                                    <span class="w-10 h-10 rounded-2xl ${bCol} font-extrabold text-xs flex items-center justify-center shadow-sm">${pct}%</span>
+                                </div>
+                                <h4 class="font-extrabold text-sm sm:text-base text-[#1a103c] mb-4">${d.name || ''}</h4>
+                                <div class="space-y-2 text-xs border-t border-slate-200/70 pt-3">
+                                    <div class="flex justify-between"><span class="text-slate-500">Jumlah Pelajar:</span><span class="font-extrabold text-[#1a103c]">${d.jumlah || 0} Orang</span></div>
+                                    <div class="flex justify-between"><span class="text-slate-500">Lelaki / Perempuan:</span><span class="font-bold text-slate-700">${d.lelaki || 0} L / ${d.perempuan || 0} P</span></div>
+                                    <div class="flex justify-between"><span class="text-slate-500">Purata HPNM:</span><span class="font-extrabold text-emerald-600">${d.hpnm || '3.65'}</span></div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+
+                updateSessionChart();
+
+                // 9. FAQ
+                const faqBox = document.getElementById('faq-container');
+                if (faqBox) {
+                    faqBox.innerHTML = (appData.faq || []).map((f, idx) => `
+                        <div class="bg-white rounded-2xl border border-slate-200/80 overflow-hidden">
+                            <button type="button" onclick="toggleFaqItem(${idx})" class="w-full p-5 text-left flex justify-between items-center gap-4 font-extrabold text-xs sm:text-sm text-[#1a103c]">
+                                <span>${f.q || ''}</span>
+                                <span id="faq-icon-${idx}" class="text-lg text-slate-400 font-bold">${idx === 0 ? '−' : '+'}</span>
+                            </button>
+                            <div id="faq-body-${idx}" class="${idx === 0 ? '' : 'hidden'} px-5 pb-5 pt-2 text-xs sm:text-sm text-slate-600 border-t border-slate-100">
+                                ${f.a || ''}
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                // 10. Footer & Pautan WhatsApp / Drive Admin
+                setText('footer-tel', appData.footer?.tel || '');
+                setText('footer-faks', appData.footer?.faks || '');
+                setText('footer-emel', appData.footer?.emel || '');
+                setText('footer-copyright', appData.footer?.copyright || '');
+
+                const adminDriveSidebar = document.getElementById('admin-only-drive-sidebar');
+                if (adminDriveSidebar) adminDriveSidebar.href = appData.footer?.adminDriveUrl || '#';
+                const adminDriveTop = document.getElementById('admin-only-drive-top');
+                if (adminDriveTop) adminDriveTop.href = appData.footer?.adminDriveUrl || '#';
+
+                const waNum = appData.chatConfig?.whatsappNumber || '6049886200';
+                const waText = encodeURIComponent(appData.chatConfig?.whatsappDefaultText || 'Salam JHEP PTSS');
+                const waUrl = `https://wa.me/${waNum}?text=${waText}`;
+                ['nav-whatsapp-btn', 'mobile-whatsapp-btn', 'chat-header-wa'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.href = waUrl;
+                });
+                setText('ai-welcome-msg', appData.chatConfig?.welcomeMsg || '');
+            } catch (err) {
+                console.error("Ralat renderFrontend:", err);
             }
         }
 
         // ==========================================
-        // PEMAMPAT IMEJ PINTAR (UNTUK MUAT NAIK GAMBAR)
-        // ==========================================
-        function compressImageFile(file, maxW = 800, maxH = 500, quality = 0.78) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = (ev) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = maxW;
-                        canvas.height = maxH;
-                        const ctx = canvas.getContext('2d');
-                        const scale = Math.max(maxW / img.width, maxH / img.height);
-                        const x = (maxW / 2) - (img.width / 2) * scale;
-                        const y = (maxH / 2) - (img.height / 2) * scale;
-                        ctx.fillStyle = "#ffffff";
-                        ctx.fillRect(0, 0, maxW, maxH);
-                        ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-                        resolve(canvas.toDataURL('image/jpeg', quality));
-                    };
-                    img.src = ev.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        async function handleApplyImageUpload(input, previewId, textInputId) {
-            if (!input.files || !input.files[0]) return;
-            const dataUrl = await compressImageFile(input.files[0], 650, 480, 0.8);
-            const prev = document.getElementById(previewId);
-            const txt = document.getElementById(textInputId);
-            if (prev) prev.src = dataUrl;
-            if (txt) txt.value = dataUrl;
-        }
-
-        // ==========================================
-        // FUNGSI LOG MASUK & PAPAN PEMUKA ADMIN (CMS PENUH)
+        // FUNGSI LOG MASUK (100% PENGESAHAN PELAYAN TAB USERS) & PAPAN PEMUKA ADMIN
         // ==========================================
         function openLoginModal() {
             document.getElementById('login-modal').classList.remove('hidden');
@@ -2410,38 +2472,164 @@
             e.preventDefault();
             const user = document.getElementById('login-user').value.trim();
             const pass = document.getElementById('login-pass').value.trim();
-            let isAuth = (user === 'admin' && pass === 'password123');
+            const btn = document.getElementById('login-submit-btn');
+            const errEl = document.getElementById('login-error');
 
-            if (!isAuth) {
-                try {
-                    const res = await fetch(DATABASE_URL, {
-                        method: "POST",
-                        headers: { "Content-Type": "text/plain;charset=utf-8" },
-                        body: JSON.stringify({ action: "login", username: user, password: pass })
-                    });
-                    const result = await res.json();
-                    if (result && result.status === 'success') isAuth = true;
-                } catch (err) {}
+            errEl.classList.add('hidden');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i> <span>Mengesahkan Akaun...</span>`;
             }
 
-            if (isAuth) {
-                document.getElementById('login-modal').classList.add('hidden');
-                document.getElementById('public-view').classList.add('hidden');
-                document.getElementById('main-nav').classList.add('hidden');
-                document.getElementById('admin-view').classList.remove('hidden');
-                populateCmsForms();
-            } else {
-                document.getElementById('login-error').classList.remove('hidden');
+            try {
+                const res = await fetch(DATABASE_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({ action: "login", username: user, password: pass })
+                });
+                const result = await res.json();
+
+                if (result && result.status === 'success') {
+                    currentAdminUser = {
+                        username: result.username || user,
+                        email: result.email || '',
+                        role: result.role || 'Pentadbir'
+                    };
+                    document.getElementById('login-modal').classList.add('hidden');
+                    document.getElementById('public-view').classList.add('hidden');
+                    document.getElementById('main-nav').classList.add('hidden');
+                    document.getElementById('admin-view').classList.remove('hidden');
+                    populateCmsForms();
+                    loadAdminSecurityData();
+                    showToast(`Selamat datang, ${currentAdminUser.username}!`);
+                } else {
+                    errEl.innerText = result?.message || "ID Pengguna atau Kata Laluan tidak sah!";
+                    errEl.classList.remove('hidden');
+                }
+            } catch (err) {
+                errEl.innerText = "Gagal menghubungi pelayan pangkalan data Google Sheets. Pastikan Code.gs telah di-deploy.";
+                errEl.classList.remove('hidden');
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = `<span>Masuk Papan Pemuka</span>`;
+                }
             }
         }
 
         function handleLogout() {
+            currentAdminUser = null;
             document.getElementById('admin-view').classList.add('hidden');
             document.getElementById('public-view').classList.remove('hidden');
             document.getElementById('main-nav').classList.remove('hidden');
             document.getElementById('login-user').value = '';
             document.getElementById('login-pass').value = '';
             renderFrontend();
+        }
+
+        async function loadAdminSecurityData() {
+            const userTbody = document.getElementById('table-db-users');
+            const logTbody = document.getElementById('table-db-logs');
+            if (!userTbody || !logTbody) return;
+
+            try {
+                const res = await fetch(DATABASE_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({ action: "getAdminSecurityData" })
+                });
+                const data = await res.json();
+                if (data && data.status === "success") {
+                    userTbody.innerHTML = (data.users || []).map(u => `
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-2.5 font-bold text-[#1a103c]">${u.username} <br><span class="text-[10px] font-normal text-slate-400">${u.email || '-'}</span></td>
+                            <td class="p-2.5 text-slate-600">${u.role || 'Pentadbir'}</td>
+                            <td class="p-2.5 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold ${u.status === 'AKTIF' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}">${u.status || 'AKTIF'}</span></td>
+                            <td class="p-2.5 text-center space-x-2">
+                                <button type="button" onclick="prefillEditUser('${u.username}', '${u.email || ''}', '${u.role || 'Pentadbir'}')" class="text-blue-600 hover:underline font-bold">Edit</button>
+                                <button type="button" onclick="handleDeleteDatabaseUser('${u.username}')" class="text-rose-600 hover:underline font-bold">Padam</button>
+                            </td>
+                        </tr>
+                    `).join('') || `<tr><td colspan="4" class="p-3 text-center text-slate-400">Tiada rekod pengguna.</td></tr>`;
+
+                    logTbody.innerHTML = (data.logs || []).map(l => `
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-2 text-[10px] text-slate-400 whitespace-nowrap">${l.timestamp || ''}</td>
+                            <td class="p-2 font-bold text-[#1a103c]">${l.username || ''}</td>
+                            <td class="p-2 text-slate-600"><span class="font-bold text-pink-600">[${l.action || ''}]</span> ${l.details || ''}</td>
+                        </tr>
+                    `).join('') || `<tr><td colspan="3" class="p-3 text-center text-slate-400">Tiada rekod aktiviti.</td></tr>`;
+                }
+            } catch (e) {
+                console.error("Ralat memuatkan data keselamatan:", e);
+            }
+        }
+
+        function prefillEditUser(username, email, role) {
+            document.getElementById('sec-user-id').value = username;
+            document.getElementById('sec-user-email').value = email;
+            document.getElementById('sec-user-role').value = role;
+            document.getElementById('sec-user-pass').focus();
+            showToast(`Mengedit pengguna: ${username}. Masukkan kata laluan baharu jika ingin menukarnya.`);
+        }
+
+        async function handleSaveDatabaseUser() {
+            const username = document.getElementById('sec-user-id').value.trim();
+            const email = document.getElementById('sec-user-email').value.trim();
+            const password = document.getElementById('sec-user-pass').value.trim();
+            const role = document.getElementById('sec-user-role').value;
+
+            if (!username) {
+                showToast("Sila masukkan ID Pengguna!");
+                return;
+            }
+
+            try {
+                const res = await fetch(DATABASE_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({
+                        action: "saveUser",
+                        actor: currentAdminUser?.username || "Admin",
+                        userObj: { username, email, password, role, status: "AKTIF" }
+                    })
+                });
+                const result = await res.json();
+                if (result && result.status === "success") {
+                    document.getElementById('sec-user-id').value = '';
+                    document.getElementById('sec-user-email').value = '';
+                    document.getElementById('sec-user-pass').value = '';
+                    await loadAdminSecurityData();
+                    showToast("Akaun pengguna berjaya disimpan ke tab USERS!");
+                } else {
+                    showToast(result?.message || "Gagal menyimpan pengguna.");
+                }
+            } catch (e) {
+                showToast("Ralat sambungan ke Google Sheets.");
+            }
+        }
+
+        async function handleDeleteDatabaseUser(username) {
+            try {
+                const res = await fetch(DATABASE_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({
+                        action: "deleteUser",
+                        actor: currentAdminUser?.username || "Admin",
+                        username: username
+                    })
+                });
+                const result = await res.json();
+                if (result && result.status === "success") {
+                    await loadAdminSecurityData();
+                    showToast(`Pengguna ${username} telah dipadam.`);
+                } else {
+                    showToast(result?.message || "Gagal memadam pengguna.");
+                }
+            } catch (e) {
+                showToast("Ralat sambungan ke Google Sheets.");
+            }
         }
 
         function toggleAdminSidebar() {
@@ -2978,9 +3166,10 @@
                 welcomeMsg: document.getElementById('cms-ai-welcome').value
             };
 
-            await saveToDatabase();
+            await saveToDatabase("Kemaskini & terbitkan kandungan CMS oleh " + (currentAdminUser?.username || "Pentadbir"));
+            await loadAdminSecurityData();
             renderFrontend();
-            showToast("Data berjaya disimpan & diterbitkan!");
+            showToast("Data berjaya disimpan ke semua tab Google Sheets & diterbitkan!");
         }
 
         // ==========================================
@@ -3046,9 +3235,10 @@
             appData.inquiries = appData.inquiries || [];
             appData.inquiries.unshift({
                 date: new Date().toLocaleDateString('ms-MY'),
-                name, matric, phone, cat, msg
+                name, matric, phone, cat, msg,
+                status: "BARU / DALAM SEMAKAN"
             });
-            saveToDatabase();
+            saveToDatabase("Pertanyaan baharu diterima daripada pelajar: " + name);
             
             if(method === 'whatsapp') {
                 const waNum = appData.chatConfig?.whatsappNumber || '6049886200';
