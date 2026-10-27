@@ -112,10 +112,7 @@
                     <!-- Dropdown 4: Data & KPI -->
                     <div class="relative dropdown-group">
                         <button class="nav-pill px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 hover:text-[#2b1b54] transition whitespace-nowrap flex items-center gap-1.5">
-                            <span>Data & KPI</span>
-                            <i class="fas fa-chevron-down text-[10px] opacity-70"></i>
-                        </button>
-                        <div id="dropdown-data-kpi" class="dropdown-menu absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50">
+                        <div id=" dropdown-data-kpi" class="dropdown-menu absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50">
                             <button onclick="navigate('statistik')" class="w-full text-left px-4 py-2.5 text-xs font-bold text-slate-700 hover:bg-pink-50 hover:text-pink-600 flex items-center gap-2.5">
                                 <i class="fas fa-chart-line text-pink-600 w-4"></i> Statistik Pelajar
                             </button>
@@ -316,7 +313,41 @@
                     <!-- Saluran Permohonan -->
                     <div>
                         <h3 class="text-2xl sm:text-3xl font-extrabold text-center text-[#0b2545] mb-10">Permohonan Kemasukan Politeknik</h3>
-                        <div id="apply-channels-public-grid" class="grid md:grid-cols-2 gap-8"></div>
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col justify-between">
+                                <div>
+                                    <div class="h-40 bg-slate-50 rounded-2xl flex items-center justify-center p-4 mb-6 border border-slate-100">
+                                        <img id="apply-upu-img" src="https://placehold.co/280x160/ffffff/db2777?text=UPU+ONLINE" alt="UPU Online" class="max-h-32 w-auto object-contain">
+                                    </div>
+                                    <h4 class="text-lg font-extrabold text-[#0b2545] mb-3">i) Permohonan Melalui UPUonline</h4>
+                                    <ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-600 mb-6">
+                                        <li>Keutamaan permohonan pengajian <strong class="underline">SESI I</strong></li>
+                                        <li>Isi borang permohonan melalui <strong>UPU online</strong></li>
+                                        <li>Tarikh penting UPU berkaitan panggilan temuduga, keputusan, rayuan dan lain-lain sila rujuk <a id="apply-upu-date-link" href="https://upu.mohe.gov.my" target="_blank" class="text-amber-600 font-bold underline">Tarikh Penting UPU</a></li>
+                                    </ul>
+                                </div>
+                                <div class="text-center">
+                                    <a id="apply-upu-btn" href="https://upu.mohe.gov.my" target="_blank" class="inline-block px-7 py-2.5 rounded-xl border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-bold text-xs sm:text-sm transition">UPU Online</a>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col justify-between">
+                                <div>
+                                    <div class="h-40 bg-slate-50 rounded-2xl flex items-center justify-center p-4 mb-6 border border-slate-100">
+                                        <img id="apply-poly-img" src="https://placehold.co/280x160/ffffff/1e3a8a?text=eBorang+MyPolyCC" alt="MyPolyCC" class="max-h-32 w-auto object-contain">
+                                    </div>
+                                    <h4 class="text-lg font-extrabold text-[#0b2545] mb-3">ii) Permohonan Melalui Portal MyPolyCC</h4>
+                                    <ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-600 mb-6">
+                                        <li>Keutamaan permohonan pengajian <strong class="underline">SESI II</strong></li>
+                                        <li>Permohonan kemasukan adalah melalui Portal Pengambilan Pelajar Politeknik dan Kolej Komuniti (MyPolyCC) di pautan <strong>Portal Ambilan MyPolyCC</strong></li>
+                                        <li>Tarikh penting ambilan boleh dirujuk di portal yang sama</li>
+                                    </ul>
+                                </div>
+                                <div class="text-center">
+                                    <a id="apply-poly-btn" href="http://ambilan.mypolycc.edu.my" target="_blank" class="inline-block px-7 py-2.5 rounded-xl border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-bold text-xs sm:text-sm transition">Portal MyPolyCC</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Semak Kelayakan -->
@@ -777,8 +808,8 @@
                 <a href="#cms-sec-9" onclick="closeAdminSidebarOnMobile()" class="block px-3 py-2 rounded-xl hover:bg-white/10 transition">9. Statistik Sesi & Jabatan</a>
                 <a href="#cms-sec-10" onclick="closeAdminSidebarOnMobile()" class="block px-3 py-2 rounded-xl hover:bg-white/10 transition">10. Footer & Drive Admin</a>
                 <a href="#cms-sec-11" onclick="closeAdminSidebarOnMobile()" class="block px-3 py-2 rounded-xl hover:bg-white/10 transition">11. Tetapan Chat & WhatsApp</a>
+                <a href="#cms-sec-13" onclick="closeAdminSidebarOnMobile()" class="block px-3 py-2 rounded-xl bg-pink-500/25 text-pink-200 font-extrabold transition mt-2 border border-pink-400/40"><i class="fas fa-wand-magic-sparkles mr-1.5"></i> 13. Modul & Halaman Tambahan</a>
                 <a href="#cms-sec-12" onclick="closeAdminSidebarOnMobile()" class="block px-3 py-2 rounded-xl bg-emerald-500/20 text-emerald-300 font-extrabold transition mt-2 border border-emerald-500/30"><i class="fas fa-shield-halved mr-1.5"></i> 12. USERS & Log Aktiviti</a>
-                <a href="#cms-sec-13" onclick="closeAdminSidebarOnMobile()" class="block px-3 py-2 rounded-xl bg-pink-500/25 text-pink-200 font-extrabold transition mt-1.5 border border-pink-400/40"><i class="fas fa-wand-magic-sparkles mr-1.5"></i> 13. Modul & Halaman Tambahan</a>
             </div>
             <div class="p-4 border-t border-white/10 space-y-2 bg-[#140c2e]">
                 <a id="admin-only-drive-sidebar" href="#" target="_blank" class="w-full py-2.5 px-3 bg-indigo-600/40 hover:bg-indigo-600 text-indigo-100 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition border border-indigo-400/30">
@@ -861,17 +892,17 @@
                                 </div>
                                 <button type="button" onclick="addRow('table-infoterkini')" class="text-xs bg-pink-600 text-white px-3.5 py-2 rounded-lg font-bold"><i class="fas fa-plus mr-1"></i> Tambah Info Terkini</button>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 bg-pink-50/50 p-3 rounded-xl border border-pink-100">
                                 <label class="block text-xs font-bold text-slate-700 mb-1">Tajuk Seksyen Info Terkini</label>
-                                <input type="text" id="cms-infoterkini-heading" class="w-full p-2 border rounded-lg text-xs font-bold">
+                                <input type="text" id="cms-infoterkini-heading" class="w-full p-2 border rounded-lg bg-white text-xs font-bold">
                             </div>
                             <div class="border rounded-2xl overflow-x-auto">
-                                <table class="w-full text-xs text-left min-w-[900px]">
+                                <table class="w-full text-xs text-left min-w-[820px]">
                                     <thead class="bg-slate-100 font-bold text-slate-700 uppercase">
                                         <tr>
                                             <th class="p-2.5 w-32 text-center">Pratonton</th>
-                                            <th class="p-2.5 w-48">Tajuk, Label & Tarikh</th>
-                                            <th class="p-2.5">Butiran Info Terkini</th>
+                                            <th class="p-2.5 w-52">Tajuk, Label & Tarikh</th>
+                                            <th class="p-2.5">Butiran</th>
                                             <th class="p-2.5 w-64">Muat Naik Gambar / URL & Pautan</th>
                                             <th class="p-2.5 w-10 text-center">X</th>
                                         </tr>
@@ -881,25 +912,22 @@
                             </div>
                         </div>
 
-                        <!-- 2. Kad Modul Utama (CRUD) -->
+                        <!-- 2. 4 Kad Modul -->
                         <div id="cms-sec-2">
-                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-2 mb-4 gap-2">
-                                <h3 class="text-base sm:text-lg font-extrabold text-[#2b1b54]">2. Pautan Kad Modul Utama (CRUD)</h3>
-                                <button type="button" onclick="addRow('table-homecards')" class="text-xs bg-indigo-600 hover:bg-indigo-700 text-white px-3.5 py-2 rounded-lg font-bold transition"><i class="fas fa-plus mr-1"></i> Tambah Kad Modul</button>
-                            </div>
+                            <h3 class="text-base sm:text-lg font-extrabold text-[#2b1b54] border-b pb-2 mb-4">2. Pautan 4 Kad Modul Utama</h3>
                             <div class="border rounded-2xl overflow-x-auto">
                                 <table class="w-full text-xs text-left min-w-[700px]">
                                     <thead class="bg-slate-100 font-bold text-slate-700 uppercase">
-                                        <tr><th class="p-2.5">Tajuk Kad</th><th class="p-2.5">Penerangan</th><th class="p-2.5 w-40">Teks Pautan</th><th class="p-2.5 w-64">URL / Seksyen</th><th class="p-2.5 w-10 text-center">X</th></tr>
+                                        <tr><th class="p-2.5">Tajuk Kad</th><th class="p-2.5">Penerangan</th><th class="p-2.5 w-40">Teks Pautan</th><th class="p-2.5 w-64">URL / Seksyen</th></tr>
                                     </thead>
                                     <tbody id="table-homecards" class="divide-y"></tbody>
                                 </table>
                             </div>
                         </div>
 
-                        <!-- 3A. Pengenalan (CRUD) -->
+                        <!-- 3A. Pengenalan -->
                         <div id="cms-sec-3">
-                            <h3 class="text-base sm:text-lg font-extrabold text-[#2b1b54] border-b pb-2 mb-4">3A. Halaman Pengenalan (CRUD)</h3>
+                            <h3 class="text-base sm:text-lg font-extrabold text-[#2b1b54] border-b pb-2 mb-4">3A. Halaman Pengenalan</h3>
                             <div class="grid md:grid-cols-2 gap-4 mb-4">
                                 <div>
                                     <label class="block text-xs font-bold text-slate-700 mb-1">Penerangan Ringkas</label>
@@ -915,37 +943,15 @@
                                 <textarea id="cms-intro-p2" rows="2" class="w-full p-2 border rounded-lg text-xs"></textarea>
                             </div>
                             <div class="grid md:grid-cols-2 gap-4">
-                                <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 space-y-2.5">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-xs font-extrabold text-indigo-900 uppercase">Bahagian 01 (Pendaftaran & Rekod)</span>
-                                        <button type="button" onclick="addRow('table-b1-items')" class="text-[11px] bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 py-1 rounded-lg font-bold transition"><i class="fas fa-plus mr-1"></i> Tambah Skop</button>
-                                    </div>
-                                    <input type="text" id="cms-b1-title" class="w-full p-2 border rounded bg-white text-xs font-bold" placeholder="Tajuk Bahagian 01">
-                                    <input type="text" id="cms-b1-desc" class="w-full p-2 border rounded bg-white text-xs" placeholder="Penerangan">
-                                    <div class="border rounded-xl overflow-hidden bg-white">
-                                        <table class="w-full text-xs">
-                                            <thead class="bg-indigo-100/70 font-bold text-indigo-900 uppercase text-[10px]">
-                                                <tr><th class="p-2">Skop Perkhidmatan Utama</th><th class="p-2 w-10 text-center">X</th></tr>
-                                            </thead>
-                                            <tbody id="table-b1-items" class="divide-y"></tbody>
-                                        </table>
-                                    </div>
+                                <div class="bg-indigo-50/50 p-4 rounded-xl border border-indigo-100 space-y-2">
+                                    <input type="text" id="cms-b1-title" class="w-full p-2 border rounded text-xs font-bold" placeholder="Tajuk Bahagian 01">
+                                    <input type="text" id="cms-b1-desc" class="w-full p-2 border rounded text-xs" placeholder="Penerangan">
+                                    <textarea id="cms-b1-list" rows="4" class="w-full p-2 border rounded text-xs" placeholder="1 baris = 1 perkhidmatan"></textarea>
                                 </div>
-                                <div class="bg-rose-50/50 p-4 rounded-xl border border-rose-100 space-y-2.5">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-xs font-extrabold text-rose-900 uppercase">Bahagian 02 (Kebajikan & Disiplin)</span>
-                                        <button type="button" onclick="addRow('table-b2-items')" class="text-[11px] bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1 rounded-lg font-bold transition"><i class="fas fa-plus mr-1"></i> Tambah Tanggungjawab</button>
-                                    </div>
-                                    <input type="text" id="cms-b2-title" class="w-full p-2 border rounded bg-white text-xs font-bold" placeholder="Tajuk Bahagian 02">
-                                    <input type="text" id="cms-b2-desc" class="w-full p-2 border rounded bg-white text-xs" placeholder="Penerangan">
-                                    <div class="border rounded-xl overflow-hidden bg-white">
-                                        <table class="w-full text-xs">
-                                            <thead class="bg-rose-100/70 font-bold text-rose-900 uppercase text-[10px]">
-                                                <tr><th class="p-2 w-2/5">Tajuk</th><th class="p-2">Huraian</th><th class="p-2 w-10 text-center">X</th></tr>
-                                            </thead>
-                                            <tbody id="table-b2-items" class="divide-y"></tbody>
-                                        </table>
-                                    </div>
+                                <div class="bg-rose-50/50 p-4 rounded-xl border border-rose-100 space-y-2">
+                                    <input type="text" id="cms-b2-title" class="w-full p-2 border rounded text-xs font-bold" placeholder="Tajuk Bahagian 02">
+                                    <input type="text" id="cms-b2-desc" class="w-full p-2 border rounded text-xs" placeholder="Penerangan">
+                                    <textarea id="cms-b2-list" rows="4" class="w-full p-2 border rounded text-xs" placeholder="Format: Tajuk | Huraian"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -973,10 +979,7 @@
                             </div>
 
                             <div class="bg-blue-50/60 p-4 sm:p-5 rounded-2xl border border-blue-100 space-y-5">
-                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-blue-200 pb-2 gap-2">
-                                    <h4 class="font-extrabold text-sm text-[#0b2545]"><i class="fas fa-user-check mr-1.5 text-blue-600"></i> Tetapan Halaman "Cara Memohon" (CRUD)</h4>
-                                    <button type="button" onclick="addRow('table-apply-channels')" class="text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg font-bold transition"><i class="fas fa-plus mr-1"></i> Tambah Saluran Permohonan</button>
-                                </div>
+                                <h4 class="font-extrabold text-sm text-[#0b2545] border-b border-blue-200 pb-2"><i class="fas fa-user-check mr-1.5 text-blue-600"></i> Tetapan Halaman "Cara Memohon"</h4>
                                 <div class="grid md:grid-cols-2 gap-4 bg-white p-4 rounded-xl border">
                                     <div class="space-y-3">
                                         <div>
@@ -999,22 +1002,30 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="bg-white rounded-xl border overflow-x-auto">
-                                    <table class="w-full text-xs text-left min-w-[780px]">
-                                        <thead class="bg-slate-100 font-bold text-slate-700 uppercase">
-                                            <tr>
-                                                <th class="p-2.5 w-28 text-center">Logo</th>
-                                                <th class="p-2.5 w-56">Tajuk Saluran</th>
-                                                <th class="p-2.5">Senarai Info (1 Baris = 1 Poin)</th>
-                                                <th class="p-2.5 w-60">Muat Naik Logo / Butang & URL</th>
-                                                <th class="p-2.5 w-10 text-center">X</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="table-apply-channels" class="divide-y"></tbody>
-                                    </table>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div class="bg-white p-4 rounded-xl border space-y-2.5">
+                                        <h5 class="text-xs font-extrabold text-pink-700 uppercase">i) Saluran Permohonan 1 (UPU)</h5>
+                                        <div class="flex items-center gap-3">
+                                            <img id="preview-apply-upu-img" src="https://placehold.co/200x120/ffffff/db2777?text=UPU" class="w-20 h-14 object-contain rounded border bg-slate-50 p-1 shrink-0">
+                                            <div class="flex-1 space-y-1">
+                                                <input type="file" accept="image/*" onchange="handleApplyImageUpload(this, 'preview-apply-upu-img', 'cms-apply-upu-img')" class="w-full text-[11px]">
+                                                <input type="text" id="cms-apply-upu-img" onchange="document.getElementById('preview-apply-upu-img').src = this.value" placeholder="URL logo UPU..." class="w-full p-1 border rounded text-[11px] font-mono">
+                                            </div>
+                                        </div>
+                                        <input type="text" id="cms-apply-upu-url" class="w-full p-2 border rounded bg-slate-50 text-xs font-mono text-blue-600">
+                                    </div>
+                                    <div class="bg-white p-4 rounded-xl border space-y-2.5">
+                                        <h5 class="text-xs font-extrabold text-indigo-800 uppercase">ii) Saluran Permohonan 2 (MyPolyCC)</h5>
+                                        <div class="flex items-center gap-3">
+                                            <img id="preview-apply-poly-img" src="https://placehold.co/200x120/ffffff/1e3a8a?text=MyPolyCC" class="w-20 h-14 object-contain rounded border bg-slate-50 p-1 shrink-0">
+                                            <div class="flex-1 space-y-1">
+                                                <input type="file" accept="image/*" onchange="handleApplyImageUpload(this, 'preview-apply-poly-img', 'cms-apply-poly-img')" class="w-full text-[11px]">
+                                                <input type="text" id="cms-apply-poly-img" onchange="document.getElementById('preview-apply-poly-img').src = this.value" placeholder="URL logo MyPolyCC..." class="w-full p-1 border rounded text-[11px] font-mono">
+                                            </div>
+                                        </div>
+                                        <input type="text" id="cms-apply-poly-url" class="w-full p-2 border rounded bg-slate-50 text-xs font-mono text-blue-600">
+                                    </div>
                                 </div>
-
                                 <div class="bg-white p-4 rounded-xl border grid md:grid-cols-2 gap-4 items-center">
                                     <div class="flex items-center gap-3">
                                         <img id="preview-apply-check-img" src="https://placehold.co/160x160/fff7ed/ea580c?text=Semak" class="w-20 h-20 object-cover rounded-xl border bg-slate-50 shrink-0">
@@ -1158,26 +1169,36 @@
                             <div class="border rounded-xl overflow-hidden"><table class="w-full text-xs text-left"><thead class="bg-slate-100 font-bold text-slate-700 uppercase"><tr><th class="p-2.5 w-1/3">Soalan</th><th class="p-2.5">Jawapan</th><th class="p-2.5 w-10 text-center">X</th></tr></thead><tbody id="table-faq" class="divide-y"></tbody></table></div>
                         </div>
 
-                        <!-- 9. Statistik Sesi & Jabatan (CRUD) -->
+                        <!-- 9. Statistik Sesi & Jabatan (Tanpa HPNM) -->
                         <div id="cms-sec-9" class="space-y-6">
                             <div>
-                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-2 mb-3 gap-2">
+                                <div class="flex justify-between items-center border-b pb-2 mb-3">
                                     <div>
-                                        <h3 class="text-base sm:text-lg font-extrabold text-[#2b1b54]">9. Data Graf Aliran Jumlah Pelajar Mengikut Tahun & Sesi (CRUD)</h3>
-                                        <p class="text-xs text-slate-500">Tambah sesi pengajian atau tambah jabatan baharu secara dinamik.</p>
+                                        <h3 class="text-base sm:text-lg font-extrabold text-[#2b1b54]">9A. Data Graf Aliran Jumlah Pelajar Mengikut Tahun & Sesi (CRUD)</h3>
+                                        <p class="text-xs text-slate-500">Bilangan pelajar mengikut jabatan (termasuk JPH).</p>
                                     </div>
-                                    <div class="flex flex-wrap items-center gap-2">
-                                        <div class="flex items-center bg-slate-100 rounded-lg p-1 border border-slate-200">
-                                            <input type="text" id="new-stat-dept-code" placeholder="Kod Jabatan (cth: JKA)" class="px-2.5 py-1 bg-white rounded border border-slate-200 text-xs font-bold uppercase w-40 focus:outline-none">
-                                            <button type="button" onclick="addStatDepartmentColumn()" class="ml-1 text-xs bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded-md font-bold transition"><i class="fas fa-plus mr-1"></i> Tambah Jabatan</button>
-                                        </div>
-                                        <button type="button" onclick="addRow('table-sesi')" class="text-xs bg-pink-600 hover:bg-pink-700 text-white px-3.5 py-2 rounded-lg font-bold transition"><i class="fas fa-plus mr-1"></i> Tambah Sesi</button>
-                                    </div>
+                                    <button type="button" onclick="addRow('table-sesi')" class="text-xs bg-pink-600 text-white px-3 py-1.5 rounded-lg font-bold"><i class="fas fa-plus mr-1"></i> Tambah Sesi</button>
                                 </div>
                                 <div class="border rounded-xl overflow-x-auto">
                                     <table class="w-full text-xs text-left min-w-[750px]">
-                                        <thead id="thead-sesi" class="bg-slate-100 font-bold text-slate-700 uppercase"></thead>
+                                        <thead class="bg-slate-100 font-bold text-slate-700 uppercase">
+                                            <tr><th class="p-2.5">Tahun & Sesi</th><th class="p-2.5 w-20 text-center">JTMK</th><th class="p-2.5 w-20 text-center">JKE</th><th class="p-2.5 w-20 text-center">JKM</th><th class="p-2.5 w-20 text-center">JP</th><th class="p-2.5 w-20 text-center">JRKV</th><th class="p-2.5 w-20 text-center">JPH</th><th class="p-2.5 w-10 text-center">X</th></tr>
+                                        </thead>
                                         <tbody id="table-sesi" class="divide-y"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center border-b pb-2 mb-3">
+                                    <h3 class="text-base sm:text-lg font-extrabold text-[#2b1b54]">9B. Statistik Taburan Pelajar Mengikut Jabatan (Tanpa HPNM)</h3>
+                                    <button type="button" onclick="addRow('table-jabatan')" class="text-xs bg-slate-800 text-white px-3 py-1.5 rounded-lg font-bold"><i class="fas fa-plus mr-1"></i> Tambah Jabatan</button>
+                                </div>
+                                <div class="border rounded-xl overflow-x-auto">
+                                    <table class="w-full text-xs text-left min-w-[650px]">
+                                        <thead class="bg-slate-100 font-bold text-slate-700 uppercase">
+                                            <tr><th class="p-2.5 w-24">Kod</th><th class="p-2.5">Nama Jabatan</th><th class="p-2.5 w-28 text-center">Jumlah</th><th class="p-2.5 w-28 text-center">Lelaki</th><th class="p-2.5 w-28 text-center">Perempuan</th><th class="p-2.5 w-32">Tema</th><th class="p-2.5 w-10 text-center">X</th></tr>
+                                        </thead>
+                                        <tbody id="table-jabatan" class="divide-y"></tbody>
                                     </table>
                                 </div>
                             </div>
@@ -1204,40 +1225,6 @@
                                 <div><label class="block text-xs font-bold text-slate-700 mb-1">No. WhatsApp</label><input type="text" id="cms-wa-number" class="w-full p-2 border rounded bg-white text-xs font-mono"></div>
                                 <div><label class="block text-xs font-bold text-slate-700 mb-1">Mesej Lalai WhatsApp</label><input type="text" id="cms-wa-text" class="w-full p-2 border rounded bg-white text-xs"></div>
                                 <div><label class="block text-xs font-bold text-slate-700 mb-1">Sapaan AI</label><input type="text" id="cms-ai-welcome" class="w-full p-2 border rounded bg-white text-xs"></div>
-                            </div>
-                        </div>
-
-                        <!-- 12. USERS & Log -->
-                        <div id="cms-sec-12" class="bg-slate-50 p-5 rounded-3xl border border-slate-200 space-y-6">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-4">
-                                <div>
-                                    <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold uppercase">Keselamatan Google Sheets</span>
-                                    <h3 class="text-base sm:text-lg font-extrabold text-[#1a103c] mt-1">12. Pengurusan Akaun (Tab USERS) & Log Aktiviti</h3>
-                                </div>
-                                <button type="button" onclick="loadAdminSecurityData()" class="px-4 py-2 rounded-xl bg-slate-800 text-white text-xs font-bold flex items-center gap-1.5"><i class="fas fa-sync-alt"></i> Muat Semula</button>
-                            </div>
-                            <div class="bg-white p-4 rounded-2xl border">
-                                <h4 class="text-xs font-extrabold text-[#1a103c] uppercase mb-3"><i class="fas fa-user-plus text-pink-600 mr-1.5"></i> Tambah / Kemaskini Pentadbir</h4>
-                                <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-3">
-                                    <input type="text" id="sec-user-id" placeholder="ID (cth: admin2)" class="p-2 border rounded-xl text-xs font-bold">
-                                    <input type="email" id="sec-user-email" placeholder="E-mel" class="p-2 border rounded-xl text-xs">
-                                    <div class="relative">
-                                        <input type="password" id="sec-user-pass" placeholder="Kata Laluan" class="w-full p-2 pr-8 border rounded-xl text-xs">
-                                        <button type="button" onclick="togglePasswordVisibility('sec-user-pass', 'sec-user-pass-icon')" class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"><i id="sec-user-pass-icon" class="fas fa-eye text-xs"></i></button>
-                                    </div>
-                                    <select id="sec-user-role" class="p-2 border rounded-xl text-xs font-semibold"><option value="Pentadbir Utama">Pentadbir Utama</option><option value="Pegawai JHEP">Pegawai JHEP</option></select>
-                                    <button type="button" onclick="handleSaveDatabaseUser()" class="py-2 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs"><i class="fas fa-key mr-1"></i> Simpan ke USERS</button>
-                                </div>
-                            </div>
-                            <div class="grid lg:grid-cols-2 gap-6">
-                                <div class="bg-white rounded-2xl border overflow-hidden">
-                                    <div class="px-4 py-3 bg-slate-100 border-b font-extrabold text-xs text-slate-700">Senarai Akaun dalam Tab USERS</div>
-                                    <div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 uppercase text-[10px] border-b"><tr><th class="p-2.5">ID & E-mel</th><th class="p-2.5">Peranan</th><th class="p-2.5 text-center">Status</th><th class="p-2.5 text-center">Tindakan</th></tr></thead><tbody id="table-db-users" class="divide-y"></tbody></table></div>
-                                </div>
-                                <div class="bg-white rounded-2xl border overflow-hidden">
-                                    <div class="px-4 py-3 bg-slate-100 border-b font-extrabold text-xs text-slate-700">Log Aktiviti (Tab ACTIVITY_LOG)</div>
-                                    <div class="overflow-y-auto max-h-64"><table class="w-full text-xs text-left"><thead class="bg-slate-50 uppercase text-[10px] border-b sticky top-0"><tr><th class="p-2.5 w-32">Masa</th><th class="p-2.5 w-24">Pengguna</th><th class="p-2.5">Aktiviti</th></tr></thead><tbody id="table-db-logs" class="divide-y"></tbody></table></div>
-                                </div>
                             </div>
                         </div>
 
@@ -1283,6 +1270,40 @@
                                     </thead>
                                     <tbody id="table-custom-modules" class="divide-y divide-slate-200"></tbody>
                                 </table>
+                            </div>
+                        </div>
+
+                        <!-- 12. USERS & Log -->
+                        <div id="cms-sec-12" class="bg-slate-50 p-5 rounded-3xl border border-slate-200 space-y-6">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-4">
+                                <div>
+                                    <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold uppercase">Keselamatan Google Sheets</span>
+                                    <h3 class="text-base sm:text-lg font-extrabold text-[#1a103c] mt-1">12. Pengurusan Akaun (Tab USERS) & Log Aktiviti</h3>
+                                </div>
+                                <button type="button" onclick="loadAdminSecurityData()" class="px-4 py-2 rounded-xl bg-slate-800 text-white text-xs font-bold flex items-center gap-1.5"><i class="fas fa-sync-alt"></i> Muat Semula</button>
+                            </div>
+                            <div class="bg-white p-4 rounded-2xl border">
+                                <h4 class="text-xs font-extrabold text-[#1a103c] uppercase mb-3"><i class="fas fa-user-plus text-pink-600 mr-1.5"></i> Tambah / Kemaskini Pentadbir</h4>
+                                <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                                    <input type="text" id="sec-user-id" placeholder="ID (cth: admin2)" class="p-2 border rounded-xl text-xs font-bold">
+                                    <input type="email" id="sec-user-email" placeholder="E-mel" class="p-2 border rounded-xl text-xs">
+                                    <div class="relative">
+                                        <input type="password" id="sec-user-pass" placeholder="Kata Laluan" class="w-full p-2 pr-8 border rounded-xl text-xs">
+                                        <button type="button" onclick="togglePasswordVisibility('sec-user-pass', 'sec-user-pass-icon')" class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"><i id="sec-user-pass-icon" class="fas fa-eye text-xs"></i></button>
+                                    </div>
+                                    <select id="sec-user-role" class="p-2 border rounded-xl text-xs font-semibold"><option value="Pentadbir Utama">Pentadbir Utama</option><option value="Pegawai JHEP">Pegawai JHEP</option></select>
+                                    <button type="button" onclick="handleSaveDatabaseUser()" class="py-2 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs"><i class="fas fa-key mr-1"></i> Simpan ke USERS</button>
+                                </div>
+                            </div>
+                            <div class="grid lg:grid-cols-2 gap-6">
+                                <div class="bg-white rounded-2xl border overflow-hidden">
+                                    <div class="px-4 py-3 bg-slate-100 border-b font-extrabold text-xs text-slate-700">Senarai Akaun dalam Tab USERS</div>
+                                    <div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 uppercase text-[10px] border-b"><tr><th class="p-2.5">ID & E-mel</th><th class="p-2.5">Peranan</th><th class="p-2.5 text-center">Status</th><th class="p-2.5 text-center">Tindakan</th></tr></thead><tbody id="table-db-users" class="divide-y"></tbody></table></div>
+                                </div>
+                                <div class="bg-white rounded-2xl border overflow-hidden">
+                                    <div class="px-4 py-3 bg-slate-100 border-b font-extrabold text-xs text-slate-700">Log Aktiviti (Tab ACTIVITY_LOG)</div>
+                                    <div class="overflow-y-auto max-h-64"><table class="w-full text-xs text-left"><thead class="bg-slate-50 uppercase text-[10px] border-b sticky top-0"><tr><th class="p-2.5 w-32">Masa</th><th class="p-2.5 w-24">Pengguna</th><th class="p-2.5">Aktiviti</th></tr></thead><tbody id="table-db-logs" class="divide-y"></tbody></table></div>
+                                </div>
                             </div>
                         </div>
 
@@ -1419,7 +1440,6 @@
                 { session: "Sesi II 2025/2026", JTMK: 0, JKE: 33, JKM: 3, JP: 70, JRKV: 100, JPH: 0 },
                 { session: "Sesi I 2026/2027", JTMK: 204, JKE: 302, JKM: 55, JP: 203, JRKV: 204, JPH: 210 }
             ],
-            statDeptKeys: ["JTMK", "JKE", "JKM", "JP", "JRKV", "JPH"],
             departments: [
                 { acronym: "JTMK", name: "Jabatan Teknologi Maklumat & Komunikasi", jumlah: 204, lelaki: 103, perempuan: 101, theme: "pink" },
                 { acronym: "JKE", name: "Jabatan Kejuruteraan Elektrik", jumlah: 302, lelaki: 211, perempuan: 91, theme: "orange" },
@@ -1469,7 +1489,6 @@
             if (saved.kpiData && Array.isArray(saved.kpiData.items)) appData.kpiData = { ...defaultAppData.kpiData, ...saved.kpiData };
             if (Array.isArray(saved.faq)) appData.faq = saved.faq;
             if (Array.isArray(saved.sessionStats)) appData.sessionStats = saved.sessionStats;
-            if (Array.isArray(saved.statDeptKeys) && saved.statDeptKeys.length > 0) appData.statDeptKeys = saved.statDeptKeys;
             if (Array.isArray(saved.departments)) appData.departments = saved.departments;
             if (saved.footer) appData.footer = { ...defaultAppData.footer, ...saved.footer };
             if (saved.chatConfig) appData.chatConfig = { ...defaultAppData.chatConfig, ...saved.chatConfig };
@@ -1529,7 +1548,7 @@
             }
         }
 
-        // Pemampat imej pintar yang memastikan saiz kod sentiasa selamat
+        // Pemampat imej pintar yang memastikan kod Base64 sentiasa pendek (< 28,000 aksara) supaya tidak pernah melebihi had 50,000 aksara sel Google Sheets
         function compressImageFile(file, maxW = 720, maxH = 520, quality = 0.7) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
@@ -1549,8 +1568,8 @@
                         ctx.drawImage(img, 0, 0, w, h);
                         let q = quality;
                         let dataUrl = canvas.toDataURL('image/jpeg', q);
-                        while (dataUrl.length > 25000 && q > 0.25) {
-                            q -= 0.1;
+                        while (dataUrl.length > 28000 && q > 0.3) {
+                            q -= 0.12;
                             dataUrl = canvas.toDataURL('image/jpeg', q);
                         }
                         resolve(dataUrl);
@@ -1581,7 +1600,7 @@
 
         async function previewLogoAndFavicon(input) {
             if (input.files && input.files[0]) {
-                const base64 = await compressImageFile(input.files[0], 180, 180, 0.8);
+                const base64 = await compressImageFile(input.files[0], 200, 200, 0.85);
                 appData.images.logo = base64;
                 updateFaviconAndAdminLogo(base64);
                 showToast("Logo & ikon tab dikemaskini!");
@@ -1590,7 +1609,7 @@
 
         async function handleApplyImageUpload(input, previewId, urlInputId) {
             if (input.files && input.files[0]) {
-                const base64 = await compressImageFile(input.files[0], 700, 500, 0.7);
+                const base64 = await compressImageFile(input.files[0], 700, 500, 0.75);
                 const prev = document.getElementById(previewId);
                 const urlInp = document.getElementById(urlInputId);
                 if (prev) prev.src = base64;
@@ -1781,40 +1800,78 @@
                 if (document.getElementById('apply-hero-title')) document.getElementById('apply-hero-title').innerText = ap.heroTitle || "Sambung Diploma?";
                 if (document.getElementById('apply-hero-desc')) document.getElementById('apply-hero-desc').innerHTML = (ap.heroDesc || "").split('\n').filter(Boolean).map(p => `<p>${p}</p>`).join('');
                 if (document.getElementById('apply-hero-img') && ap.heroImg) document.getElementById('apply-hero-img').src = ap.heroImg;
+                if (document.getElementById('apply-upu-img') && ap.upuImg) document.getElementById('apply-upu-img').src = ap.upuImg;
+                if (document.getElementById('apply-poly-img') && ap.polyImg) document.getElementById('apply-poly-img').src = ap.polyImg;
                 if (document.getElementById('apply-check-img') && ap.checkImg) document.getElementById('apply-check-img').src = ap.checkImg;
+                if (document.getElementById('apply-upu-btn') && ap.upuUrl) document.getElementById('apply-upu-btn').href = ap.upuUrl;
+                if (document.getElementById('apply-poly-btn') && ap.polyUrl) document.getElementById('apply-poly-btn').href = ap.polyUrl;
                 if (document.getElementById('apply-check-btn') && ap.checkUrl) document.getElementById('apply-check-btn').href = ap.checkUrl;
 
-                const channelsGrid = document.getElementById('apply-channels-public-grid');
-                if (channelsGrid) {
-                    const channels = Array.isArray(ap.channels) && ap.channels.length > 0 ? ap.channels : [
-                        {
-                            title: "i) Permohonan Melalui UPUonline",
-                            img: ap.upuImg || "https://placehold.co/280x160/ffffff/db2777?text=UPU+ONLINE",
-                            bullets: "Keutamaan permohonan pengajian SESI I\nIsi borang permohonan melalui UPU online\nTarikh penting UPU berkaitan panggilan temuduga, keputusan dan rayuan boleh dirujuk di portal rasmi UPU",
-                            btnText: "UPU Online",
-                            url: ap.upuUrl || "https://upu.mohe.gov.my"
-                        },
-                        {
-                            title: "ii) Permohonan Melalui Portal MyPolyCC",
-                            img: ap.polyImg || "https://placehold.co/280x160/ffffff/1e3a8a?text=eBorang+MyPolyCC",
-                            bullets: "Keutamaan permohonan pengajian SESI II\nPermohonan kemasukan adalah melalui Portal Pengambilan Pelajar Politeknik dan Kolej Komuniti (MyPolyCC)\nTarikh penting ambilan boleh dirujuk di portal yang sama",
-                            btnText: "Portal MyPolyCC",
-                            url: ap.polyUrl || "http://ambilan.mypolycc.edu.my"
-                        }
-                    ];
-                    channelsGrid.innerHTML = channels.map(ch => `
-                        <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col justify-between">
-                            <div>
-                                <div class="h-40 bg-slate-50 rounded-2xl flex items-center justify-center p-4 mb-6 border border-slate-100">
-                                    <img src="${ch.img || 'https://placehold.co/280x160/ffffff/1e3a8a?text=Saluran'}" alt="${ch.title || ''}" class="max-h-32 w-auto object-contain">
+                const orgBox = document.getElementById('org-chart-container');
+                if (orgBox) {
+                    orgBox.innerHTML = appData.images?.orgChart ? `<img src="${appData.images.orgChart}" class="max-h-[520px] w-auto mx-auto rounded-xl object-contain">` : `<i class="fas fa-sitemap text-4xl mb-3 text-slate-300"></i><p class="text-xs font-bold">Imej Carta Organisasi Belum Dimuat Naik</p>`;
+                }
+                const staffBody = document.getElementById('staff-table-body');
+                if (staffBody) {
+                    staffBody.innerHTML = (appData.staff || []).map((s, i) => `
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-4 text-center font-bold text-slate-400">${i + 1}</td>
+                            <td class="p-4 font-extrabold text-[#1a103c]">${s.nama || ''}</td>
+                            <td class="p-4 text-slate-600">${s.jawatan || ''}</td>
+                            <td class="p-4 text-center font-semibold">${s.tel || ''}</td>
+                            <td class="p-4 text-center text-pink-600 font-mono">${s.emel || ''}</td>
+                        </tr>
+                    `).join('');
+                }
+
+                if (document.getElementById('komuniti-desc')) document.getElementById('komuniti-desc').innerText = appData.komuniti?.desc || "";
+                const komGrid = document.getElementById('komuniti-grid');
+                if (komGrid) {
+                    komGrid.innerHTML = (appData.kelab || []).map(k => {
+                        const name = typeof k === 'string' ? k : (k.name || '');
+                        const url = typeof k === 'object' ? (k.url || '') : '';
+                        return `<a href="${url || '#'}" ${url ? 'target="_blank"' : ''} class="p-4 rounded-2xl border border-slate-200 hover:border-pink-500 hover:shadow-sm transition flex items-center justify-between bg-white"><span class="font-bold text-xs sm:text-sm text-[#1a103c]">${name}</span><i class="fas fa-arrow-up-right-from-square text-xs text-slate-400"></i></a>`;
+                    }).join('');
+                }
+                if (document.getElementById('komuniti-gdrive-btn')) document.getElementById('komuniti-gdrive-btn').href = appData.komuniti?.driveLink || "#";
+                if (document.getElementById('komuniti-qr-img') && appData.images?.qrCode) document.getElementById('komuniti-qr-img').src = appData.images.qrCode;
+
+                const perkList = document.getElementById('perkhidmatan-list');
+                if (perkList) {
+                    perkList.innerHTML = (appData.perkhidmatan || []).map(p => `<li class="flex items-center gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-100"><i class="fas fa-check-circle text-pink-600 text-base"></i><span class="text-xs sm:text-sm font-bold text-[#1a103c]">${p}</span></li>`).join('');
+                }
+
+                const galGrid = document.getElementById('galeri-grid');
+                if (galGrid) {
+                    galGrid.innerHTML = (appData.galeri || []).map((g, idx) => {
+                        const imgs = Array.isArray(g.imgs) && g.imgs.length > 0 ? g.imgs.filter(Boolean) : ['https://placehold.co/600x380?text=Galeri'];
+                        const activeIdx = gallerySlideIndices[idx] || 0;
+                        const currentImg = imgs[activeIdx % imgs.length];
+                        return `
+                            <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden flex flex-col">
+                                <div class="relative h-52 bg-slate-900">
+                                    <img onclick="openLightbox(${idx})" src="${currentImg}" class="w-full h-full object-cover cursor-pointer">
+                                    ${imgs.length > 1 ? `<button onclick="changeGalleryCardSlide(${idx}, -1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/50 text-white text-xs flex items-center justify-center"><i class="fas fa-chevron-left"></i></button><button onclick="changeGalleryCardSlide(${idx}, 1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/50 text-white text-xs flex items-center justify-center"><i class="fas fa-chevron-right"></i></button>` : ''}
                                 </div>
-                                <h4 class="text-lg font-extrabold text-[#0b2545] mb-3">${ch.title || ''}</h4>
-                                <ul class="list-disc pl-5 space-y-2 text-xs sm:text-sm text-slate-600 mb-6">
-                                    ${(ch.bullets || '').split('\n').filter(Boolean).map(b => `<li>${b}</li>`).join('')}
-                                </ul>
+                                <div class="p-5"><span class="text-[10px] font-extrabold text-pink-600 uppercase">${g.date || ''}</span><h4 class="font-extrabold text-base text-[#1a103c] mt-0.5 mb-1.5">${g.title || ''}</h4><p class="text-xs text-slate-600">${g.desc || ''}</p></div>
                             </div>
-                            <div class="text-center">
-                                <a href="${ch.url || '#'}" target="_blank" class="inline-block px-7 py-2.5 rounded-xl border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-bold text-xs sm:text-sm transition">${ch.btnText || 'Buka Pautan'}</a>
+                        `;
+                    }).join('');
+                }
+
+                if (document.getElementById('borang-main-title')) document.getElementById('borang-main-title').innerText = appData.borangData?.title || "Borang HEP";
+                if (document.getElementById('borang-instructions')) {
+                    document.getElementById('borang-instructions').innerHTML = (appData.borangData?.instructions || "").split('\n').filter(Boolean).map(l => `<p>• ${l}</p>`).join('');
+                }
+                const borangGrid = document.getElementById('borang-grid-container');
+                if (borangGrid) {
+                    borangGrid.innerHTML = (appData.borangData?.items || []).map(b => `
+                        <div class="flex items-start gap-4 pt-4 md:pt-0">
+                            <div class="w-14 h-14 rounded-full border-2 border-blue-600 text-blue-600 flex items-center justify-center text-lg shrink-0"><i class="fas ${b.icon || 'fa-file-alt'}"></i></div>
+                            <div>
+                                <h4 class="font-extrabold text-sm sm:text-base text-[#0b2545]">${b.title || ''}</h4>
+                                <a href="${b.url || '#'}" target="_blank" class="text-xs font-bold text-amber-600 underline">${b.linkText || 'Muat turun borang'}</a>
+                                ${b.note ? `<p class="text-[11px] text-slate-500 mt-0.5">${b.note}</p>` : ''}
                             </div>
                         </div>
                     `).join('');
@@ -1842,18 +1899,11 @@
                                 <td class="p-4 text-center font-semibold">${k.target || ''}</td>
                                 <td class="p-4 text-center font-extrabold text-[#1a103c]">${k.achieved || ''}</td>
                                 <td class="p-4"><div class="text-xs font-extrabold mb-1">${pct}%</div><div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden"><div class="${barClass} h-full rounded-full" style="width:${pct}%"></div></div></td>
-                                <td class="p-4 text-center"><span class="px-3 py-1 rounded-full text-xs font-bold ${badgeClass}">${k.status || 'Tercapai'}</span></td>
-                                <td class="p-4 text-center"><a href="${k.link || '#'}" target="_blank" class="px-3.5 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold inline-flex items-center gap-1.5"><i class="fab fa-google-drive"></i> Bukti</a></td>
+                                <td class="p-4 text-center"><span class="px-3 py-1 rounded-full text-[11px] font-extrabold whitespace-nowrap ${badgeClass}">${k.status || 'Tercapai'}</span></td>
+                                <td class="p-4 text-center"><a href="${k.link || appData.kpiData?.driveUrl || '#'}" target="_blank" class="px-3 py-1.5 rounded-xl bg-blue-50 text-blue-600 font-bold text-xs inline-flex items-center gap-1.5 whitespace-nowrap"><i class="fab fa-google-drive"></i> Folder Bukti</a></td>
                             </tr>
                         `;
                     }).join('');
-                }
-
-                const deptKeys = getActiveStatDeptKeys();
-                const filterSelect = document.getElementById('stat-dept-filter');
-                if (filterSelect) {
-                    const currentVal = filterSelect.value || 'ALL';
-                    filterSelect.innerHTML = `<option value="ALL">Semua Jabatan PTSS</option>` + deptKeys.map(k => `<option value="${k}" ${currentVal === k ? 'selected' : ''}>${k}</option>`).join('');
                 }
 
                 const depts = appData.departments || [];
@@ -1966,143 +2016,83 @@
         }
 
         function renderCustomModulesAndPages() {
-            const utSlot = document.getElementById('custom-modules-slot-utama');
-            if (utSlot) utSlot.innerHTML = "";
-            const slots = {
-                utama: utSlot,
-                pengenalan: document.getElementById('custom-modules-slot-pengenalan'),
-                program: document.getElementById('custom-modules-slot-program'),
-                permohonan: document.getElementById('custom-modules-slot-permohonan'),
-                kakitangan: document.getElementById('custom-modules-slot-kakitangan'),
-                komuniti: document.getElementById('custom-modules-slot-komuniti'),
-                perkhidmatan: document.getElementById('custom-modules-slot-perkhidmatan'),
-                borang: document.getElementById('custom-modules-slot-borang'),
-                kpi: document.getElementById('custom-modules-slot-kpi'),
-                statistik: document.getElementById('custom-modules-slot-statistik'),
-                faq: document.getElementById('custom-modules-slot-faq')
-            };
-            Object.values(slots).forEach(s => { if (s) s.innerHTML = ""; });
+            const slotPages = ['utama', 'pengenalan', 'program', 'permohonan', 'kakitangan', 'komuniti', 'perkhidmatan', 'borang', 'kpi', 'statistik', 'faq'];
+            slotPages.forEach(p => {
+                const el = document.getElementById('custom-modules-slot-' + p);
+                if (el) el.innerHTML = '';
+            });
 
-            const dynamicPagesContainer = document.getElementById('dynamic-custom-pages-container');
-            const desktopNavContainer = document.getElementById('dynamic-desktop-nav-items');
-            const mobileNavContainer = document.getElementById('dynamic-mobile-nav-items');
-            if (dynamicPagesContainer) dynamicPagesContainer.innerHTML = "";
-            if (desktopNavContainer) desktopNavContainer.innerHTML = "";
-            if (mobileNavContainer) mobileNavContainer.innerHTML = "";
+            const desktopNav = document.getElementById('dynamic-desktop-nav-items');
+            const mobileNav = document.getElementById('dynamic-mobile-nav-items');
+            const customPagesContainer = document.getElementById('dynamic-custom-pages-container');
+            if (desktopNav) desktopNav.innerHTML = '';
+            if (mobileNav) mobileNav.innerHTML = '';
+            if (customPagesContainer) customPagesContainer.innerHTML = '';
 
-            const mods = appData.customModules || [];
-            mods.forEach((m, idx) => {
-                const htmlBlock = buildCustomModuleBlockHTML(m);
-                if (m.target === 'new_page') {
-                    const pageId = `custom-page-${idx}`;
-                    const menuTitle = m.menuTitle || m.title || `Halaman ${idx + 1}`;
-                    const safeKey = menuTitle.toLowerCase().replace(/[^a-z0-9]/g, '');
+            const modules = Array.isArray(appData.customModules) ? appData.customModules : [];
+            if (modules.length === 0) return;
 
-                    if (desktopNavContainer) {
-                        desktopNavContainer.innerHTML += `<button onclick="navigate('${safeKey}')" class="nav-pill px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 hover:text-[#2b1b54] transition whitespace-nowrap">${menuTitle}</button>`;
+            const newPagesMap = {};
+
+            modules.forEach((m, idx) => {
+                if (!m || (!m.title && !m.content && !m.img)) return;
+                const target = m.target || 'utama';
+
+                if (target === 'new_page') {
+                    const rawSlug = (m.menuTitle || m.title || ('halaman-' + (idx + 1))).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                    const pageId = 'custom-' + (rawSlug || (idx + 1));
+                    if (!newPagesMap[pageId]) {
+                        newPagesMap[pageId] = {
+                            pageId,
+                            menuTitle: m.menuTitle || m.title || 'Menu Baharu',
+                            pageTitle: m.title || m.menuTitle || 'Halaman Baharu',
+                            badge: m.badge || 'INFORMASI JHEP',
+                            blocks: []
+                        };
                     }
-                    if (mobileNavContainer) {
-                        mobileNavContainer.innerHTML += `<button onclick="navigate('${safeKey}')" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-100">${menuTitle}</button>`;
-                    }
-                    if (dynamicPagesContainer) {
-                        dynamicPagesContainer.innerHTML += `
-                            <section id="sec-${safeKey}" class="page-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                                <div class="mb-6 flex justify-between items-center">
-                                    <button onclick="navigate('utama')" class="inline-flex items-center px-4 py-2 rounded-full bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-100 shadow-sm">
-                                        <i class="fas fa-arrow-left mr-2"></i> Kembali ke Laman Utama
-                                    </button>
-                                </div>
-                                ${htmlBlock}
-                            </section>
-                        `;
-                    }
+                    newPagesMap[pageId].blocks.push(m);
                 } else {
-                    const targetSlot = slots[m.target];
-                    if (targetSlot) {
-                        targetSlot.innerHTML += htmlBlock;
+                    const slotEl = document.getElementById('custom-modules-slot-' + target);
+                    if (slotEl) {
+                        slotEl.innerHTML += buildCustomModuleBlockHTML(m);
                     }
                 }
             });
-        }
 
-        function getActiveStatDeptKeys() {
-            if (Array.isArray(appData.statDeptKeys) && appData.statDeptKeys.length > 0) {
-                return appData.statDeptKeys;
-            }
-            const defaultKeys = ["JTMK", "JKE", "JKM", "JP", "JRKV", "JPH"];
-            const extraKeys = new Set();
-            (appData.sessionStats || []).forEach(s => {
-                Object.keys(s || {}).forEach(k => {
-                    if (k !== 'session' && !defaultKeys.includes(k)) extraKeys.add(k);
-                });
-            });
-            appData.statDeptKeys = [...defaultKeys, ...Array.from(extraKeys)];
-            return appData.statDeptKeys;
-        }
-
-        function renderSesiTableHead() {
-            const thead = document.getElementById('thead-sesi');
-            if (!thead) return;
-            const keys = getActiveStatDeptKeys();
-            thead.innerHTML = `
-                <tr>
-                    <th class="p-2.5 min-w-[160px]">Tahun & Sesi</th>
-                    ${keys.map(k => `
-                        <th class="p-2.5 w-24 text-center">
-                            <div class="flex items-center justify-center gap-1">
-                                <span>${k}</span>
-                                <button type="button" onclick="removeStatDepartmentColumn('${k}')" title="Padam Jabatan ${k}" class="text-rose-400 hover:text-rose-600 text-[10px]"><i class="fas fa-times-circle"></i></button>
+            const createdPages = Object.values(newPagesMap);
+            createdPages.forEach(pg => {
+                if (desktopNav) {
+                    desktopNav.innerHTML += `
+                        <button onclick="navigate('${pg.pageId}')" data-target="${pg.pageId}" class="nav-pill px-3.5 py-2 rounded-full text-xs font-bold text-pink-600 hover:text-[#2b1b54] transition whitespace-nowrap">
+                            ${pg.menuTitle}
+                        </button>
+                    `;
+                }
+                if (mobileNav) {
+                    mobileNav.innerHTML += `
+                        <button onclick="navigate('${pg.pageId}'); document.getElementById('mobile-menu').classList.add('hidden');" class="w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold text-pink-700 bg-pink-50/70 hover:bg-pink-100">
+                            ${pg.menuTitle}
+                        </button>
+                    `;
+                }
+                if (customPagesContainer) {
+                    const blocksHtml = pg.blocks.map(b => buildCustomModuleBlockHTML(b)).join('');
+                    customPagesContainer.innerHTML += `
+                        <section id="sec-${pg.pageId}" class="page-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-16">
+                            <div class="bg-gradient-to-r from-[#2b1b54] to-[#4c1d95] rounded-3xl p-8 sm:p-10 text-white shadow-xl mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                                <div>
+                                    <span class="px-3 py-1 rounded-full bg-white/15 text-pink-200 text-[11px] font-bold uppercase tracking-wider mb-3 inline-block">${pg.badge}</span>
+                                    <h2 class="text-2xl sm:text-4xl font-extrabold mb-1">${pg.pageTitle}</h2>
+                                </div>
+                                <button onclick="navigate('utama')" class="px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition inline-flex items-center gap-2">
+                                    <i class="fas fa-arrow-left"></i> Ke Halaman Utama
+                                </button>
                             </div>
-                        </th>
-                    `).join('')}
-                    <th class="p-2.5 w-10 text-center">X</th>
-                </tr>
-            `;
-        }
-
-        function syncCurrentSesiTableFromDOM() {
-            const keys = getActiveStatDeptKeys();
-            const rows = Array.from(document.querySelectorAll('#table-sesi tr'));
-            if (rows.length === 0) return;
-            appData.sessionStats = rows.map(tr => {
-                const obj = { session: tr.querySelector('.ss-name')?.value || '' };
-                keys.forEach(k => {
-                    const inp = tr.querySelector(`.ss-dept[data-dept="${k}"]`);
-                    obj[k] = parseInt(inp?.value || 0);
-                });
-                return obj;
+                            <div class="space-y-8">${blocksHtml}</div>
+                        </section>
+                    `;
+                }
             });
-        }
-
-        function addStatDepartmentColumn() {
-            const inp = document.getElementById('new-stat-dept-code');
-            const code = (inp?.value || '').trim().toUpperCase().replace(/[^A-Z0-9_-]/g, '');
-            if (!code) { showToast("Sila masukkan Kod Jabatan (cth: JKA)!"); return; }
-            syncCurrentSesiTableFromDOM();
-            const keys = getActiveStatDeptKeys();
-            if (keys.includes(code)) { showToast("Jabatan " + code + " sudah wujud!"); return; }
-            keys.push(code);
-            appData.statDeptKeys = keys;
-            (appData.sessionStats || []).forEach(s => { if (s[code] === undefined) s[code] = 0; });
-            if (!(appData.departments || []).some(d => d.acronym === code)) {
-                appData.departments.push({ acronym: code, name: "Jabatan " + code, jumlah: 0, lelaki: 0, perempuan: 0, theme: "blue" });
-            }
-            if (inp) inp.value = '';
-            renderSesiTableHead();
-            document.getElementById('table-sesi').innerHTML = '';
-            (appData.sessionStats || []).forEach(s => addRow('table-sesi', s));
-            showToast("Lajur jabatan " + code + " ditambah!");
-        }
-
-        function removeStatDepartmentColumn(code) {
-            syncCurrentSesiTableFromDOM();
-            const keys = getActiveStatDeptKeys().filter(k => k !== code);
-            if (keys.length === 0) { showToast("Sekurang-kurangnya 1 jabatan diperlukan!"); return; }
-            appData.statDeptKeys = keys;
-            renderSesiTableHead();
-            document.getElementById('table-sesi').innerHTML = '';
-            (appData.sessionStats || []).forEach(s => addRow('table-sesi', s));
-            showToast("Lajur jabatan " + code + " dipadam.");
         }
 
         function updateSessionChart() {
@@ -2113,10 +2103,9 @@
             if (subtitle) subtitle.innerText = filter === 'ALL' ? 'Paparan Keseluruhan Semua Jabatan Akademik PTSS' : `Paparan Khusus Jabatan: ${filter}`;
 
             const stats = appData.sessionStats || [];
-            const keys = getActiveStatDeptKeys();
             const labels = stats.map(s => s.session || '');
             const values = stats.map(s => {
-                if (filter === 'ALL') return keys.reduce((sum, k) => sum + Number(s[k] || 0), 0);
+                if (filter === 'ALL') return Number(s.JTMK || 0) + Number(s.JKE || 0) + Number(s.JKM || 0) + Number(s.JP || 0) + Number(s.JRKV || 0) + Number(s.JPH || 0);
                 return Number(s[filter] || 0);
             });
 
@@ -2177,7 +2166,7 @@
             updateFaviconAndAdminLogo(appData.images?.logo || "");
             document.getElementById('cms-main-heading').value = appData.hero?.mainHeading || "";
             document.getElementById('cms-main-subheading').value = appData.hero?.mainSubheading || "";
-            document.getElementById('cms-infoterkini-heading').value = appData.latestNewsData?.heading || "Info Terkini & Pengumuman JHEP";
+            document.getElementById('cms-infoterkini-heading').value = appData.latestNewsData?.heading || "";
 
             document.getElementById('table-slides').innerHTML = "";
             (appData.slides || []).forEach(s => addRow('table-slides', s));
@@ -2193,16 +2182,10 @@
             document.getElementById('cms-intro-p2').value = appData.intro?.p2 || "";
             document.getElementById('cms-b1-title').value = appData.intro?.b1Title || "";
             document.getElementById('cms-b1-desc').value = appData.intro?.b1Desc || "";
-            document.getElementById('table-b1-items').innerHTML = "";
-            (appData.intro?.b1List || "").split('\n').filter(Boolean).forEach(line => addRow('table-b1-items', { text: line }));
-
+            document.getElementById('cms-b1-list').value = appData.intro?.b1List || "";
             document.getElementById('cms-b2-title').value = appData.intro?.b2Title || "";
             document.getElementById('cms-b2-desc').value = appData.intro?.b2Desc || "";
-            document.getElementById('table-b2-items').innerHTML = "";
-            (appData.intro?.b2List || "").split('\n').filter(Boolean).forEach(line => {
-                const parts = line.split('|');
-                addRow('table-b2-items', { title: (parts[0] || '').trim(), desc: (parts[1] || '').trim() });
-            });
+            document.getElementById('cms-b2-list').value = appData.intro?.b2List || "";
 
             document.getElementById('cms-program-banner-title').value = appData.programsData?.bannerTitle || "";
             document.getElementById('table-programs').innerHTML = "";
@@ -2213,45 +2196,32 @@
             document.getElementById('cms-apply-desc').value = ap.heroDesc || "";
             document.getElementById('cms-apply-img').value = ap.heroImg || "";
             if (ap.heroImg) document.getElementById('preview-apply-hero-img').src = ap.heroImg;
+            document.getElementById('cms-apply-upu-img').value = ap.upuImg || "";
+            if (ap.upuImg) document.getElementById('preview-apply-upu-img').src = ap.upuImg;
+            document.getElementById('cms-apply-upu-url').value = ap.upuUrl || "";
+            document.getElementById('cms-apply-poly-img').value = ap.polyImg || "";
+            if (ap.polyImg) document.getElementById('preview-apply-poly-img').src = ap.polyImg;
+            document.getElementById('cms-apply-poly-url').value = ap.polyUrl || "";
             document.getElementById('cms-apply-check-img').value = ap.checkImg || "";
             if (ap.checkImg) document.getElementById('preview-apply-check-img').src = ap.checkImg;
             document.getElementById('cms-apply-check-url').value = ap.checkUrl || "";
 
-            const channels = Array.isArray(ap.channels) && ap.channels.length > 0 ? ap.channels : [
-                {
-                    title: "i) Permohonan Melalui UPUonline",
-                    img: ap.upuImg || "https://placehold.co/280x160/ffffff/db2777?text=UPU+ONLINE",
-                    bullets: "Keutamaan permohonan pengajian SESI I\nIsi borang permohonan melalui UPU online\nTarikh penting UPU berkaitan panggilan temuduga, keputusan dan rayuan boleh dirujuk di portal rasmi UPU",
-                    btnText: "UPU Online",
-                    url: ap.upuUrl || "https://upu.mohe.gov.my"
-                },
-                {
-                    title: "ii) Permohonan Melalui Portal MyPolyCC",
-                    img: ap.polyImg || "https://placehold.co/280x160/ffffff/1e3a8a?text=eBorang+MyPolyCC",
-                    bullets: "Keutamaan permohonan pengajian SESI II\nPermohonan kemasukan adalah melalui Portal Pengambilan Pelajar Politeknik dan Kolej Komuniti (MyPolyCC)\nTarikh penting ambilan boleh dirujuk di portal yang sama",
-                    btnText: "Portal MyPolyCC",
-                    url: ap.polyUrl || "http://ambilan.mypolycc.edu.my"
-                }
-            ];
-            document.getElementById('table-apply-channels').innerHTML = "";
-            channels.forEach(ch => addRow('table-apply-channels', ch));
-
             document.getElementById('cms-carta-url').value = appData.images?.orgChart || "";
             document.getElementById('table-kakitangan').innerHTML = "";
-            (appData.staff || []).forEach(st => addRow('table-kakitangan', st));
+            (appData.staff || []).forEach(s => addRow('table-kakitangan', s));
 
             document.getElementById('cms-komuniti-desc').value = appData.komuniti?.desc || "";
             document.getElementById('cms-drive-link').value = appData.komuniti?.driveLink || "";
             document.getElementById('table-kelab').innerHTML = "";
-            (appData.kelab || []).forEach(kl => addRow('table-kelab', kl));
+            (appData.kelab || []).forEach(k => addRow('table-kelab', typeof k === 'string' ? { name: k, url: '' } : k));
 
             document.getElementById('table-perkhidmatan').innerHTML = "";
-            (appData.perkhidmatan || []).forEach(pk => addRow('table-perkhidmatan', pk));
+            (appData.perkhidmatan || []).forEach(p => addRow('table-perkhidmatan', p));
 
             document.getElementById('table-galeri').innerHTML = "";
-            (appData.galeri || []).forEach(gl => addRow('table-galeri', gl));
+            (appData.galeri || []).forEach(g => addRow('table-galeri', g));
 
-            document.getElementById('cms-borang-title').value = appData.borangData?.title || "Borang HEP";
+            document.getElementById('cms-borang-title').value = appData.borangData?.title || "";
             document.getElementById('cms-borang-instructions').value = appData.borangData?.instructions || "";
             document.getElementById('table-borang').innerHTML = "";
             (appData.borangData?.items || []).forEach(b => addRow('table-borang', b));
@@ -2265,9 +2235,11 @@
             document.getElementById('table-faq').innerHTML = "";
             (appData.faq || []).forEach(f => addRow('table-faq', f));
 
-            renderSesiTableHead();
             document.getElementById('table-sesi').innerHTML = "";
             (appData.sessionStats || []).forEach(s => addRow('table-sesi', s));
+
+            document.getElementById('table-jabatan').innerHTML = "";
+            (appData.departments || []).forEach(d => addRow('table-jabatan', d));
 
             document.getElementById('cms-footer-tel').value = appData.footer?.tel || "";
             document.getElementById('cms-footer-faks').value = appData.footer?.faks || "";
@@ -2339,37 +2311,10 @@
                 `;
             } else if (tableId === 'table-homecards') {
                 tr.innerHTML = `
-                    <td class="p-2"><input type="text" class="w-full p-1.5 border rounded hc-title font-bold" placeholder="Tajuk Kad" value="${data.title || ''}"></td>
-                    <td class="p-2"><input type="text" class="w-full p-1.5 border rounded hc-desc" placeholder="Penerangan" value="${data.desc || ''}"></td>
+                    <td class="p-2"><input type="text" class="w-full p-1.5 border rounded hc-title font-bold" value="${data.title || ''}"></td>
+                    <td class="p-2"><input type="text" class="w-full p-1.5 border rounded hc-desc" value="${data.desc || ''}"></td>
                     <td class="p-2"><input type="text" class="w-full p-1.5 border rounded hc-linktext" value="${data.linkText || 'Buka modul'}"></td>
-                    <td class="p-2"><input type="text" class="w-full p-1.5 border rounded hc-url font-mono" placeholder="URL / #seksyen" value="${data.url || '#'}"></td>
-                    <td class="p-2 text-center"><button type="button" onclick="this.closest('tr').remove()" class="text-rose-500 hover:text-rose-700"><i class="fas fa-trash"></i></button></td>
-                `;
-            } else if (tableId === 'table-b1-items') {
-                tr.innerHTML = `
-                    <td class="p-1.5"><input type="text" class="w-full p-1.5 border rounded b1-item-text font-semibold" placeholder="Nama skop perkhidmatan..." value="${data.text || ''}"></td>
-                    <td class="p-1.5 w-10 text-center"><button type="button" onclick="this.closest('tr').remove()" class="text-rose-500 hover:text-rose-700"><i class="fas fa-trash"></i></button></td>
-                `;
-            } else if (tableId === 'table-b2-items') {
-                tr.innerHTML = `
-                    <td class="p-1.5"><input type="text" class="w-full p-1.5 border rounded b2-item-title font-bold" placeholder="Tajuk tanggungjawab" value="${data.title || ''}"></td>
-                    <td class="p-1.5"><input type="text" class="w-full p-1.5 border rounded b2-item-desc" placeholder="Huraian ringkas..." value="${data.desc || ''}"></td>
-                    <td class="p-1.5 w-10 text-center"><button type="button" onclick="this.closest('tr').remove()" class="text-rose-500 hover:text-rose-700"><i class="fas fa-trash"></i></button></td>
-                `;
-            } else if (tableId === 'table-apply-channels') {
-                tr.innerHTML = `
-                    <td class="p-2 text-center"><img src="${data.img || 'https://placehold.co/160x100/ffffff/1e3a8a?text=Logo'}" class="w-20 h-14 object-contain rounded border bg-slate-50 p-1 mx-auto ac-prev"></td>
-                    <td class="p-2"><input type="text" class="w-full p-1.5 border rounded ac-title font-bold" placeholder="cth: i) Permohonan Melalui UPU" value="${data.title || ''}"></td>
-                    <td class="p-2"><textarea rows="3" class="w-full p-1.5 border rounded ac-bullets" placeholder="1 baris = 1 poin senarai">${data.bullets || ''}</textarea></td>
-                    <td class="p-2 space-y-1">
-                        <input type="file" accept="image/*" onchange="uploadRowImg(this, '.ac-prev', '.ac-img', 400, 220)" class="w-full text-[10px]">
-                        <input type="text" class="w-full p-1 border rounded ac-img font-mono text-[10px]" placeholder="URL Logo" value="${data.img || ''}">
-                        <div class="grid grid-cols-2 gap-1">
-                            <input type="text" class="w-full p-1 border rounded ac-btntext font-bold text-[10px]" placeholder="Teks Butang" value="${data.btnText || 'Mohon Sekarang'}">
-                            <input type="text" class="w-full p-1 border rounded ac-url font-mono text-[10px]" placeholder="URL Pautan" value="${data.url || 'https://'}">
-                        </div>
-                    </td>
-                    <td class="p-2 text-center"><button type="button" onclick="this.closest('tr').remove()" class="text-rose-500 hover:text-rose-700"><i class="fas fa-trash"></i></button></td>
+                    <td class="p-2"><input type="text" class="w-full p-1.5 border rounded hc-url font-mono" value="${data.url || ''}"></td>
                 `;
             } else if (tableId === 'table-programs') {
                 tr.innerHTML = `
@@ -2461,11 +2406,15 @@
                     <td class="p-2 text-center"><button type="button" onclick="this.closest('tr').remove()" class="text-rose-500"><i class="fas fa-trash"></i></button></td>
                 `;
             } else if (tableId === 'table-sesi') {
-                const keys = getActiveStatDeptKeys();
                 tr.innerHTML = `
-                    <td class="p-2"><input type="text" class="w-full p-1.5 border rounded ss-name font-bold" placeholder="cth: Sesi I 2026/2027" value="${data.session || ''}"></td>
-                    ${keys.map(k => `<td class="p-2"><input type="number" data-dept="${k}" class="w-full p-1.5 border rounded ss-dept text-center font-semibold" value="${data[k] ?? 0}"></td>`).join('')}
-                    <td class="p-2 text-center"><button type="button" onclick="this.closest('tr').remove()" class="text-rose-500 hover:text-rose-700"><i class="fas fa-trash"></i></button></td>
+                    <td class="p-2"><input type="text" class="w-full p-1 border rounded ss-name font-bold" value="${data.session || ''}"></td>
+                    <td class="p-2"><input type="number" class="w-full p-1 border rounded ss-jtmk text-center" value="${data.JTMK ?? 0}"></td>
+                    <td class="p-2"><input type="number" class="w-full p-1 border rounded ss-jke text-center" value="${data.JKE ?? 0}"></td>
+                    <td class="p-2"><input type="number" class="w-full p-1 border rounded ss-jkm text-center" value="${data.JKM ?? 0}"></td>
+                    <td class="p-2"><input type="number" class="w-full p-1 border rounded ss-jp text-center" value="${data.JP ?? 0}"></td>
+                    <td class="p-2"><input type="number" class="w-full p-1 border rounded ss-jrkv text-center" value="${data.JRKV ?? 0}"></td>
+                    <td class="p-2"><input type="number" class="w-full p-1 border rounded ss-jph text-center" value="${data.JPH ?? 0}"></td>
+                    <td class="p-2 text-center"><button type="button" onclick="this.closest('tr').remove()" class="text-rose-500"><i class="fas fa-trash"></i></button></td>
                 `;
             } else if (tableId === 'table-custom-modules') {
                 const target = data.target || 'utama';
@@ -2524,7 +2473,7 @@
         async function uploadRowImg(input, prevSelector, urlSelector, w, h) {
             if (input.files && input.files[0]) {
                 const tr = input.closest('tr');
-                const base64 = await compressImageFile(input.files[0], w, h, 0.65);
+                const base64 = await compressImageFile(input.files[0], w, h, 0.72);
                 const prev = tr.querySelector(prevSelector);
                 const urlInp = tr.querySelector(urlSelector);
                 if (prev) prev.src = base64;
@@ -2583,23 +2532,11 @@
                 p2: document.getElementById('cms-intro-p2').value,
                 b1Title: document.getElementById('cms-b1-title').value,
                 b1Desc: document.getElementById('cms-b1-desc').value,
-                b1List: Array.from(document.querySelectorAll('#table-b1-items tr')).map(tr => tr.querySelector('.b1-item-text')?.value.trim() || '').filter(Boolean).join('\n'),
+                b1List: document.getElementById('cms-b1-list').value,
                 b2Title: document.getElementById('cms-b2-title').value,
                 b2Desc: document.getElementById('cms-b2-desc').value,
-                b2List: Array.from(document.querySelectorAll('#table-b2-items tr')).map(tr => {
-                    const t = tr.querySelector('.b2-item-title')?.value.trim() || '';
-                    const d = tr.querySelector('.b2-item-desc')?.value.trim() || '';
-                    return t ? `${t} | ${d}` : '';
-                }).filter(Boolean).join('\n')
+                b2List: document.getElementById('cms-b2-list').value
             };
-
-            const applyChannels = Array.from(document.querySelectorAll('#table-apply-channels tr')).map(tr => ({
-                title: tr.querySelector('.ac-title')?.value || '',
-                img: tr.querySelector('.ac-img')?.value || '',
-                bullets: tr.querySelector('.ac-bullets')?.value || '',
-                btnText: tr.querySelector('.ac-btntext')?.value || 'Buka Pautan',
-                url: tr.querySelector('.ac-url')?.value || '#'
-            })).filter(c => c.title.trim() !== '');
 
             appData.programsData = {
                 bannerTitle: document.getElementById('cms-program-banner-title').value || 'Program Pengajian @ PTSS',
@@ -2613,13 +2550,27 @@
                     heroTitle: document.getElementById('cms-apply-title').value,
                     heroDesc: document.getElementById('cms-apply-desc').value,
                     heroImg: document.getElementById('cms-apply-img').value,
+                    upuImg: document.getElementById('cms-apply-upu-img').value,
+                    upuUrl: document.getElementById('cms-apply-upu-url').value,
+                    polyImg: document.getElementById('cms-apply-poly-img').value,
+                    polyUrl: document.getElementById('cms-apply-poly-url').value,
                     checkImg: document.getElementById('cms-apply-check-img').value,
-                    checkUrl: document.getElementById('cms-apply-check-url').value,
-                    channels: applyChannels
+                    checkUrl: document.getElementById('cms-apply-check-url').value
                 }
             };
 
-            appData.images.orgChart = document.getElementById('cms-carta-url').value;
+            const cartaFile = document.getElementById('cms-carta-img');
+            if (cartaFile && cartaFile.files && cartaFile.files[0]) {
+                appData.images.orgChart = await compressImageFile(cartaFile.files[0], 900, 650, 0.75);
+                document.getElementById('cms-carta-url').value = appData.images.orgChart;
+            } else {
+                appData.images.orgChart = document.getElementById('cms-carta-url').value;
+            }
+
+            const qrFile = document.getElementById('cms-qr-img');
+            if (qrFile && qrFile.files && qrFile.files[0]) {
+                appData.images.qrCode = await compressImageFile(qrFile.files[0], 300, 300, 0.8);
+            }
 
             appData.staff = Array.from(document.querySelectorAll('#table-kakitangan tr')).map(tr => ({
                 nama: tr.querySelector('.st-nama')?.value || '',
@@ -2674,7 +2625,7 @@
                     achieved: tr.querySelector('.kp-achieved')?.value || '',
                     pct: Number(tr.querySelector('.kp-pct')?.value || 0),
                     status: tr.querySelector('.kp-status')?.value || 'Tercapai',
-                    link: tr.querySelector('.kp-link')?.value || '#'
+                    link: tr.querySelector('.kp-link')?.value || ''
                 }))
             };
 
@@ -2683,34 +2634,24 @@
                 a: tr.querySelector('.fq-a')?.value || ''
             }));
 
-            const statKeys = getActiveStatDeptKeys();
-            appData.sessionStats = Array.from(document.querySelectorAll('#table-sesi tr')).map(tr => {
-                const rowObj = { session: tr.querySelector('.ss-name')?.value || '' };
-                statKeys.forEach(k => {
-                    const inp = tr.querySelector(`.ss-dept[data-dept="${k}"]`);
-                    rowObj[k] = parseInt(inp?.value || 0);
-                });
-                return rowObj;
-            });
+            appData.sessionStats = Array.from(document.querySelectorAll('#table-sesi tr')).map(tr => ({
+                session: tr.querySelector('.ss-name')?.value || '',
+                JTMK: parseInt(tr.querySelector('.ss-jtmk')?.value || 0),
+                JKE: parseInt(tr.querySelector('.ss-jke')?.value || 0),
+                JKM: parseInt(tr.querySelector('.ss-jkm')?.value || 0),
+                JP: parseInt(tr.querySelector('.ss-jp')?.value || 0),
+                JRKV: parseInt(tr.querySelector('.ss-jrkv')?.value || 0),
+                JPH: parseInt(tr.querySelector('.ss-jph')?.value || 0)
+            }));
 
-            const latestSession = appData.sessionStats[appData.sessionStats.length - 1] || {};
-            const existingDeptsMap = {};
-            (appData.departments || []).forEach(d => { existingDeptsMap[d.acronym] = d; });
-            const themesCycle = ["pink", "orange", "green", "blue", "purple"];
-            appData.departments = statKeys.map((k, idx) => {
-                const ex = existingDeptsMap[k] || {};
-                const jum = Number(latestSession[k] ?? ex.jumlah ?? 0);
-                const l = ex.jumlah > 0 ? Math.round((ex.lelaki / ex.jumlah) * jum) : Math.round(jum / 2);
-                const p = Math.max(0, jum - l);
-                return {
-                    acronym: k,
-                    name: ex.name || ("Jabatan " + k),
-                    jumlah: jum,
-                    lelaki: l,
-                    perempuan: p,
-                    theme: ex.theme || themesCycle[idx % themesCycle.length]
-                };
-            });
+            appData.departments = Array.from(document.querySelectorAll('#table-jabatan tr')).map(tr => ({
+                acronym: tr.querySelector('.jb-code')?.value || '',
+                name: tr.querySelector('.jb-name')?.value || '',
+                jumlah: parseInt(tr.querySelector('.jb-jum')?.value || 0),
+                lelaki: parseInt(tr.querySelector('.jb-l')?.value || 0),
+                perempuan: parseInt(tr.querySelector('.jb-p')?.value || 0),
+                theme: tr.querySelector('.jb-theme')?.value || 'blue'
+            }));
 
             appData.footer = {
                 tel: document.getElementById('cms-footer-tel').value,
