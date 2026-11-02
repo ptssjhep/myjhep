@@ -615,16 +615,16 @@
     </div>
 
     <!-- LIGHTBOX GALERI -->
-    <div id="gallery-lightbox" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[90] hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl relative">
+    <div id="gallery-lightbox" class="fixed inset-0 bg-black/85 backdrop-blur-sm z-[90] hidden flex items-center justify-center p-2 sm:p-4">
+        <div class="bg-white rounded-3xl max-w-5xl w-full overflow-hidden shadow-2xl relative flex flex-col max-h-[92vh]">
             <button onclick="closeLightbox()" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black"><i class="fas fa-times"></i></button>
-            <div class="relative bg-slate-950 h-72 sm:h-96 flex items-center justify-center">
-                <img id="lightbox-img" src="" alt="Galeri" class="w-full h-full object-cover">
+            <div class="relative bg-slate-950 flex-1 min-h-[300px] sm:min-h-[480px] max-h-[75vh] flex items-center justify-center overflow-auto p-2">
+                <img id="lightbox-img" src="" alt="Galeri" class="max-w-full max-h-[72vh] w-auto h-auto object-contain mx-auto">
                 <button onclick="prevLightboxImg()" class="absolute left-3 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black"><i class="fas fa-chevron-left"></i></button>
                 <button onclick="nextLightboxImg()" class="absolute right-3 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black"><i class="fas fa-chevron-right"></i></button>
                 <div id="lightbox-dots" class="absolute bottom-3 flex gap-1.5"></div>
             </div>
-            <div class="p-6">
+            <div class="p-5 sm:p-6 bg-white border-t border-slate-100">
                 <span id="lightbox-date" class="text-[11px] font-extrabold text-pink-600 uppercase"></span>
                 <h4 id="lightbox-title" class="text-lg font-extrabold text-[#1a103c] mt-1 mb-2"></h4>
                 <p id="lightbox-desc" class="text-xs sm:text-sm text-slate-600"></p>
@@ -1007,14 +1007,18 @@
                                 <h3 class="text-base sm:text-lg font-extrabold text-[#2b1b54]">4. Carta Organisasi & Kakitangan</h3>
                                 <button type="button" onclick="addRow('table-kakitangan')" class="text-xs bg-slate-800 text-white px-3 py-1.5 rounded-lg font-bold"><i class="fas fa-plus mr-1"></i> Tambah Staf</button>
                             </div>
-                            <div class="grid md:grid-cols-2 gap-4 mb-4 bg-slate-50 p-4 rounded-xl border">
-                                <div>
-                                    <label class="block text-xs font-bold text-slate-700 mb-1">Muat Naik Carta Organisasi</label>
-                                    <input type="file" id="cms-carta-img" accept="image/*" class="w-full text-xs">
+                            <div class="grid md:grid-cols-2 gap-4 mb-4 bg-slate-50 p-4 rounded-xl border items-center">
+                                <div class="flex items-center gap-3">
+                                    <img id="preview-carta-cms" src="https://placehold.co/160x110/e2e8f0/475569?text=Carta+HD" class="w-24 h-16 object-contain rounded-lg border bg-white p-1 shrink-0">
+                                    <div class="flex-1">
+                                        <label class="block text-xs font-bold text-slate-700 mb-1">Muat Naik Carta Organisasi (Resolusi Tinggi HD)</label>
+                                        <input type="file" id="cms-carta-img" accept="image/*" onchange="previewOrgChartHD(this)" class="w-full text-xs">
+                                        <p class="text-[10px] text-emerald-600 font-bold mt-1"><i class="fas fa-check-circle"></i> Disimpan dalam kualiti HD jelas tanpa kabur.</p>
+                                    </div>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-700 mb-1">Atau URL Carta Organisasi</label>
-                                    <input type="text" id="cms-carta-url" class="w-full p-2 border rounded bg-white text-xs font-mono">
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Atau URL Imej Carta Organisasi</label>
+                                    <input type="text" id="cms-carta-url" oninput="if(this.value) document.getElementById('preview-carta-cms').src = this.value" placeholder="https://..." class="w-full p-2 border rounded bg-white text-xs font-mono">
                                 </div>
                             </div>
                             <div class="border rounded-xl overflow-x-auto">
@@ -1508,59 +1512,75 @@
             if (Array.isArray(saved.inquiries)) appData.inquiries = saved.inquiries;
         }
 
-        async function fetchSavedData() {
-            let localData = null;
-            try {
-                const local = localStorage.getItem(LOCAL_STORAGE_KEY);
-                if (local) {
-                    localData = JSON.parse(local);
-                    mergeWithDefaults(localData);
-                }
-            } catch (e) {}
-            renderFrontend();
+        async function fetchSavedData(silent = false) {
+            // 1. Paparkan cache tempatan dahulu untuk kelajuan pantas sementara menunggu pelayan
+            if (!silent) {
+                try {
+                    const local = localStorage.getItem(LOCAL_STORAGE_KEY);
+                    if (local) {
+                        const localData = JSON.parse(local);
+                        mergeWithDefaults(localData);
+                    }
+                } catch (e) {}
+                renderFrontend();
+            }
 
+            // 2. Sentiasa utamakan data terkini dari Google Sheets (Cloud Single Source of Truth)
+            // supaya semua pelayar, peranti & akaun lain sentiasa mendapat data yang sama
             try {
-                const res = await fetch(DATABASE_URL + "?t=" + Date.now(), { cache: "no-store" });
-                const data = await res.json();
-                if (data && typeof data === 'object' && Object.keys(data).length > 0 && data.status !== "error") {
-                    const localTime = Number(localData?._lastSavedAt || 0);
-                    const remoteTime = Number(data._lastSavedAt || 0);
-                    if (!localTime || remoteTime >= localTime) {
+                const res = await fetch(DATABASE_URL + "?action=getData&t=" + Date.now(), {
+                    method: "GET",
+                    redirect: "follow",
+                    cache: "no-store"
+                });
+                const text = await res.text();
+                if (text) {
+                    const data = JSON.parse(text);
+                    if (data && typeof data === 'object' && Object.keys(data).length > 0 && data.status !== "error") {
+                        appData = JSON.parse(JSON.stringify(defaultAppData));
                         mergeWithDefaults(data);
                         try { localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appData)); } catch (e) {}
                         renderFrontend();
+                        return true;
                     }
                 }
             } catch (e) {}
+            return false;
         }
 
         async function saveToDatabase(logNote = "Kemaskini CMS") {
             appData._lastSavedAt = Date.now();
             try { localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(appData)); } catch (e) {}
             const statusEl = document.getElementById('cms-sync-status');
-            if (statusEl) statusEl.innerHTML = `<i class="fas fa-circle-notch fa-spin text-pink-600"></i> Menyimpan ke Google Sheets...`;
+            if (statusEl) statusEl.innerHTML = `<i class="fas fa-circle-notch fa-spin text-pink-600"></i> Menyimpan & menyelaraskan ke Google Sheets...`;
 
             try {
                 const res = await fetch(DATABASE_URL, {
                     method: "POST",
+                    redirect: "follow",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
                     body: JSON.stringify({ action: "saveData", actor: currentAdminUser?.username || "Pentadbir", logNote, payload: appData })
                 });
-                const result = await res.json();
+                const text = await res.text();
+                let result = {};
+                try { result = JSON.parse(text); } catch (err) {}
+
                 if (result && result.status === "success") {
-                    if (statusEl) statusEl.innerHTML = `<i class="fas fa-check-circle text-emerald-600"></i> Berjaya diselaraskan (${new Date().toLocaleTimeString('ms-MY')})`;
+                    if (statusEl) statusEl.innerHTML = `<i class="fas fa-check-circle text-emerald-600"></i> Diselaraskan ke semua pelayar (${new Date().toLocaleTimeString('ms-MY')})`;
+                    // Tarik semula dari awan untuk mengesahkan keselarasan penuh
+                    await fetchSavedData(true);
                     return true;
                 } else {
-                    if (statusEl) statusEl.innerHTML = `<i class="fas fa-exclamation-triangle text-rose-600"></i> Ralat simpanan: ${result?.message || 'Semak Code.gs'}`;
+                    if (statusEl) statusEl.innerHTML = `<i class="fas fa-exclamation-triangle text-rose-600"></i> Ralat simpanan: ${result?.message || 'Semak Web App Google Apps Script'}`;
                     return false;
                 }
             } catch (e) {
-                if (statusEl) statusEl.innerHTML = `<i class="fas fa-exclamation-triangle text-rose-600"></i> Disimpan secara tempatan.`;
+                if (statusEl) statusEl.innerHTML = `<i class="fas fa-exclamation-triangle text-rose-600"></i> Ralat rangkaian ke Google Sheets.`;
                 return false;
             }
         }
 
-        function compressImageFile(file, maxW = 600, maxH = 400, quality = 0.65) {
+        function compressImageFile(file, maxW = 800, maxH = 600, quality = 0.78, maxBytes = 65000) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
@@ -1574,13 +1594,15 @@
                         }
                         canvas.width = w; canvas.height = h;
                         const ctx = canvas.getContext('2d');
+                        ctx.imageSmoothingEnabled = true;
+                        ctx.imageSmoothingQuality = "high";
                         ctx.fillStyle = "#ffffff";
                         ctx.fillRect(0, 0, w, h);
                         ctx.drawImage(img, 0, 0, w, h);
                         let q = quality;
                         let dataUrl = canvas.toDataURL('image/jpeg', q);
-                        while (dataUrl.length > 25000 && q > 0.2) {
-                            q -= 0.1;
+                        while (dataUrl.length > maxBytes && q > 0.45) {
+                            q -= 0.06;
                             dataUrl = canvas.toDataURL('image/jpeg', q);
                         }
                         resolve(dataUrl);
@@ -1590,6 +1612,20 @@
                 };
                 reader.readAsDataURL(file);
             });
+        }
+
+        async function previewOrgChartHD(input) {
+            if (input.files && input.files[0]) {
+                showToast("Memproses imej Carta Organisasi dalam resolusi HD...");
+                // Resolusi tinggi 1800x1400 supaya teks nama & jawatan dalam carta tajam dan tidak pecah
+                const hdBase64 = await compressImageFile(input.files[0], 1800, 1400, 0.92, 420000);
+                appData.images.orgChart = hdBase64;
+                const urlInp = document.getElementById('cms-carta-url');
+                if (urlInp) urlInp.value = hdBase64;
+                const prev = document.getElementById('preview-carta-cms');
+                if (prev) prev.src = hdBase64;
+                showToast("Carta Organisasi HD sedia! Klik 'Kemaskini & Terbitkan' untuk simpan.");
+            }
         }
 
         function updateFaviconAndAdminLogo(logoUrl) {
@@ -1912,7 +1948,12 @@
                 if (orgChartBox) {
                     const orgImg = appData.images?.orgChart || "";
                     if (orgImg && orgImg.trim() !== "") {
-                        orgChartBox.innerHTML = `<img src="${orgImg}" alt="Carta Organisasi JHEP" onclick="openLightboxSingle('${orgImg}')" class="max-h-[520px] w-auto object-contain rounded-xl cursor-pointer shadow-sm">`;
+                        orgChartBox.innerHTML = `
+                            <div class="w-full flex flex-col items-center">
+                                <img src="${orgImg}" alt="Carta Organisasi JHEP" onclick="openLightboxSingle('${orgImg}')" style="image-rendering: -webkit-optimize-contrast;" class="w-full max-w-5xl h-auto object-contain rounded-xl cursor-zoom-in shadow-sm border border-slate-100 bg-white">
+                                <span class="text-[11px] font-bold text-slate-400 mt-3 flex items-center gap-1.5"><i class="fas fa-search-plus text-pink-600"></i> Klik pada imej carta untuk zum paparan penuh HD</span>
+                            </div>
+                        `;
                     } else {
                         orgChartBox.innerHTML = `<p class="text-xs font-bold text-slate-400">Imej Carta Organisasi Belum Dimuat Naik</p>`;
                     }
@@ -2451,7 +2492,11 @@
 
             document.getElementById('table-kakitangan').innerHTML = "";
             (appData.staff || []).forEach(st => addRow('table-kakitangan', st));
-            if (appData.images?.orgChart) document.getElementById('cms-carta-url').value = appData.images.orgChart;
+            if (appData.images?.orgChart) {
+                document.getElementById('cms-carta-url').value = appData.images.orgChart;
+                const prevCarta = document.getElementById('preview-carta-cms');
+                if (prevCarta) prevCarta.src = appData.images.orgChart;
+            }
 
             document.getElementById('cms-komuniti-desc').value = appData.komuniti?.desc || "";
             document.getElementById('cms-drive-link').value = appData.komuniti?.driveLink || "";
@@ -3046,7 +3091,7 @@
 
             const cartaFileInp = document.getElementById('cms-carta-img');
             if (cartaFileInp && cartaFileInp.files && cartaFileInp.files[0]) {
-                appData.images.orgChart = await compressImageFile(cartaFileInp.files[0], 1000, 750, 0.72);
+                appData.images.orgChart = await compressImageFile(cartaFileInp.files[0], 1800, 1400, 0.92, 420000);
             } else {
                 appData.images.orgChart = document.getElementById('cms-carta-url')?.value || appData.images.orgChart || "";
             }
@@ -3354,16 +3399,20 @@
             try {
                 const res = await fetch(DATABASE_URL, {
                     method: "POST",
+                    redirect: "follow",
                     headers: { "Content-Type": "text/plain;charset=utf-8" },
                     body: JSON.stringify({ action: "login", username, password })
                 });
                 const result = await res.json();
                 if (result && result.status === "success") {
                     currentAdminUser = { username: result.username, role: result.role };
+                    // Tarik data paling terkini dari Google Sheets sebelum mengisi borang CMS
+                    // supaya kemaskini dari akaun/browser lain dipaparkan dengan tepat
+                    await fetchSavedData(true);
                     document.getElementById('login-modal')?.classList.add('hidden');
                     document.getElementById('admin-view')?.classList.remove('hidden');
                     populateCmsForms();
-                    showToast("Selamat datang, " + result.username + "!");
+                    showToast("Selamat datang, " + result.username + "! Data terkini diselaraskan.");
                     return;
                 } else {
                     if (errEl) {
@@ -3496,6 +3545,13 @@
         window.addEventListener('DOMContentLoaded', () => {
             fetchSavedData();
             carouselInterval = setInterval(nextSlide, 6000);
+            // Semakan penyelarasan automatik setiap 25 saat supaya perubahan dari pelayar/akaun lain dikemaskini secara langsung
+            setInterval(() => {
+                const isAdminOpen = !document.getElementById('admin-view')?.classList.contains('hidden');
+                if (!isAdminOpen) {
+                    fetchSavedData(true);
+                }
+            }, 25000);
         });
     </script>
 </body>
